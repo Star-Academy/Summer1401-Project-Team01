@@ -7,10 +7,10 @@ import {AppComponent} from './app.component';
 import {HeaderModule} from './components/header/header.module';
 
 import {HomeModule} from './pages/home/home.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, HeaderModule, HomeModule],
+    imports: [BrowserModule, AppRoutingModule, HeaderModule, HomeModule, BrowserAnimationsModule],
     providers: [],
     bootstrap: [AppComponent],
 })
