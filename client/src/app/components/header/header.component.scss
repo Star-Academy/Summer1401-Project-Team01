@@ -1,23 +1,31 @@
 header{
   .navbar{
+    background-color: var(--color-primary-blue-50);
+
     display: flex;
     align-items: center;
+    gap: var(--flex-gap-large);
+
     font-size: var(--font-size-tertiary-heading);
+
     span{
       padding: var(--padding-medium);
     }
-    gap: var(--flex-gap-large);
 
     .logo-container{
       inline-size: 15rem;
-      font-size: var(--font-size-paragraph);
+
+      font-size: var(--font-size-sub-paragraph);
     }
 
     .select-env-container{
-
-
       inline-size: 15rem;
 
+      & *{
+        display: flex;
+        align-items: center;
+        gap: var(--flex-gap-medium);
+      }
     }
 
     .env-title{
@@ -26,6 +34,17 @@ header{
 
     .help-container{
 margin-inline-start: auto;
+
+      button{
+        font-size: var(--font-size-tertiary-heading);
+
+        >* {
+          block-size: 3rem;
+          inline-size: 3rem;
+
+          padding: var(--padding-small);
+        }
+      }
     }
   }
 }
