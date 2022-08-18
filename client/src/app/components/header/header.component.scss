@@ -1,10 +1,14 @@
 header {
     .navbar {
-        background-color: var(--color-primary-blue-50);
+        background-color: var(--color-primary-blue-60);
 
         display: flex;
         align-items: center;
         gap: var(--flex-gap-large);
+
+        inline-size: 100%;
+
+        padding-inline: var(--padding-large);
 
         font-size: var(--font-size-tertiary-heading);
 
@@ -16,31 +20,84 @@ header {
             inline-size: 15rem;
 
             font-size: var(--font-size-sub-paragraph);
-        }
 
-        .select-env-container {
-            inline-size: 15rem;
+            a {
+                color: inherit;
 
-            .option{
-                background-color: aqua;
+                text-decoration: none;
+
+                &:visited,
+                &:active,
+                &:focus {
+                    color: inherit;
+                }
+
+                img {
+                    align-items: inherit;
+                }
             }
         }
 
+        .title-container {
+        }
 
+        .select-env-container {
+            inline-size: 25rem;
+
+            .option {
+                display: flex;
+                align-items: center;
+                gap: var(--flex-gap-medium);
+
+                font-size: var(--font-size-paragraph);
+            }
+        }
 
         .help-container {
             margin-inline-start: auto;
 
-            button {
-                font-size: var(--font-size-tertiary-heading);
-
-                > * {
+            button[mat-icon-button] {
+                &.help-button {
                     block-size: 3rem;
                     inline-size: 3rem;
 
-                    padding: var(--padding-small);
+                    line-height: 3rem;
+                }
+
+                .mat-icon {
+                    block-size: 3rem;
+                    inline-size: 3rem;
+
+                    font-size: var(--font-size-secondary-heading);
+
+                    line-height: 3rem;
+                }
+
+                .mat-button-ripple {
+                    width: inherit;
+                    height: inherit;
+
+                    font-size: inherit;
+
+                    line-height: inherit;
                 }
             }
+        }
+    }
+}
+
+.mat-menu-content {
+    button {
+        display: flex;
+        align-items: center;
+        gap: var(--flex-gap-medium);
+
+        padding-block: var(--padding-small);
+
+        font-size: var(--font-size-paragraph);
+
+        i {
+            padding: var(--padding-small);
         }
     }
 }

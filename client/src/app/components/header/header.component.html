@@ -8,9 +8,9 @@
         <span class="select-env-container">
             <button class="option" mat-menu-item [matMenuTriggerFor]="menu" aria-label=" محیط کار">
                 <i class="fa-regular fa-chevron-down"></i>
-                <span>انتخاب محیط کار</span>
+                <span>{{ currentEnvTitle }}</span>
             </button>
-            <mat-menu #menu="matMenu">
+            <mat-menu yPosition="below" xPosition="after" backdropClass="menu" #menu="matMenu">
                 <button class="option" mat-menu-item (click)="currentEnvTitle = 'فهرست دادگان‌ها'">
                     <i class="fa-regular fa-database"></i>
                     <span>فهرست دادگان‌ها</span>
@@ -21,13 +21,10 @@
                 </button>
             </mat-menu>
         </span>
-        <span class="env-title">
-            {{ currentEnvTitle }}
-        </span>
         <span class="help-container">
-            <button mat-icon-button title="سوالات متداول">
-            <i class="fa-regular fa-messages-question"></i>
-                </button>
+            <button mat-icon-button aria-label="سوالات متداول" title="سوالات متداول" class="help-button">
+                <mat-icon>question_answer</mat-icon>
+            </button>
         </span>
     </nav>
 </header>
