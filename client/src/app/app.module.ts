@@ -8,9 +8,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AgGridModule} from 'ag-grid-angular';
 import {HttpClientModule} from '@angular/common/http';
 import 'ag-grid-enterprise';
+import { DragNDropComponent } from './components/drag-n-drop/drag-n-drop.component';
+import { DndEventsDirective } from './components/drag-n-drop/directive/dnd-events.directive';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DragNDropComponent, DndEventsDirective],
     imports: [
         BrowserModule,
         AppRoutingModule,

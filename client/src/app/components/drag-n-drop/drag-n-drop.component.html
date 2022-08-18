@@ -1,0 +1,13 @@
+<div class="dnd-container" appDndEvents (fileDropped)="onFileDropped($event)">
+    <input
+        class="file-input"
+        type="file"
+        #fileDropRef
+        id="fileDropRef"
+        multiple
+        (change)="fileBrowseHandler($event.target)"
+    />
+    <h3>Drag and drop file here</h3>
+    <span>or</span>
+    <label for="fileDropRef">Browse for file</label>
+</div>
