@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-    public currentEnvTitle: string = 'داده‌آرا';
+    public currentEnvTitle: string = '';
 }

@@ -6,16 +6,16 @@
             </a>
         </span>
         <span class="select-env-container">
-            <button mat-menu-item [matMenuTriggerFor]="menu" aria-label=" محیط کار">
+            <button class="option" mat-menu-item [matMenuTriggerFor]="menu" aria-label=" محیط کار">
                 <i class="fa-regular fa-chevron-down"></i>
                 <span>انتخاب محیط کار</span>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="currentEnvTitle = 'فهرست دادگان‌ها'">
+                <button class="option" mat-menu-item (click)="currentEnvTitle = 'فهرست دادگان‌ها'">
                     <i class="fa-regular fa-database"></i>
                     <span>فهرست دادگان‌ها</span>
                 </button>
-                <button mat-menu-item (click)="currentEnvTitle = 'مدیریت پایپلاین‌ها'">
+                <button class="option" mat-menu-item (click)="currentEnvTitle = 'مدیریت پایپلاین‌ها'">
                     <i class="fa-regular fa-timeline-arrow"></i>
                     <span>مدیریت پایپلاین‌ها</span>
                 </button>
