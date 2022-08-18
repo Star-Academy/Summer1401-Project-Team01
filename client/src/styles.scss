@@ -3,6 +3,10 @@
 // For more information: https://material.angular.io/guide/theming
 @use '~@angular/material' as mat;
 
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -33,6 +37,7 @@ $boilera-theme: mat.define-light-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($boilera-theme);
+
 
 
 
