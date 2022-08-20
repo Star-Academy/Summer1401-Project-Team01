@@ -1,9 +1,6 @@
-<div>
-    <!-- Button to clear selection -->
-    <button (click)="clearSelection()">Clear Selection</button>
-    <!-- AG Grid Angular Component -->
+<div class="list-wrapper">
     <ag-grid-angular
-        style="width: 100%; height: 200px"
+        style="height: 50em; width: 100%"
         class="ag-theme-alpine"
         [columnDefs]="columnDefs"
         [defaultColDef]="defaultColDef"
@@ -11,5 +8,8 @@
         [animateRows]="true"
         (gridReady)="onGridReady($event)"
         (cellClicked)="onCellClicked($event)"
+        [enableRtl]="true"
+        [paginationAutoPageSize]="true"
+        [pagination]="true"
     ></ag-grid-angular>
 </div>

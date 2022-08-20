@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
-import {CellClickedEvent, ColDef, GridReadyEvent} from 'ag-grid-community';
+import {CellClassParams, CellClickedEvent, ColDef, GridReadyEvent, ICellRendererParams} from 'ag-grid-community';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
@@ -10,36 +10,76 @@ import {HttpClient} from '@angular/common/http';
     styleUrls: ['./list-of-items.component.scss'],
 })
 export class ListOfItemsComponent {
-    // Each Column Definition results in one Column.
+    @ViewChild(AgGridAngular) public agGrid!: AgGridAngular;
+
     public columnDefs: ColDef[] = [
-        {field: 'fileName', checkboxSelection: true},
-        {field: 'dataType'},
-        {field: 'createdAt'},
+        {
+            field: 'fileName',
+            headerName: 'نام فایل',
+            headerTooltip: 'برای ادیت اسم فایل دوبار کلیک کنید',
+            editable: true,
+            checkboxSelection: true,
+            headerCheckboxSelection: true,
+            headerCheckboxSelectionFilteredOnly: true,
+            flex: 1,
+        },
+        {
+            field: 'dataType',
+            headerName: 'نوع داده',
+            maxWidth: 150,
+            cellClass: (params: CellClassParams): string => {
+                return ListOfItemsComponent.determineFileType(params);
+            },
+            cellRenderer: (params: ICellRendererParams): string => {
+                return ListOfItemsComponent.spanMaker(params);
+            },
+        },
+        {field: 'createdAt', headerName: 'تاریخ ایجاد'},
     ];
 
-    // DefaultColDef sets props common to all Columns
+    private static determineFileType(params: CellClassParams): string {
+        switch (params.value) {
+            case 'csv':
+                return 'csv';
+            case 'xls':
+                return 'xls';
+            case 'json':
+                return 'json';
+            default:
+                return 'unknown';
+        }
+    }
+
+    private static spanMaker(params: ICellRendererParams): string {
+        return '<span class="border-element">' + params.value + '</span>';
+    }
+
     public defaultColDef: ColDef = {
         sortable: true,
         filter: true,
     };
 
-    // Data that gets displayed in the grid
-    public rowData$: any[] = [{fileName: 'covid', dataType: 'csv', createdAt: '2020'}];
-
-    // For accessing the Grid's API
-    @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
+    public rowData$: any[] = [
+        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
+        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
+        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
+        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
+        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
+        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
+        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
+        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
+        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
+        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
+    ];
 
     public constructor(private http: HttpClient) {}
 
-    // Example load data from sever
     public onGridReady(params: GridReadyEvent): void {}
 
-    // Example of consuming Grid Event
     public onCellClicked(e: CellClickedEvent): void {
         console.log('cellClicked', e);
     }
 
-    // Example using Grid's API
     public clearSelection(): void {
         this.agGrid.api.deselectAll();
     }

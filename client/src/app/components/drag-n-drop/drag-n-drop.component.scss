@@ -3,17 +3,35 @@
 
     text-align: center;
 
-    border: 0.1rem solid black;
+    border: 0.1rem dashed var(--color-gray-40);
+    border-radius: var(--border-radius-small);
 
     inline-size: 100%;
     block-size: 100%;
     cursor: pointer;
+
+    padding: 3.2rem;
+
+    &:hover {
+        background-color: rgba(229,229,247,0);
+        opacity: 1;
+        background: repeating-linear-gradient( 45deg, #e0e3eb, #e0e3eb 2px, rgba(229,229,247,0) 2px, rgba(229,229,247,0) 10px );
+    }
+
+    .info {
+        display: flex;
+        gap: 1.2rem;
+        align-items: center;
+        justify-content: center;
+    }
 
     .file-input {
         opacity: 0;
         position: absolute;
         z-index: 2;
         inset: 0;
+
+        cursor: pointer;
     }
 
     span {
@@ -23,14 +41,17 @@
     label {
         display: inline-block;
 
-        background-color: hsl(200deg, 50%, 50%);
-        color: #fff;
+        background-color: var(--color-accent-normal);
+        color: var(--color-gray-90);
 
         padding: 0.5rem 1rem;
-        border-radius: 0.4rem;
+        border-radius: var(--border-radius-small);
+
+
+
     }
     &.file-over {
-        animation: shake 1s;
+        animation: shake 1000ms;
         animation-iteration-count: infinite;
     }
 }
