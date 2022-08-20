@@ -1,15 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
-
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {PipelineDesignerComponent} from './pipeline-designer.component';
+import {NgFlowchartModule} from '@joelwenzel/ng-flowchart';
 
 @NgModule({
-  declarations: [
-    PipelineDesignerComponent
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [PipelineDesignerComponent],
+    imports: [CommonModule, NgFlowchartModule],
+    exports: [PipelineDesignerComponent],
 })
-export class PipelineDesignerModule { }
+export class PipelineDesignerModule {}
