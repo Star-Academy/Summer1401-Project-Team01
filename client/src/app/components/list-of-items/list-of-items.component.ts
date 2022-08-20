@@ -1,6 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
-import {CellClassParams, CellClickedEvent, ColDef, GridReadyEvent, ICellRendererParams} from 'ag-grid-community';
+import {
+    CellClassParams,
+    CellClickedEvent,
+    ColDef,
+    GridReadyEvent,
+    GridApi,
+    ICellRendererParams,
+    RowNodeTransaction,
+} from 'ag-grid-community';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
@@ -11,6 +19,9 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ListOfItemsComponent {
     @ViewChild(AgGridAngular) public agGrid!: AgGridAngular;
+
+    private gridApi!: GridApi;
+    public rowSelection: 'single' | 'multiple' = 'multiple';
 
     public columnDefs: ColDef[] = [
         {
@@ -74,7 +85,18 @@ export class ListOfItemsComponent {
 
     public constructor(private http: HttpClient) {}
 
-    public onGridReady(params: GridReadyEvent): void {}
+    public onRemoveSelected(): void {
+        const selectedData = this.gridApi.getSelectedRows();
+        this.gridApi.applyTransaction({remove: selectedData});
+    }
+
+    public clearData(): void {
+        this.gridApi.setRowData([]);
+    }
+
+    public onGridReady(params: GridReadyEvent): void {
+        this.gridApi = params.api;
+    }
 
     public onCellClicked(e: CellClickedEvent): void {
         console.log('cellClicked', e);

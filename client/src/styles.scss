@@ -73,11 +73,14 @@ White spaces (px)
   --color-accent-lighter: hsl(192deg 53% 77%);
   --color-accent-lightest: hsl(192deg 50% 94%);
 
-
-
   --color-csv-format: hsl(205deg 100% 45%);
   --color-xls-format: hsl(110deg 100% 35%);
   --color-json-format: hsl(40deg 100% 45%);
+
+  --success-color: hsl(123deg 38% 57%);
+  --warning-color: var(--tertiary-color-light);
+  --error-color: hsl(4deg 90% 58%);
+  --error-color-dark: hsl(4deg 90% 50%);
 
   --font-size-primary-heading: 3.6rem;
   --font-size-secondary-heading: 3rem;
@@ -152,6 +155,19 @@ body {
 
   p {
     font-size: var(--font-size-paragraph);
+  }
+
+  button {
+    background-color: transparent;
+
+    padding: 1.2rem;
+
+    border: none;
+    border-radius: var(--border-radius-small);
+
+    outline: none;
+
+    cursor: pointer;
   }
 
   .border-element {
