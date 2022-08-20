@@ -11,11 +11,11 @@
                 <span>{{ currentEnvTitle }}</span>
             </button>
             <mat-menu yPosition="below" xPosition="after" backdropClass="menu" #menu="matMenu">
-                <button class="option" mat-menu-item (click)="currentEnvTitle = 'فهرست دادگان‌ها'">
+                <button class="option" mat-menu-item (click)="selectDataInventory()">
                     <i class="fa-regular fa-database"></i>
                     <span>فهرست دادگان‌ها</span>
                 </button>
-                <button class="option" mat-menu-item (click)="currentEnvTitle = 'مدیریت پایپلاین‌ها'">
+                <button class="option" mat-menu-item (click)="selectPipelineDesigner()">
                     <i class="fa-regular fa-timeline-arrow"></i>
                     <span>مدیریت پایپلاین‌ها</span>
                 </button>
