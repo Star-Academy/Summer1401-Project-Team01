@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalStart", "TalStart.csproj", "{041B11E8-E227-4F70-884C-80FA4C08E87B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{041B11E8-E227-4F70-884C-80FA4C08E87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{041B11E8-E227-4F70-884C-80FA4C08E87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{041B11E8-E227-4F70-884C-80FA4C08E87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{041B11E8-E227-4F70-884C-80FA4C08E87B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FD4DCB9-100F-4BDB-AAD0-EF8FCAF33CEA}
+	EndGlobalSection
+EndGlobal

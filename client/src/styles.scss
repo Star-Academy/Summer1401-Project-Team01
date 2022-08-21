@@ -1,0 +1,116 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '~@angular/material' as mat;
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$boilera-primary: mat.define-palette(mat.$indigo-palette);
+$boilera-accent: mat.define-palette(mat.$pink-palette, a200, a100, a400);
+
+// The warn palette is optional (defaults to red).
+$boilera-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$boilera-theme: mat.define-light-theme((
+  color: (
+    primary: $boilera-primary,
+    accent: $boilera-accent,
+    warn: $boilera-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($boilera-theme);
+
+/*
+Design System
+
+Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+White spaces (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+
+// VARIABLES
+:root {
+  --color-gray-98: hsl(0deg 0% 98%);
+  --color-gray-90: hsl(0deg 0% 90%);
+  --color-gray-80: hsl(0deg 0% 80%);
+  --color-gray-70: hsl(0deg 0% 70%);
+  --color-gray-40: hsl(0deg 0% 40%);
+  --color-gray-30: hsl(0deg 0% 30%);
+  --color-gray-20: hsl(0deg 0% 20%);
+  --color-gray-10: hsl(0deg 0% 10%);
+
+  --font-size-primary-heading: 3.6rem;
+  --font-size-secondary-heading: 3rem;
+  --font-size-tertiary-heading: 2.4rem;
+  --font-size-paragraph: 2rem;
+
+  --animation-duration-fast: 0.1s;
+  --animation-duration-normal: 0.5s;
+  --animation-duration-slow: 1s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+
+  font-family: Vazirmatn, sans-serif;
+  font-size: 62.5%;
+}
+
+body {
+  background-color: var(--color-gray-98);
+  color: var(--color-gray-20);
+
+  min-block-size: 100vh;
+
+  margin: 0;
+
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  
+  line-height: 1;
+
+  h1 {
+    font-size: var(--font-size-primary-heading);
+  }
+
+  h2 {
+    font-size: var(--font-size-secondary-heading);
+  }
+
+  h3 {
+    font-size: var(--font-size-tertiary-heading);
+  }
+
+  p {
+    font-size: var(--font-size-paragraph);
+  }
+}
+
+
+
+html, body { height: 100%; }
