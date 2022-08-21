@@ -1,1 +1,12 @@
-<p>pipeline-designer works!</p>
+<main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">
+    <div class="designer__header">run</div>
+    <aside #side class="designer__side">
+        pipeline details
+        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
+    </aside>
+    <div #canvas class="designer__canvas">canvas</div>
+    <div #sample class="designer__sample">
+        data sample
+        <div class="drag-v" (mousedown)="dragVHandler($event)"></div>
+    </div>
+</main>

@@ -1,0 +1,57 @@
+.designer{
+  &__header{
+    background-color: var(--color-primary-dark);
+    
+    position: absolute;
+    inset-block-start: 0;
+    
+    block-size: 3rem;
+    inline-size: 100%;
+  }
+
+  &__side{
+    background-color: var(--color-primary-light);
+    
+    position: absolute;
+    inset-inline-start: 0;
+
+    block-size: 90vh;
+    inline-size: 20rem;
+
+    .drag-h{
+      position: absolute;
+      inset-block:0 ;
+      inset-inline-end: -4px;
+
+      inline-size: 8px;
+
+      cursor: ew-resize;
+    }
+  }
+
+  &__canvas{
+    background-color: var(--color-accent-lighter);
+
+    block-size: 90vh;
+  }
+
+  &__sample{
+    background-color: var(--color-primary-lighter);
+
+    position: absolute;
+    inset-block-end: 0;
+    
+    block-size: 30rem;
+    inline-size: 100%;
+
+    .drag-v{
+      position: absolute;
+      inset-block-start: -4px;
+      inset-inline: 0;
+
+      block-size: 8px;
+
+      cursor: ns-resize;
+    }
+  }
+}
