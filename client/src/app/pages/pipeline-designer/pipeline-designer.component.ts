@@ -1,4 +1,6 @@
 import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {AddProcessorModalComponent} from './components/add-processor-modal/add-processor-modal.component';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -18,7 +20,7 @@ export class PipelineDesignerComponent {
     @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
     @ViewChild('designer', {static: false}) public main!: ElementRef | undefined;
 
-    public constructor(private renderer: Renderer2) {}
+    public constructor(private renderer: Renderer2, public dialog: MatDialog) {}
 
     public dragVHandler(e: MouseEvent): void {
         this.isVResizing = true;
@@ -51,5 +53,11 @@ export class PipelineDesignerComponent {
         this.isHResizing = false;
     }
 
-    public openAddProcessorModal(): void {}
+    public openAddProcessorModal(): void {
+        const dialogRef = this.dialog.open(AddProcessorModalComponent);
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 }

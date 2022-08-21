@@ -9,6 +9,7 @@ import {AgGridModule} from 'ag-grid-angular';
 import {HttpClientModule} from '@angular/common/http';
 import 'ag-grid-enterprise';
 import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     declarations: [AppComponent],
@@ -21,6 +22,7 @@ import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
         BrowserAnimationsModule,
         AgGridModule,
         HttpClientModule,
+        MatDialogModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
