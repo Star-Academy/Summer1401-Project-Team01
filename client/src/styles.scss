@@ -201,7 +201,33 @@ body {
     }
   }
 
+  .global-button{
+    background-color: var(--color-accent-light);
+    color: var(--color-primary-normal);
 
+
+    &:hover{
+      background-color: var(--color-accent-normal);
+      border-block-end-style: solid;
+      border-block-end-color: var(--color-accent-dark);
+      border-block-end-width: 0.2rem;
+
+      border-inline-start-color: var(--color-accent-dark);
+      border-inline-start-style: solid;
+      border-inline-start-width: 0.2rem;
+    }
+
+    &:active{
+      background-color: var(--color-accent-dark);
+      border-block-end-style: solid;
+      border-block-end-color: var(--color-accent-darker);
+      border-block-end-width: 0.3rem;
+
+      border-inline-start-color: var(--color-accent-darker);
+      border-inline-start-style: solid;
+      border-inline-start-width: 0.3rem;
+    }
+  }
 }
 
 

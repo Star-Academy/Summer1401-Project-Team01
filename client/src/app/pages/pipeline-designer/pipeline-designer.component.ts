@@ -50,4 +50,6 @@ export class PipelineDesignerComponent {
         this.isVResizing = false;
         this.isHResizing = false;
     }
+
+    public openAddProcessorModal(): void {}
 }
