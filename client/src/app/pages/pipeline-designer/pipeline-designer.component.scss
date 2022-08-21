@@ -16,7 +16,9 @@
     inset-inline-start: 0;
 
     block-size: 90vh;
+    min-inline-size: 8rem;
     inline-size: 20rem;
+    max-inline-size: 50rem;
 
     .drag-h{
       position: absolute;
@@ -41,7 +43,9 @@
     position: absolute;
     inset-block-end: 0;
     
+    min-block-size: 5rem;
     block-size: 30rem;
+    max-block-size: 40rem;
     inline-size: 100%;
 
     .drag-v{
