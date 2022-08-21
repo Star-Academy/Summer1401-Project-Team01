@@ -17,9 +17,9 @@ public class DatasetController
         return new BadRequestResult();
     }
 
-    [HttpDelete("/dataset")]
+    [HttpDelete("/dataset/{name}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset()
+    public async Task<IActionResult> RemoveDataset([FromRoute] string name)
     {
         await Task.Delay(3);
         return new BadRequestResult();
