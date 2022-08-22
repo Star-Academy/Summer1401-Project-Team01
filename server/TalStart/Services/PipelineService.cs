@@ -6,6 +6,7 @@ namespace TalStart.Services
     {
         public bool AddPipeline(string pipelineName)
         {
+
             return true;
         }
     }

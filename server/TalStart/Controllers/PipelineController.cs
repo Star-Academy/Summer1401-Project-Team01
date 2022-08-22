@@ -8,7 +8,7 @@ namespace TalStart.Controllers;
 [Route("[controller]")]
 public class PipelineController
 {
-    private IPipelineService _pipelineService;
+    private readonly IPipelineService _pipelineService;
     public PipelineController(IPipelineService pipelineService)
     {
         _pipelineService = pipelineService;
