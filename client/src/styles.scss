@@ -1,10 +1,9 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 
-@import 'ag-grid-community/styles/ag-grid.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
-
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
 
 // Plus imports for other components in your app.
 
@@ -24,19 +23,20 @@ $boilera-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$boilera-theme: mat.define-light-theme((
+$boilera-theme: mat.define-light-theme(
+    (
         color: (
-                primary: $boilera-primary,
-                accent: $boilera-accent,
-                warn: $boilera-warn,
-        )
-));
+            primary: $boilera-primary,
+            accent: $boilera-accent,
+            warn: $boilera-warn,
+        ),
+    )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($boilera-theme);
-
 
 /*
 Design System
@@ -48,189 +48,188 @@ White spaces (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
 */
 
-
 // VARIABLES
 :root {
-  --color-gray-98: hsl(0deg 0% 98%);
-  --color-gray-90: hsl(0deg 0% 90%);
-  --color-gray-80: hsl(0deg 0% 80%);
-  --color-gray-70: hsl(0deg 0% 70%);
-  --color-gray-40: hsl(0deg 0% 40%);
-  --color-gray-30: hsl(0deg 0% 30%);
-  --color-gray-20: hsl(0deg 0% 20%);
-  --color-gray-10: hsl(0deg 0% 10%);
+    --color-gray-98: hsl(0deg 0% 98%);
+    --color-gray-90: hsl(0deg 0% 90%);
+    --color-gray-80: hsl(0deg 0% 80%);
+    --color-gray-70: hsl(0deg 0% 70%);
+    --color-gray-40: hsl(0deg 0% 40%);
+    --color-gray-30: hsl(0deg 0% 30%);
+    --color-gray-20: hsl(0deg 0% 20%);
+    --color-gray-10: hsl(0deg 0% 10%);
 
-  --color-primary-darker: hsl(201deg 100% 3%);
-  --color-primary-dark: hsl(201deg 96% 10%);
-  --color-primary-normal: hsl(201deg 93% 12%);
-  --color-primary-light: hsl(201deg 34% 32%);
-  --color-primary-lighter: hsl(201deg 16% 57%);
+    --color-primary-darker: hsl(201deg 100% 3%);
+    --color-primary-dark: hsl(201deg 96% 10%);
+    --color-primary-normal: hsl(201deg 93% 12%);
+    --color-primary-light: hsl(201deg 34% 32%);
+    --color-primary-lighter: hsl(201deg 16% 57%);
 
-  --color-accent-darker: hsl(192deg 70% 13%);
-  --color-accent-dark: hsl(192deg 70% 35%);
-  --color-accent-normal: hsl(192deg 70% 43%);
-  --color-accent-light: hsl(192deg 53% 55%);
-  --color-accent-lighter: hsl(192deg 53% 77%);
-  --color-accent-lightest: hsl(192deg 50% 94%);
+    --color-accent-darker: hsl(192deg 70% 13%);
+    --color-accent-dark: hsl(192deg 70% 35%);
+    --color-accent-normal: hsl(192deg 70% 43%);
+    --color-accent-light: hsl(192deg 53% 55%);
+    --color-accent-lighter: hsl(192deg 53% 77%);
+    --color-accent-lightest: hsl(192deg 50% 94%);
 
-  --color-csv-format: hsl(205deg 100% 45%);
-  --color-xls-format: hsl(110deg 100% 35%);
-  --color-json-format: hsl(40deg 100% 45%);
+    --color-csv-format: hsl(205deg 100% 45%);
+    --color-xls-format: hsl(110deg 100% 35%);
+    --color-json-format: hsl(40deg 100% 45%);
 
-  --success-color: hsl(123deg 38% 57%);
-  --warning-color: var(--tertiary-color-light);
-  --error-color: hsl(4deg 90% 58%);
-  --error-color-dark: hsl(4deg 90% 50%);
+    --success-color: hsl(123deg 38% 57%);
+    --warning-color: var(--tertiary-color-light);
+    --error-color: hsl(4deg 90% 58%);
+    --error-color-dark: hsl(4deg 90% 50%);
 
-  --font-size-primary-heading: 3.6rem;
-  --font-size-secondary-heading: 3rem;
-  --font-size-tertiary-heading: 2.4rem;
-  --font-size-paragraph: 2rem;
-  --font-size-sub-paragraph: 1rem;
+    --font-size-primary-heading: 3.6rem;
+    --font-size-secondary-heading: 3rem;
+    --font-size-tertiary-heading: 2.4rem;
+    --font-size-paragraph: 2rem;
+    --font-size-sub-paragraph: 1rem;
 
-  --border-radius-small: 0.4rem;
-  --border-radius-normal: 0.8rem;
-  --border-radius-big: 1.2rem;
+    --border-radius-small: 0.4rem;
+    --border-radius-normal: 0.8rem;
+    --border-radius-big: 1.2rem;
 
-  --animation-duration-fast: 0.1s;
-  --animation-duration-normal: 0.5s;
-  --animation-duration-slow: 1s;
+    --animation-duration-fast: 0.1s;
+    --animation-duration-normal: 0.5s;
+    --animation-duration-slow: 1s;
 
-  --flex-gap-large: 1rem;
-  --flex-gap-medium: 0.5rem;
-  --flex-gap-small: 0.1rem;
+    --flex-gap-large: 1rem;
+    --flex-gap-medium: 0.5rem;
+    --flex-gap-small: 0.1rem;
 
-  --padding-large: 4rem;
-  --padding-medium: 2rem;
-  --padding-small: 1rem;
+    --padding-large: 4rem;
+    --padding-medium: 2rem;
+    --padding-small: 1rem;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 * {
-  font-family: Vazirmatn, sans-serif;
+    font-family: Vazirmatn, sans-serif;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 
-  font-family: Vazirmatn, sans-serif;
-  font-size: 62.5%;
+    font-family: Vazirmatn, sans-serif;
+    font-size: 62.5%;
 }
 
 body {
-  background-color: var(--color-gray-98);
-  color: var(--color-gray-20);
+    background-color: var(--color-gray-98);
+    color: var(--color-gray-20);
 
-  min-block-size: 100vh;
+    min-block-size: 100vh;
 
-  margin: 0;
-
-  font-family: Vazirmatn, Roboto, "Helvetica Neue", sans-serif;
-
-  line-height: 1;
-
-  h1, h2, h3 {
     margin: 0;
-  }
 
-  h1 {
-    font-size: var(--font-size-primary-heading);
-  }
+    font-family: Vazirmatn, Roboto, "Helvetica Neue", sans-serif;
 
-  h2 {
-    font-size: var(--font-size-secondary-heading);
-  }
+    line-height: 1;
 
-  h3 {
-    font-size: var(--font-size-tertiary-heading);
-  }
-
-  p {
-    font-size: var(--font-size-paragraph);
-  }
-
-  button {
-    background-color: transparent;
-
-    padding: 1.2rem;
-
-    border: none;
-    border-radius: var(--border-radius-small);
-
-    outline: none;
-
-    cursor: pointer;
-  }
-
-  .border-element {
-    padding-inline: 1.2rem;
-
-    border-radius: 999rem;
-  }
-
-  .csv {
-    color: var(--color-csv-format);
-
-    & .border-element {
-      border: 1px solid var(--color-csv-format);
-
-    }
-  }
-
-  .xls {
-    color: var(--color-xls-format);
-
-    & .border-element {
-      border: 1px solid var(--color-xls-format);
-    }
-  }
-
-  .json {
-    color: var(--color-json-format);
-
-    & .border-element {
-      border: 1px solid var(--color-json-format);
-    }
-  }
-
-  .global-button{
-    background-color: var(--color-accent-light);
-    color: var(--color-primary-normal);
-
-
-    &:hover{
-      background-color: var(--color-accent-normal);
-      border-block-end-style: solid;
-      border-block-end-color: var(--color-accent-dark);
-      border-block-end-width: 0.2rem;
-
-      border-inline-start-color: var(--color-accent-dark);
-      border-inline-start-style: solid;
-      border-inline-start-width: 0.2rem;
+    h1,
+    h2,
+    h3 {
+        margin: 0;
     }
 
-    &:active{
-      background-color: var(--color-accent-dark);
-      border-block-end-style: solid;
-      border-block-end-color: var(--color-accent-darker);
-      border-block-end-width: 0.3rem;
-
-      border-inline-start-color: var(--color-accent-darker);
-      border-inline-start-style: solid;
-      border-inline-start-width: 0.3rem;
+    h1 {
+        font-size: var(--font-size-primary-heading);
     }
-  }
+
+    h2 {
+        font-size: var(--font-size-secondary-heading);
+    }
+
+    h3 {
+        font-size: var(--font-size-tertiary-heading);
+    }
+
+    p {
+        font-size: var(--font-size-paragraph);
+    }
+
+    button {
+        background-color: transparent;
+
+        padding: 1.2rem;
+
+        border: none;
+        border-radius: var(--border-radius-small);
+
+        outline: none;
+
+        cursor: pointer;
+    }
+
+    .border-element {
+        padding-inline: 1.2rem;
+
+        border-radius: 999rem;
+    }
+
+    .csv {
+        color: var(--color-csv-format);
+
+        & .border-element {
+            border: 1px solid var(--color-csv-format);
+        }
+    }
+
+    .xls {
+        color: var(--color-xls-format);
+
+        & .border-element {
+            border: 1px solid var(--color-xls-format);
+        }
+    }
+
+    .json {
+        color: var(--color-json-format);
+
+        & .border-element {
+            border: 1px solid var(--color-json-format);
+        }
+    }
+
+    .global-button {
+        background-color: var(--color-accent-light);
+        color: var(--color-primary-normal);
+
+        &:hover {
+            background-color: var(--color-accent-normal);
+            border-block-end-style: solid;
+            border-block-end-color: var(--color-accent-dark);
+            border-block-end-width: 0.2rem;
+
+            border-inline-start-color: var(--color-accent-dark);
+            border-inline-start-style: solid;
+            border-inline-start-width: 0.2rem;
+        }
+
+        &:active {
+            background-color: var(--color-accent-dark);
+            border-block-end-style: solid;
+            border-block-end-color: var(--color-accent-darker);
+            border-block-end-width: 0.3rem;
+
+            border-inline-start-color: var(--color-accent-darker);
+            border-inline-start-style: solid;
+            border-inline-start-width: 0.3rem;
+        }
+    }
 }
 
-
-html, body {
-  height: 100%;
+html,
+body {
+    height: 100%;
 }

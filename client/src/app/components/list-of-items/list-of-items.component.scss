@@ -1,34 +1,31 @@
 .list-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1.2rem;
-
-  height: 50rem;
-
-
-  .actions {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     gap: 1.2rem;
 
-    button {
-      background-color: var(--color-gray-90);
+    height: 50rem;
 
-      i {
-        color: var(--color-primary-normal);
+    .actions {
+        display: flex;
+        gap: 1.2rem;
 
-      }
+        button {
+            background-color: var(--color-gray-90);
 
-      &:hover {
-        .delete-icon {
-          color: var(--error-color);
+            i {
+                color: var(--color-primary-normal);
+            }
+
+            &:hover {
+                .delete-icon {
+                    color: var(--error-color);
+                }
+
+                i {
+                    color: var(--color-accent-normal);
+                }
+            }
         }
-
-        i {
-          color: var(--color-accent-normal);
-        }
-      }
     }
-
-  }
 }
