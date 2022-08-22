@@ -1,5 +1,7 @@
 ﻿using System.Data.Common;
+using Npgsql;
 using TalStart.IServices;
+using TalStart.Properties;
 
 namespace TalStart.Services;
 
@@ -9,30 +11,34 @@ public class SqlService : ISqlService
     {
     }
 
-    private static SqlService _instance;
+    private static SqlService? _instance;
 
     public static SqlService GetInstance()
     {
-        if (_instance == null)
-        {
-            _instance = new SqlService();
-        }
-
-        return _instance;
+        return _instance ??= new SqlService();
     }
 
-    public void ExecuteNonQueryPostgres(string query)
+    public async void ExecuteNonQueryPostgres(string query)
     {
-        throw new NotImplementedException();
+        await using var conn = new NpgsqlConnection(CString.connectionString);
+        conn.Open();
+        await using var cmd = new NpgsqlCommand(query);
+        await cmd.ExecuteNonQueryAsync();
     }
 
-    public Task<object> ExecuteScalarPostgres(string query)
+    public async Task<object?> ExecuteScalarPostgres(string query)
     {
-        throw new NotImplementedException();
+        await using var conn = new NpgsqlConnection(CString.connectionString);
+        conn.Open();
+        await using var cmd = new NpgsqlCommand(query);
+        return await cmd.ExecuteScalarAsync();
     }
 
-    public Task<DbDataReader> ExecuteReaderPostgres(string query)
+    public async Task<DbDataReader>  ExecuteReaderPostgres(string query)
     {
-        throw new NotImplementedException();
+        await using var conn = new NpgsqlConnection(CString.connectionString);
+        conn.Open();
+        await using var cmd = new NpgsqlCommand(query);
+        return await cmd.ExecuteReaderAsync();
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System.Text;
 using TalStart.IServices;
-using TalStart.Models;
-using TalStart.Models.Interfaces;
 
 namespace TalStart.Services;
 

@@ -2,11 +2,10 @@
 
 namespace TalStart.Services
 {
-    public class PipelineService :IPipelineService
+    public class PipelineService : IPipelineService
     {
         public bool AddPipeline(string pipelineName)
         {
-
             return true;
         }
     }

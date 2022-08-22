@@ -2,8 +2,8 @@
 
 public enum DataType
 {
-    boolean,
-    INT,
-    VARCHAR,
+    Boolean,
+    Int,
+    Varchar,
     
 }
