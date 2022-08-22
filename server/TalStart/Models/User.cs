@@ -1,4 +1,4 @@
-﻿namespace DefaultNamespace;
+﻿namespace TalStart.Models;
 
 public class User
 {

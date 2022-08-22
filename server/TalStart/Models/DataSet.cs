@@ -1,5 +1,5 @@
 ﻿//using System.ComponentModel.DataAnnotations;
-namespace DefaultNamespace;
+namespace TalStart.Models;
 
 public class DataSet
 {
