@@ -13,18 +13,16 @@ public class FileController
     {
         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
 
-        await using (var stream = new FileStream(path, FileMode.Create))
+        await using var stream = new FileStream(path, FileMode.Create);
+        await file.CopyToAsync(stream);
+        try
         {
-            await file.CopyToAsync(stream);
-            try
-            {
-                ParserDatatableToPostgresTable.ParseToPostgresTable(ParserCsvToDatatable.Parse(path));
-                return new OkResult();
-            }
-            catch (Exception e)
-            {
-                return new BadRequestResult();
-            }
+            // need additional info to proceed.
+            return new OkResult();
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
         }
     }
 }
