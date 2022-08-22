@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using TalStart.Models;
 
 namespace TalStart.Controllers;
 
@@ -7,10 +7,15 @@ namespace TalStart.Controllers;
 [Route("[controller]")]
 public class PipelineController
 {
-    [HttpPost("/pipeline")]
+    [HttpPost("/addPipeline")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromBody] Object pipeline)
     {
+        var db = new TalStartContext();
+        var pipelineId = db.Pipelines.FirstOrDefault();
+
+        db.Pipelines.Add(new PipelineDbo { Name = "d" });
+        db.SaveChanges();
         await Task.Delay(3);
         return new BadRequestResult();
     }

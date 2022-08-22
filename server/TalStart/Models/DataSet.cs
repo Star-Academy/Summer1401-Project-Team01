@@ -1,10 +1,10 @@
-﻿//using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace TalStart.Models;
 
 public class DataSet
 {
-    // [Required]
+    [Key]
     public string Name { get; set; }
-    // [Key]
     public User User { get; set; }
 }
