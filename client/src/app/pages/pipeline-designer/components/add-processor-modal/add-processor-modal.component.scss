@@ -1,5 +1,9 @@
 .add-processor-modal {
+    min-inline-size: 40rem;
+    max-inline-size: 75rem;
+
     .header-container {
+        padding: var(--padding-medium);
         .header {
             font-size: var(--font-size-secondary-heading);
         }
@@ -9,29 +13,43 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: var(--flex-gap-medium);
+        justify-content: center;
+        gap: var(--flex-gap-large);
+
+        inline-size: 100%;
 
         .processor-container {
             display: flex;
             flex-direction: row;
-            gap: var(--flex-gap-medium);
+            gap: var(--flex-gap-large);
 
             inline-size: 40%;
+
             padding: var(--padding-medium);
 
             border-radius: var(--border-radius-small);
 
-            &:hover {
+            cursor: pointer;
+
+            &:hover{
+                background-color: var(--color-gray-98);
+            }
+
+            &:active, &:active .processor-icon-container{
                 background-color: var(--color-gray-90);
             }
 
             .processor-icon-container {
-                background-color: var(--color-gray-70);
+                background-color: var(--color-gray-98);
 
-                min-block-size: 10rem;
-                max-block-size: 10rem;
-                min-inline-size: 10rem;
-                max-inline-size: 10rem;
+                min-block-size: 8rem;
+                max-block-size: 8rem;
+                min-inline-size: 8rem;
+                max-inline-size: 8rem;
+
+                padding: var(--padding-medium);
+
+                border-radius: var(--border-radius-big);
             }
 
             .processor-data-container {

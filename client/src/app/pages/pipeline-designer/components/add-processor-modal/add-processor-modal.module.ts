@@ -5,7 +5,7 @@ import {MatDialogContent, MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
-    declarations: [AddProcessorModalComponent],
+    declarations: [],
     imports: [CommonModule, MatDialogModule, MatButtonModule],
 })
 export class AddProcessorModalModule {}
