@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import 'ag-grid-enterprise';
 import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
 import {MatDialogModule} from '@angular/material/dialog';
+import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designer.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -23,6 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         AgGridModule,
         HttpClientModule,
         MatDialogModule,
+        PipelineDesignerModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

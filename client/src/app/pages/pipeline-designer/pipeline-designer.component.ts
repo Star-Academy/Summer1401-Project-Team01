@@ -1,6 +1,7 @@
 import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './components/add-processor-modal/add-processor-modal.component';
+import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -55,6 +56,14 @@ export class PipelineDesignerComponent {
 
     public openAddProcessorModal(): void {
         const dialogRef = this.dialog.open(AddProcessorModalComponent);
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    public openSelectDataset(): void {
+        const dialogRef = this.dialog.open(SelectDatasetComponent);
 
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);

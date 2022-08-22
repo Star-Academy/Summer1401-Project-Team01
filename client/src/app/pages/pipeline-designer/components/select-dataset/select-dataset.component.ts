@@ -1,46 +1,33 @@
 import {Component, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
-import {
-    CellClassParams,
-    CellClickedEvent,
-    ColDef,
-    GridReadyEvent,
-    GridApi,
-    ICellRendererParams,
-    RowNodeTransaction,
-} from 'ag-grid-community';
-import {Observable} from 'rxjs';
+import {CellClassParams, ColDef, GridApi, GridReadyEvent, ICellRendererParams} from 'ag-grid-community';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
-    selector: 'app-list-of-items',
-    templateUrl: './list-of-items.component.html',
-    styleUrls: ['./list-of-items.component.scss'],
+    selector: 'app-select-dataset',
+    templateUrl: './select-dataset.component.html',
+    styleUrls: ['./select-dataset.component.scss'],
 })
-export class ListOfItemsComponent {
+export class SelectDatasetComponent {
     @ViewChild(AgGridAngular) public agGrid!: AgGridAngular;
 
     private gridApi!: GridApi;
-    public rowSelection: 'single' | 'multiple' = 'multiple';
+    public rowSelection: 'single' | 'multiple' = 'single';
 
     public columnDefs: ColDef[] = [
         {
             field: 'fileName',
-            headerTooltip: 'double click to edit',
-            editable: true,
             checkboxSelection: true,
-            headerCheckboxSelection: true,
-            headerCheckboxSelectionFilteredOnly: true,
             flex: 1,
         },
         {
             field: 'dataType',
             maxWidth: 150,
             cellClass: (params: CellClassParams): string => {
-                return ListOfItemsComponent.determineFileType(params);
+                return SelectDatasetComponent.determineFileType(params);
             },
             cellRenderer: (params: ICellRendererParams): string => {
-                return ListOfItemsComponent.spanMaker(params);
+                return SelectDatasetComponent.spanMaker(params);
             },
         },
         {field: 'createdAt'},
@@ -83,20 +70,7 @@ export class ListOfItemsComponent {
 
     public constructor(private http: HttpClient) {}
 
-    public onRemoveSelected(): void {
-        const selectedData = this.gridApi.getSelectedRows();
-        this.gridApi.applyTransaction({remove: selectedData});
-    }
-
-    public clearData(): void {
-        this.gridApi.setRowData([]);
-    }
-
     public onGridReady(params: GridReadyEvent): void {
         this.gridApi = params.api;
-    }
-
-    public onCellClicked(e: CellClickedEvent): void {
-        console.log('cellClicked', e);
     }
 }
