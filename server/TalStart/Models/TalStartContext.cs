@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TalStart.Properties;
 
 namespace TalStart.Models
 {
@@ -8,7 +9,7 @@ namespace TalStart.Models
         public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql($"Server=127.0.0.1;Port=5432;Database=talStart;User Id=postgres;Password=basilisk79");
+            optionsBuilder.UseNpgsql(CString.connectionString);
         }
     }
 }
