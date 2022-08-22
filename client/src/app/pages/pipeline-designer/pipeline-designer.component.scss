@@ -13,7 +13,7 @@
     background-color: var(--color-primary-light);
     
     position: absolute;
-    inset-inline-start: 0;
+    inset-inline-end: 0;
 
     block-size: 90vh;
     min-inline-size: 8rem;
@@ -23,7 +23,7 @@
     .drag-h{
       position: absolute;
       inset-block:0 ;
-      inset-inline-end: -4px;
+      inset-inline-start: -4px;
 
       inline-size: 8px;
 
@@ -58,9 +58,11 @@
       cursor: ns-resize;
     }
   }
+
   .add-processor-button{
     position: absolute;
-    inset-inline-end: 0;
+    inset-inline-start: 0;
+
     margin: 1rem;
   }
 }

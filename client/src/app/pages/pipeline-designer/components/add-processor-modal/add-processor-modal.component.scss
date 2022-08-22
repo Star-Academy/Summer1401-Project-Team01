@@ -1,0 +1,56 @@
+.add-processor-modal {
+    .header-container {
+        .header {
+            font-size: var(--font-size-secondary-heading);
+        }
+    }
+
+    .all-processors-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--flex-gap-medium);
+
+        .processor-container {
+            display: flex;
+            flex-direction: row;
+            gap: var(--flex-gap-medium);
+
+            inline-size: 40%;
+          padding: var(--padding-medium);
+
+            border-radius: var(--border-radius-small);
+
+            &:hover {
+                background-color: var(--color-gray-90);
+            }
+
+            .processor-icon-container {
+                background-color: var(--color-gray-70);
+
+                min-block-size: 10rem;
+                max-block-size: 10rem;
+                min-inline-size: 10rem;
+                max-inline-size: 10rem;
+            }
+
+            .processor-data-container {
+                display: flex;
+                flex-direction: column;
+                gap: var(--flex-gap-small);
+
+                .processor-title-container {
+                    .processor-title {
+                        font-size: var(--font-size-tertiary-heading);
+                    }
+                }
+
+                .processor-description-container {
+                    .processor-description {
+                        font-size: var(--font-size-sub-paragraph);
+                    }
+                }
+            }
+        }
+    }
+}

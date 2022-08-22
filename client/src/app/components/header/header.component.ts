@@ -15,9 +15,9 @@ export class HeaderComponent {
         else if (path.startsWith('/data-inventory')) this.currentEnvTitle = this.DATA_INVENTORY;
     }
 
-    private SELECT_ENV = 'انتخاب محیط کار';
-    private DATA_INVENTORY = 'فهرست دادگان‌ها';
-    private PIPELINE_DESIGNER = 'مدیریت پایپلاین‌ها';
+    private SELECT_ENV = 'Select Workspace';
+    private DATA_INVENTORY = 'Data Inventory';
+    private PIPELINE_DESIGNER = 'Pipeline Designer';
 
     public currentEnvTitle: string = this.SELECT_ENV;
 
