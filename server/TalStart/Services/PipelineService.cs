@@ -3,7 +3,7 @@ using TalStart.Models;
 
 namespace TalStart.Services
 {
-    public class PipelineService :IPipelineService
+    public class PipelineService : IPipelineService
     {
         TalStartContext db = new TalStartContext();
         public PipelineService()

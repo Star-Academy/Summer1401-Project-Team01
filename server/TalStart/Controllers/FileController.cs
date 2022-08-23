@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Npgsql;
+using TalStart.Services.ParserService;
 
 namespace TalStart.Controllers;
 
@@ -6,21 +8,21 @@ namespace TalStart.Controllers;
 [Route("[controller]")]
 public class FileController
 {
-    [HttpPost("/file")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPost("upload")]
     public async Task<IActionResult> UploadFile(IFormFile file)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
 
-    [HttpGet("/file")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DownloadFile([FromQuery] string fileName)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
+        await using var stream = new FileStream(path, FileMode.Create);
+        await file.CopyToAsync(stream);
+        try
+        {
+            // need additional info to proceed.
+            return new OkResult();
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
     }
-    
-    
 }
