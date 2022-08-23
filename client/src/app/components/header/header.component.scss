@@ -6,12 +6,12 @@ header {
         align-items: center;
         gap: var(--flex-gap-large);
 
-        block-size: 10vh;
+        block-size: 7vh;
         inline-size: 100%;
 
         padding-inline: var(--padding-large);
 
-        font-size: var(--font-size-tertiary-heading);
+        font-size: var(--font-size-med-paragraph);
 
         span {
             color: var(--color-gray-90);
@@ -22,7 +22,7 @@ header {
         .logo-container {
             inline-size: 15rem;
 
-            font-size: var(--font-size-sub-paragraph);
+            font-size: var(--font-size-med-paragraph);
 
             a {
                 color: inherit;
@@ -51,7 +51,7 @@ header {
                 align-items: center;
                 gap: var(--flex-gap-medium);
 
-                font-size: var(--font-size-paragraph);
+                font-size: var(--font-size-med-paragraph);
             }
         }
 
@@ -75,7 +75,7 @@ header {
 
         padding-block: var(--padding-small);
 
-        font-size: var(--font-size-paragraph);
+        font-size: var(--font-size-med-paragraph);
 
         i {
             padding: var(--padding-small);

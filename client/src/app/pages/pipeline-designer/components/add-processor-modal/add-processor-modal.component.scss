@@ -31,11 +31,12 @@
 
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 background-color: var(--color-gray-98);
             }
 
-            &:active, &:active .processor-icon-container{
+            &:active,
+            &:active .processor-icon-container {
                 background-color: var(--color-gray-90);
             }
 

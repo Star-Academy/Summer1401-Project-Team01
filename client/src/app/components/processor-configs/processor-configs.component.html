@@ -4,7 +4,8 @@
         <h3 class="configs__header--type">{{ processorType }}</h3>
     </header>
     <div class="configs__body">
-        <app-config-select></app-config-select>
+        <app-config-select [title]="processorType"></app-config-select>
+        <app-config-toggle></app-config-toggle>
     </div>
     <div class="configs__buttons">
         <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>

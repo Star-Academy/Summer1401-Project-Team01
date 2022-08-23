@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './components/add-processor-modal/add-processor-modal.component';
 import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
@@ -9,6 +9,11 @@ import {SelectDatasetComponent} from './components/select-dataset/select-dataset
     styleUrls: ['./pipeline-designer.component.scss'],
 })
 export class PipelineDesignerComponent {
+    @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
+    @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
+    @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
+    @ViewChild('designer', {static: false}) public main!: ElementRef | undefined;
+
     private isVResizing = false;
     private isHResizing = false;
     private lastDownX = 0;
@@ -20,11 +25,6 @@ export class PipelineDesignerComponent {
     //the value should be the processor key and type. -> 'Join, 1'
     //when no processor is selected the value should be ''.
     public selectedProcessor: string = 'Join, 1';
-
-    @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
-    @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
-    @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
-    @ViewChild('designer', {static: false}) public main!: ElementRef | undefined;
 
     public constructor(private renderer: Renderer2, public dialog: MatDialog) {}
 

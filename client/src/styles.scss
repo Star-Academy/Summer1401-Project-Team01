@@ -86,6 +86,7 @@ White spaces (px)
     --font-size-secondary-heading: 3rem;
     --font-size-tertiary-heading: 2.4rem;
     --font-size-paragraph: 2rem;
+    --font-size-med-paragraph: 1.5rem;
     --font-size-sub-paragraph: 1rem;
 
     --border-radius-small: 0.4rem;
@@ -174,12 +175,11 @@ body {
 
         cursor: pointer;
 
-        &:disabled{
+        &:disabled {
             opacity: 0.6;
 
             cursor: not-allowed;
         }
-
     }
 
     .border-element {
