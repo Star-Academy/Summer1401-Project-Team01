@@ -5,16 +5,27 @@ namespace TalStart.Services
 {
     public class PipelineService :IPipelineService
     {
-        TalStartContext db = new TalStartContext();
+        TalStartContext db = new();
         public PipelineService()
         {
 
         }
-        public bool AddPipeline(string pipelineName)
+
+        public bool AddPipeline(string pipelineName, string username)
         {
-            return true;
+            try
+            {
+                db.Pipelines.Add(new PipelineDbo() { Name = pipelineName, User = db.Users.SingleOrDefault(user => user.Username == username)});
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
-        public bool UpdateJSON(string JSON, string name) 
+
+        public bool UpdateJson(string json, string name) 
         {
             try
             {
@@ -23,7 +34,7 @@ namespace TalStart.Services
                 {
                     throw new Exception();
                 }
-                pipeline.JSON = JSON;
+                pipeline.Json = json;
                 db.SaveChanges();
             }
             catch (Exception e)
