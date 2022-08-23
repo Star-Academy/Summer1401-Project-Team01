@@ -10,5 +10,7 @@
         public bool RemoveSource(string pipelineName, string username);
         public bool AddDestination(string destinationName, string pipelineName, string username);
         public bool RemoveDestination(string pipelineName, string username);
+
+        public bool RenamePipeline(string pipelineName, string username, string newPipelineName);
     }
 }

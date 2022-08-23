@@ -34,7 +34,7 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPut("/pipeline/updateProcesses")]
+    [HttpPut("/updateProcesses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
@@ -68,17 +68,9 @@ public class PipelineController
         return new BadRequestResult();
     }
     
-    [HttpGet("/pipeline/")]
-        
-    [HttpPatch("/pipeline")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ChangePipelineName([FromBody] string name)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }
+    
 
-    [HttpGet("/pipeline/run")]
+    [HttpGet("/run")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RunPipeline([FromQuery] string name)
     {
@@ -86,7 +78,7 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/source")]
+    [HttpPatch("/add/source")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
@@ -96,7 +88,7 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/source")]
+    [HttpPatch("/remove/source")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
@@ -106,7 +98,7 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/destination")]
+    [HttpPatch("/add/destination")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
@@ -116,12 +108,22 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/destination")]
+    [HttpPatch("/remove/destination")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.RemoveDestination(pipelineName, username))
+            return new OkResult();
+        return new BadRequestResult();
+    }
+    
+    [HttpPatch("/rename")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] string newPipelineName)
+    {
+        if (_pipelineService.RenamePipeline(pipelineName, username, newPipelineName))
             return new OkResult();
         return new BadRequestResult();
     }

@@ -144,5 +144,21 @@ namespace TalStart.Services
                 return false;
             }
         }
+
+        public bool RenamePipeline(string pipelineName, string username, string newPipelineName)
+        {
+            try
+            {
+                db.Pipelines.SingleOrDefault(pipeline => 
+                        pipeline.Name == pipelineName && pipeline.User.Username == username)
+                    .Name = newPipelineName;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
