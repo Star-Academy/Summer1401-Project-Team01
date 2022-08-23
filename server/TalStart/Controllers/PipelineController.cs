@@ -6,7 +6,7 @@ namespace TalStart.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PipelineController
+public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
     public PipelineController(IPipelineService pipelineService)
@@ -52,12 +52,19 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpGet("/pipeline/all")]
+    [HttpGet("/getAllPipelines")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAll()
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
+    public async Task<IActionResult> GetAllPipelinesNames([FromForm] string username)
+    {   
+        try
+        {
+            return Ok(_pipelineService.GetAllPipelinesNames(username));
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
     }
     
     [HttpGet("/pipeline/50")]

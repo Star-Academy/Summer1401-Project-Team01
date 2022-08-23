@@ -160,5 +160,10 @@ namespace TalStart.Services
                 return false;
             }
         }
+
+        public List<string> GetAllPipelinesNames(string username)
+        {
+            return db.Pipelines.Where(pipeline => pipeline.User.Username == username).Select(pipeline => pipeline.Name).ToList();
+        }
     }
 }

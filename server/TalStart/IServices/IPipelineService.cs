@@ -12,5 +12,6 @@
         public bool RemoveDestination(string pipelineName, string username);
 
         public bool RenamePipeline(string pipelineName, string username, string newPipelineName);
+        public List<string> GetAllPipelinesNames(string username);
     }
 }
