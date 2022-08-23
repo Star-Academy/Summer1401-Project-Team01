@@ -29,6 +29,16 @@ public class PipelineController
         return new BadRequestResult();
     }
 
+    [HttpPut("/pipeline/updateProcesses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
+    {
+        var res = _pipelineService.UpdateJSON(processes, name);
+
+        return new OkResult();
+    }
+
     [HttpGet("/pipeline/{pipelineId}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetPipeline([FromRoute] string pipelineId)
@@ -103,12 +113,6 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPut("/pipeline/process/{pipelineId}")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateProcesses([FromBody] Object processes)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }
+
 
 }
