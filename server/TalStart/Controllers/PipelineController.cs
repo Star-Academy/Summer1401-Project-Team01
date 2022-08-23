@@ -87,12 +87,20 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/source/{pipelineId}")]
+    [HttpPatch("/pipeline/add/source")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddSource([FromBody] string datasetName, [FromRoute] string pipelineId)
+    public async Task<IActionResult> AddSource([FromForm] string datasetName,[FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
+        var res = _pipelineService.AddSource(datasetName, pipelineName, username);
+        if (res)
+        {
+            return new OkResult();
+        }
+        else
+        {
+            return new BadRequestResult();
+        }
     }
 
     [HttpPatch("/pipeline/remove/source/{pipelineId}")]
