@@ -3,6 +3,7 @@
     public interface IPipelineService
     {
         public bool AddPipeline(string pipelineName, string username);
+        public bool RemovePipeline(string pipelineName, string username);
         public bool UpdateJson(string json, string name);
         public bool AddSource(string datasetName, string pipelineName, string username);
 

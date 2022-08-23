@@ -25,6 +25,21 @@ namespace TalStart.Services
             }
         }
 
+        public bool RemovePipeline(string pipelineName, string username)
+        {
+            try
+            {
+                db.Pipelines.Remove(db.Pipelines.Single(pipeline =>
+                    pipeline.Name == pipelineName && pipeline.User.Username == username));
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public bool UpdateJson(string json, string name) 
         {
             try

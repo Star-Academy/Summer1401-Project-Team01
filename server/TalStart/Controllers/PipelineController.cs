@@ -15,10 +15,21 @@ public class PipelineController
     }
 
     [HttpPost("/addPipeline")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.AddPipeline(pipelineName, username))
+            return new OkResult();
+        return new BadRequestResult();
+    }
+    
+    [HttpPost("/removePipeline")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
+    {
+        if (_pipelineService.RemovePipeline(pipelineName, username))
             return new OkResult();
         return new BadRequestResult();
     }
