@@ -34,9 +34,15 @@ public class PipelineController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
     {
-        var res = _pipelineService.UpdateJSON(processes, name);
+        if(_pipelineService.UpdateJSON(processes, name))
+        {
+            return new OkResult();
+        }
+        else
+        {
+            return new BadRequestResult();
+        }
 
-        return new OkResult();
     }
 
     [HttpGet("/pipeline/{pipelineId}")]
