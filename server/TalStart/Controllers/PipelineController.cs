@@ -29,6 +29,22 @@ public class PipelineController
         return new BadRequestResult();
     }
 
+    [HttpPut("/pipeline/updateProcesses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
+    {
+        if(_pipelineService.UpdateJSON(processes, name))
+        {
+            return new OkResult();
+        }
+        else
+        {
+            return new BadRequestResult();
+        }
+
+    }
+
     [HttpGet("/pipeline/{pipelineId}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetPipeline([FromRoute] string pipelineId)
@@ -71,44 +87,43 @@ public class PipelineController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/source/{pipelineId}")]
+    [HttpPatch("/pipeline/add/source")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddSource([FromBody] string datasetName, [FromRoute] string pipelineId)
+    public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if (_pipelineService.AddSource(sourceName, pipelineName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/source/{pipelineId}")]
+    [HttpPatch("/pipeline/remove/source")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveSource([FromForm] string datasetName, [FromRoute] string pipelineId)
+    public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if (_pipelineService.RemoveSource(pipelineName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/destination/{pipelineId}")]
+    [HttpPatch("/pipeline/add/destination")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddDestination([FromBody] string datasetName, [FromRoute] string pipelineId)
+    public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if (_pipelineService.AddDestination(destinationName, pipelineName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/destination/{pipelineId}")]
+    [HttpPatch("/pipeline/remove/destination")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDestination([FromForm] string datasetName, [FromRoute] int pipelineId)
+    public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if (_pipelineService.RemoveDestination(pipelineName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
-
-    [HttpPut("/pipeline/process/{pipelineId}")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateProcesses([FromBody] Object processes)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }
-
 }
