@@ -6,9 +6,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
 import {AgGridModule} from 'ag-grid-angular';
 import 'ag-grid-enterprise';
+import { PreviewComponent } from './components/preview/preview.component';
 
 @NgModule({
-    declarations: [PipelineDesignerComponent, SelectDatasetComponent],
+    declarations: [PipelineDesignerComponent, SelectDatasetComponent, PreviewComponent],
     imports: [CommonModule, NgFlowchartModule, MatDialogModule, AgGridModule],
     exports: [PipelineDesignerComponent],
 })
