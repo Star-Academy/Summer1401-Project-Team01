@@ -9,11 +9,12 @@ import {AgGridModule} from 'ag-grid-angular';
 import {HttpClientModule} from '@angular/common/http';
 import 'ag-grid-enterprise';
 import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogContainer, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
+import {AddProcessorModalComponent} from './pages/pipeline-designer/components/add-processor-modal/add-processor-modal.component';
 import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designer.module';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, AddProcessorModalComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,

@@ -2,8 +2,6 @@ header {
     .navbar {
         background-color: var(--color-primary-normal);
 
-
-
         display: flex;
         align-items: center;
         gap: var(--flex-gap-large);
@@ -44,8 +42,7 @@ header {
         }
 
         .select-env-container {
-            inline-size: 25rem;
-
+            inline-size: 35rem;
 
             .option {
                 color: var(--color-gray-90);

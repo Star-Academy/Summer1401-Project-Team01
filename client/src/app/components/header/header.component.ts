@@ -1,5 +1,5 @@
-import {Component, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
+import {AfterViewChecked, Component, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
+import {NavigationStart, Router} from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
@@ -10,14 +10,21 @@ import {Location} from '@angular/common';
 })
 export class HeaderComponent {
     public constructor(private router: Router, private location: Location) {
-        let path = this.location.path();
-        if (path.startsWith('/pipeline-designer')) this.currentEnvTitle = this.PIPELINE_DESIGNER;
-        else if (path.startsWith('/data-inventory')) this.currentEnvTitle = this.DATA_INVENTORY;
+        router.events.subscribe((event) => {
+            if (event instanceof NavigationStart) {
+                console.log(event.url);
+                let path = event.url;
+                if (path.startsWith('/pipeline-designer')) this.currentEnvTitle = this.PIPELINE_DESIGNER;
+                else if (path.startsWith('/data-inventory')) this.currentEnvTitle = this.DATA_INVENTORY;
+                //....
+                else this.currentEnvTitle = this.SELECT_ENV;
+            }
+        });
     }
 
-    private SELECT_ENV = 'انتخاب محیط کار';
-    private DATA_INVENTORY = 'فهرست دادگان‌ها';
-    private PIPELINE_DESIGNER = 'مدیریت پایپلاین‌ها';
+    private SELECT_ENV = 'Select Workspace';
+    private DATA_INVENTORY = 'Data Inventory';
+    private PIPELINE_DESIGNER = 'Pipeline Designer';
 
     public currentEnvTitle: string = this.SELECT_ENV;
 
