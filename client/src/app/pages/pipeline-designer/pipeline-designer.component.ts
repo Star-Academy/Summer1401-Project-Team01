@@ -16,6 +16,11 @@ export class PipelineDesignerComponent {
     private vDragger = document.querySelector('.drag-v');
     private hDragger = document.querySelector('.drag-h');
 
+    //there should be a function to change this field whenever the selected processor on canvas changes.
+    //the value should be the processor key and type. -> 'Join, 1'
+    //when no processor is selected the value should be ''.
+    public selectedProcessor: string = 'Join, 1';
+
     @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
     @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
     @ViewChild('side', {static: false}) public side!: ElementRef | undefined;

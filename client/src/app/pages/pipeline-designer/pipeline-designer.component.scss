@@ -9,7 +9,8 @@
     }
 
     &__side {
-        background-color: var(--color-primary-light);
+        background-color: var(--color-gray-100);
+        box-shadow: -10px 5px 20px -15px var(--color-gray-40);
 
         position: absolute;
         inset-block-end: 0;
@@ -17,7 +18,7 @@
 
         block-size: 85vh;
         min-inline-size: 8rem;
-        inline-size: 20rem;
+        inline-size: 30rem;
         max-inline-size: 50rem;
 
         .drag-h {

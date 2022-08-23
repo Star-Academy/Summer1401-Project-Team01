@@ -1,13 +1,16 @@
 <main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">
     <div class="designer__header">run</div>
+
     <div #canvas class="designer__canvas">canvas</div>
-    <aside #side class="designer__side">
-        pipeline details
-        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
-    </aside>
+
     <div #sample class="designer__sample">
         data sample
         <button class="global-button add-processor-button" (click)="openAddProcessorModal()" k>Add processor</button>
         <div class="drag-v" (mousedown)="dragVHandler($event)"></div>
     </div>
+
+    <aside #side class="designer__side">
+        <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
+    </aside>
 </main>

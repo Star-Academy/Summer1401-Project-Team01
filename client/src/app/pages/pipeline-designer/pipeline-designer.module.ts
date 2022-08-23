@@ -6,10 +6,11 @@ import {SelectDatasetComponent} from './components/select-dataset/select-dataset
 import {AgGridModule} from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 import {PreviewComponent} from './components/preview/preview.component';
+import {ProcessorConfigsModule} from '../../components/processor-configs/processor-configs.module';
 
 @NgModule({
     declarations: [PipelineDesignerComponent, SelectDatasetComponent, PreviewComponent],
-    imports: [CommonModule, MatDialogModule, AgGridModule],
+    imports: [CommonModule, MatDialogModule, AgGridModule, ProcessorConfigsModule],
     exports: [PipelineDesignerComponent],
 })
 export class PipelineDesignerModule {}
