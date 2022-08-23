@@ -16,16 +16,10 @@ public class PipelineController
 
     [HttpPost("/addPipeline")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddPipeline([FromBody] Object pipeline)
+    public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        _pipelineService.AddPipeline((string)pipeline);
-
-        var db = new TalStartContext();
-        var pipelineId = db.Pipelines.FirstOrDefault();
-
-        db.Pipelines.Add(new PipelineDbo { Name = "d" });
-        db.SaveChanges();
-        await Task.Delay(3);
+        if (_pipelineService.AddPipeline(pipelineName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
@@ -34,15 +28,9 @@ public class PipelineController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
     {
-        if(_pipelineService.UpdateJSON(processes, name))
-        {
+        if(_pipelineService.UpdateJson(processes, name))
             return new OkResult();
-        }
-        else
-        {
-            return new BadRequestResult();
-        }
-
+        return new BadRequestResult();
     }
 
     [HttpGet("/pipeline/{pipelineId}")]
