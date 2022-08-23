@@ -1,7 +1,9 @@
 <main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">
     <div class="designer__header">run</div>
 
-    <div #canvas class="designer__canvas">canvas</div>
+    <div #canvas class="designer__canvas">
+        <app-canvas-diagram></app-canvas-diagram>
+    </div>
 
     <div #sample class="designer__sample">
         data sample

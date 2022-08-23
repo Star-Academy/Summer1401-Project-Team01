@@ -6,5 +6,6 @@ import {DiagramComponent} from './diagram/diagram.component';
 @NgModule({
     declarations: [CanvasDiagramComponent, DiagramComponent],
     imports: [CommonModule],
+    exports: [CanvasDiagramComponent],
 })
 export class CanvasDiagramModule {}
