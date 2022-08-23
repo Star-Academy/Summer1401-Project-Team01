@@ -15,6 +15,7 @@
         position: absolute;
         inset-block-end: 0;
         inset-inline-end: 0;
+        z-index: 4;
 
         block-size: 85vh;
         min-inline-size: 8rem;
@@ -33,6 +34,8 @@
     }
 
     &__canvas {
+        position: relative;
+
         background-color: var(--color-accent-lighter);
 
         block-size: 85vh;
@@ -43,6 +46,7 @@
 
         position: absolute;
         inset-block-end: 0;
+        z-index: 3;
 
         min-block-size: 5rem;
         block-size: 30rem;
