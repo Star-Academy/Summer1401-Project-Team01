@@ -6,6 +6,6 @@ import {Component, Input, OnInit} from '@angular/core';
     styleUrls: ['./config-select.component.scss'],
 })
 export class ConfigSelectComponent {
-    @Input() public title: string = 'Select';
+    @Input() public inputTitle: string = 'Select';
     public constructor() {}
 }
