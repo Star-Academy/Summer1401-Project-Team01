@@ -12,19 +12,18 @@ namespace TalStart.Services
         }
         public bool AddPipeline(string pipelineName)
         {
-
             return true;
         }
         public bool UpdateJSON(string JSON, string name) 
         {
             try
             {
-                var pipe = db.Pipelines.FirstOrDefault(p=>p.Name == name);
-                if (pipe == null)
+                var pipeline = db.Pipelines.FirstOrDefault(p=>p.Name == name);
+                if (pipeline == null)
                 {
                     throw new Exception();
                 }
-                pipe.JSON = JSON;
+                pipeline.JSON = JSON;
                 db.SaveChanges();
             }
             catch (Exception e)
@@ -34,31 +33,90 @@ namespace TalStart.Services
             return true; 
         }
 
-        public bool AddSource(string datasetName, string pipelineName, string username)
+        public bool AddSource(string sourceName, string pipelineName, string username)
         {
             try
             {
-                var pipe = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipe == null)
+                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+                if (pipeline == null)
                 {
                     return false;
                 }
-                var dataset = db.dataSets.FirstOrDefault(d => d.Name == datasetName && d.User.Username == username);
-                if (dataset == null)
+                var sourceDataset = db.dataSets.FirstOrDefault(d => d.Name == sourceName && d.User.Username == username);
+                if (sourceDataset == null)
                 {
                     return false;
                 }
-                pipe.SourceDataset = dataset;
+                pipeline.SourceDataset = sourceDataset;
                 db.SaveChanges();
             }
             catch (Exception e)
             {
-
                 return false;
             }
             return true;
         }
 
+        public bool RemoveSource(string pipelineName, string username)
+        {
+            try
+            {
+                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+                if (pipeline == null)
+                {
+                    return false;
+                }
+                pipeline.SourceDataset = null;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
+        public bool AddDestination(string destinationName, string pipelineName, string username)
+        {
+            try
+            {
+                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+                if (pipeline == null)
+                {
+                    return false;
+                }
+                var destinationDataset = db.dataSets.FirstOrDefault(d => d.Name == destinationName && d.User.Username == username);
+                if (destinationDataset == null)
+                {
+                    return false;
+                }
+                pipeline.DestinationDataset = destinationDataset;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public bool RemoveDestination(string pipelineName, string username)
+        {
+            try
+            {
+                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+                if (pipeline == null)
+                {
+                    return false;
+                }
+                pipeline.DestinationDataset = null;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
