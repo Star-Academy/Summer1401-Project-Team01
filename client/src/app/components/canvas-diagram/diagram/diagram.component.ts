@@ -22,7 +22,7 @@ export class DiagramComponent {
     constructor(private diagramNodeService: DiagramNodeService) {}
 
     public ngAfterViewInit(): void {
-        this.diagram = $(go.Diagram, 'my-diagram-div', {
+        this.diagram = $(go.Diagram, 'diagram-div', {
             layout: $(go.TreeLayout, {
                 isOngoing: true,
                 treeStyle: go.TreeLayout.StyleLastParents,
@@ -41,6 +41,7 @@ export class DiagramComponent {
             isTreePathToChildren: false,
         });
 
+        console.log(this.model);
         this.model.nodeParentKeyProperty = 'next';
 
         // define the Node template
