@@ -6,6 +6,8 @@ namespace TalStart.Models
     {
         [Key]
         public string Name { get; set; }
+        public DataSet SourceDataset{ get; set; }
+        public DataSet DestinationDataset { get; set; }
         public string JSON { get; set; }
         public User User { get; set; }
     }
