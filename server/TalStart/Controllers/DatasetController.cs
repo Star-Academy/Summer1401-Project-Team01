@@ -19,8 +19,8 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDataset([FromForm] string username, [FromForm] string datasetName)
     {
-        if(_datasetService?.AddDataset(username, datasetName))
-            return OkResult();
+        if(_datasetService.AddDataset(username, datasetName))
+            return new OkResult();
         return new BadRequestResult();
     }
 
@@ -29,7 +29,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveDataset([FromRoute] string datasetId)
     {
-        if(_datasetService?.RemoveDataset(datasetId))
+        if(_datasetService.RemoveDataset(datasetId))
             return new OkResult();
         return new BadRequestResult();
     }
