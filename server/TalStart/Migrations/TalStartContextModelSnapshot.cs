@@ -56,8 +56,7 @@ namespace TalStart.Migrations
                     b.Property<int?>("DestinationDatasetId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("JSON")
-                        .IsRequired()
+                    b.Property<string>("Json")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -68,7 +67,6 @@ namespace TalStart.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -131,9 +129,7 @@ namespace TalStart.Migrations
 
                     b.HasOne("TalStart.Models.User", "User")
                         .WithMany("ListOfPipelines")
-                        .HasForeignKey("Username")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Username");
 
                     b.Navigation("DestinationDataset");
 
