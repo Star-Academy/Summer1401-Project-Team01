@@ -35,7 +35,7 @@ public class FileController
             return new BadRequestResult();
         }
     }
-
+    [HttpPost("download")]
     public async Task<IActionResult> DownloadFile(string fileName, string username)
     {
         var tableName = $"{fileName}.{username}";
