@@ -4,16 +4,13 @@
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class DatasetController
+[Route("[controller]/[action]")]
+public class DatasetController : ControllerBase
 {
-
-
-    [HttpPost("/dataset")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDataset()
     {
-        await Task.Delay(3);
         return new BadRequestResult();
     }
 
@@ -25,15 +22,15 @@ public class DatasetController
         return new BadRequestResult();
     }
 
-    [HttpPatch("/dataset")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ChangeDatasetName([FromBody] string name)
+    public async Task<IActionResult> RenameDataset([FromForm] string name, [FromForm] string username, [FromForm] string newDatasetName)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpGet("/dataset/all")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllDatasets()
     {
@@ -48,9 +45,4 @@ public class DatasetController
         await Task.Delay(3);
         return new BadRequestResult();
     }
-
-
-
-
-
 }
