@@ -6,7 +6,7 @@ namespace TalStart.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PipelineController
+public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
     public PipelineController(IPipelineService pipelineService)
@@ -15,6 +15,7 @@ public class PipelineController
     }
 
     [HttpPost("/addPipeline")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
@@ -34,6 +35,7 @@ public class PipelineController
     }
 
     [HttpGet("/pipeline/{pipelineId}")]
+   // [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetPipeline([FromRoute] string pipelineId)
     {
@@ -42,6 +44,7 @@ public class PipelineController
     }
 
     [HttpGet("/pipeline/all")]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll()
     {
@@ -50,6 +53,7 @@ public class PipelineController
     }
     
     [HttpGet("/pipeline/50")]
+   // [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetFifty()
     {
@@ -60,6 +64,7 @@ public class PipelineController
     [HttpGet("/pipeline/")]
         
     [HttpPatch("/pipeline")]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ChangePipelineName([FromBody] string name)
     {
@@ -68,6 +73,7 @@ public class PipelineController
     }
 
     [HttpGet("/pipeline/run")]
+   // [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RunPipeline([FromQuery] string name)
     {
