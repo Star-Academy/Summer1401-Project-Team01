@@ -78,7 +78,7 @@ public class PipelineController : ControllerBase
     
     
 
-    [HttpGet]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
