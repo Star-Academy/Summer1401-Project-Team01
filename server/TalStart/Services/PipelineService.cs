@@ -6,10 +6,6 @@ namespace TalStart.Services
     public class PipelineService :IPipelineService
     {
         TalStartContext db = new();
-        public PipelineService()
-        {
-
-        }
 
         public bool AddPipeline(string pipelineName, string username)
         {
@@ -63,35 +59,23 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeline == null)
-                {
-                    return false;
-                }
-                var sourceDataset = db.dataSets.FirstOrDefault(d => d.Name == sourceName && d.User.Username == username);
-                if (sourceDataset == null)
-                {
-                    return false;
-                }
+                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var sourceDataset = db.dataSets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
                 pipeline.SourceDataset = sourceDataset;
                 db.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
                 return false;
             }
-            return true;
         }
 
         public bool RemoveSource(string pipelineName, string username)
         {
             try
             {
-                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeline == null)
-                {
-                    return false;
-                }
+                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.SourceDataset = null;
                 db.SaveChanges();
                 return true;
@@ -106,16 +90,8 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeline == null)
-                {
-                    return false;
-                }
-                var destinationDataset = db.dataSets.FirstOrDefault(d => d.Name == destinationName && d.User.Username == username);
-                if (destinationDataset == null)
-                {
-                    return false;
-                }
+                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var destinationDataset = db.dataSets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
                 pipeline.DestinationDataset = destinationDataset;
                 db.SaveChanges();
                 return true;
@@ -130,11 +106,7 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeline == null)
-                {
-                    return false;
-                }
+                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.DestinationDataset = null;
                 db.SaveChanges();
                 return true;
@@ -149,8 +121,7 @@ namespace TalStart.Services
         {
             try
             {
-                db.Pipelines.SingleOrDefault(pipeline => 
-                        pipeline.Name == pipelineName && pipeline.User.Username == username)
+                db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username)
                     .Name = newPipelineName;
                 db.SaveChanges();
                 return true;
