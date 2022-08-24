@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<IPipelineService, PipelineService>();
+//builder.Services.AddTransient<ISqlService, SqlService>();
+builder.Services.AddTransient<IScenarioService, ScenarioService>();
 
 
 builder.Services.AddControllers();

@@ -8,9 +8,11 @@ namespace TalStart.Controllers;
 public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
-    public PipelineController(IPipelineService pipelineService)
+    private readonly IScenarioService _scenarioService;
+    public PipelineController(IPipelineService pipelineService, IScenarioService scenarioService)
     {
         _pipelineService = pipelineService;
+        _scenarioService = scenarioService;
     }
 
     [HttpPost]
@@ -76,11 +78,15 @@ public class PipelineController : ControllerBase
     
     
 
-    [HttpGet]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RunPipeline([FromQuery] string name)
+    public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        var res = _scenarioService.RunPipeline(pipelineName, username);
+        if (res)
+        {
+            return new OkResult();
+        }
         return new BadRequestResult();
     }
 
