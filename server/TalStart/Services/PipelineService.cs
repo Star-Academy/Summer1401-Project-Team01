@@ -15,7 +15,7 @@ namespace TalStart.Services
         {
             try
             {
-                db.Pipelines.Add(new PipelineDbo() { Name = pipelineName, User = db.Users.SingleOrDefault(user => user.Username == username)});
+                db.Pipelines.Add(new PipelineDbo() { Name = pipelineName, User = db.Users.Single(user => user.Username == username)});
                 db.SaveChanges();
                 return true;
             }
