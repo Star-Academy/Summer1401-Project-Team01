@@ -51,10 +51,10 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpGet]
+    [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllPipelinesNames([FromForm] string username)
+    public async Task<IActionResult> GetAllPipelinesNames(string username)
     {   
         try
         {
