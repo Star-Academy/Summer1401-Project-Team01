@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
-using TalStart.Models;
 
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
@@ -14,7 +13,7 @@ public class PipelineController : ControllerBase
         _pipelineService = pipelineService;
     }
 
-    [HttpPost("/addPipeline")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
@@ -24,7 +23,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
     
-    [HttpPost("/removePipeline")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
@@ -34,7 +33,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPut("/updateProcesses")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
@@ -44,15 +43,15 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpGet("/pipeline/{pipelineId}")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetPipeline([FromRoute] string pipelineId)
+    public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpGet("/getAllPipelines")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllPipelinesNames([FromForm] string username)
@@ -67,7 +66,7 @@ public class PipelineController : ControllerBase
         }
     }
     
-    [HttpGet("/pipeline/50")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetFifty()
     {
@@ -77,7 +76,7 @@ public class PipelineController : ControllerBase
     
     
 
-    [HttpGet("/run")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RunPipeline([FromQuery] string name)
     {
@@ -85,7 +84,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/add/source")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
@@ -95,7 +94,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/remove/source")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
@@ -105,7 +104,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/add/destination")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
@@ -115,7 +114,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/remove/destination")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
@@ -125,7 +124,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
     
-    [HttpPatch("/rename")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] string newPipelineName)
