@@ -2,7 +2,7 @@ using TalStart.IServices;
 
 namespace TalStart.Services;
 
-public class DatasetServices : IDatasetService
+public class DatasetService : IDatasetService
 {
     
 }
