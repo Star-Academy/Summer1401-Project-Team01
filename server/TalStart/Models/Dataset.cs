@@ -2,7 +2,7 @@
 
 namespace TalStart.Models;
 
-public class Dataset
+public class DataSet
 {
     [Key]
     public int Id { get; set; }
