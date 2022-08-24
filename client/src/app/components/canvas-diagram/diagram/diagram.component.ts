@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import * as go from 'gojs';
 import {DiagramNodeService} from '../../../services/diagram-node.service';
+import {NodeDataModel} from '../../../models/node-data.model';
 
 const $ = go.GraphObject.make;
 
@@ -11,7 +12,7 @@ const $ = go.GraphObject.make;
 })
 export class DiagramComponent {
     @Input() public model!: go.TreeModel;
-    @Input() public nodeDataArray!: Array<object>;
+    @Input() public nodeDataArray!: NodeDataModel[];
 
     @Output() public nodeClicked = new EventEmitter();
 
@@ -38,11 +39,8 @@ export class DiagramComponent {
             }),
             'undoManager.isEnabled': true,
             initialAutoScale: go.Diagram.Uniform,
-            isTreePathToChildren: false,
+            isTreePathToChildren: true,
         });
-
-        console.log(this.model);
-        this.model.nodeParentKeyProperty = 'next';
 
         // define the Node template
         this.diagram.nodeTemplate = $(
@@ -64,9 +62,8 @@ export class DiagramComponent {
                     stroke: null,
                     // set the port properties:
                     portId: '',
-                    fromLinkable: true,
-                    toLinkable: true,
-                    cursor: 'pointer',
+                    fromLinkable: false,
+                    toLinkable: false,
                 },
                 new go.Binding('fill', '', function (node) {
                     // modify the fill based on the tree depth level

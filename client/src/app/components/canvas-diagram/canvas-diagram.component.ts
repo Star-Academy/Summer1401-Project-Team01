@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import * as go from 'gojs';
+import {NodeDataModel} from '../../models/node-data.model';
+import {DiagramNodeService} from '../../services/diagram-node.service';
 
 @Component({
     selector: 'app-canvas-diagram',
@@ -7,14 +9,12 @@ import * as go from 'gojs';
     styleUrls: ['./canvas-diagram.component.scss'],
 })
 export class CanvasDiagramComponent {
+    public constructor(private diagramNodeService: DiagramNodeService) {}
     public selectedNode!: go.TreeVertex;
 
-    public nodeDataArray: Array<object> = [
-        {key: 0, name: 'Start', next: 1},
-        {key: 1, name: 'Filter'},
-    ];
+    public nodeDataArray: NodeDataModel[] = this.diagramNodeService.nodeDataArray;
 
-    public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
+    public model: go.TreeModel = this.diagramNodeService.model;
 
     public setSelectedNodeClicked(node: go.TreeVertex): void {
         this.selectedNode = node;
