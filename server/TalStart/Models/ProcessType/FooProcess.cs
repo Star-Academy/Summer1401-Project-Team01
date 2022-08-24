@@ -19,7 +19,7 @@ namespace TalStart.Models.ProcessType
         {
             try
             {
-                var query = $"SELECT a INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+                var query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
                 _sqlService.ExecuteNonQueryPostgres(query);
                 return true;
             }
