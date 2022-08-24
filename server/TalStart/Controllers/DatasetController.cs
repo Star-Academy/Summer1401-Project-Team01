@@ -37,9 +37,9 @@ public class DatasetController : ControllerBase
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RenameDataset([FromForm] string name, [FromForm] string username, [FromForm] string newDatasetName)
+    public async Task<IActionResult> RenameDataset([FromForm] string currentDatasetName, [FromForm] string username, [FromForm] string newDatasetName)
     {
-        if(_datasetService.RenameDataset(name, username, newDatasetName))  
+        if(_datasetService.RenameDataset(currentDatasetName, username, newDatasetName))  
             return new OkResult();
         return new BadRequestResult();
     }
