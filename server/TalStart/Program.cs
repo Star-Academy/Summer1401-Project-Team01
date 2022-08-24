@@ -8,6 +8,7 @@ builder.Services.AddTransient<IPipelineService, PipelineService>();
 //builder.Services.AddTransient<ISqlService, SqlService>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>();
 builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddTransient<IDatasetService, DatasetService>();
 
 
 builder.Services.AddControllers();

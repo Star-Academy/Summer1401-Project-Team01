@@ -9,7 +9,7 @@ using TalStart.Properties;
 
 namespace TalStart.Services;
 
-public class DataService : IDatasetService
+public class DatasetService : IDatasetService
 {
     public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
     {
