@@ -32,7 +32,7 @@ export class DiagramComponent {
                 angle: 0,
                 layerSpacing: 35,
                 // properties for the "last parents":
-                alternateAngle: 90,
+                // alternateAngle: 90,
                 alternateLayerSpacing: 35,
                 alternateAlignment: go.TreeLayout.AlignmentBus,
                 alternateNodeSpacing: 20,
@@ -55,15 +55,11 @@ export class DiagramComponent {
             // define the node's outer shape
             $(
                 go.Shape,
-                'Rectangle',
+                'RoundedRectangle',
                 {
                     name: 'SHAPE',
                     fill: 'lightblue',
                     stroke: null,
-                    // set the port properties:
-                    portId: '',
-                    fromLinkable: false,
-                    toLinkable: false,
                 },
                 new go.Binding('fill', '', function (node) {
                     // modify the fill based on the tree depth level
@@ -112,7 +108,7 @@ export class DiagramComponent {
                             column: 0,
                             columnSpan: 5,
                             font: '12pt Segoe UI,sans-serif',
-                            editable: true,
+                            editable: false,
                             isMultiline: false,
                             minSize: new go.Size(10, 16),
                         },
@@ -124,14 +120,6 @@ export class DiagramComponent {
                         {row: 2, column: 0},
                         new go.Binding('text', 'key', function (v) {
                             return 'ID: ' + v;
-                        })
-                    ),
-                    $(
-                        go.TextBlock,
-                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white'},
-                        {name: 'boss', row: 2, column: 3}, // we include a name so we can access this TextBlock when deleting Nodes/Links
-                        new go.Binding('text', 'parent', function (v) {
-                            return 'Boss: ' + v;
                         })
                     ),
                     $(
@@ -151,6 +139,13 @@ export class DiagramComponent {
                 ) // end Table Panel
             ) // end Horizontal Panel
         ); // end Node
+
+        this.diagram.linkTemplate = $(
+            go.Link,
+            {routing: go.Link.AvoidsNodes, corner: 10},
+            $(go.Shape),
+            $(go.Shape, {toArrow: 'Standard'})
+        );
 
         this.diagram.model = this.model;
 
