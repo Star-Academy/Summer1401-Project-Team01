@@ -1,4 +1,4 @@
-﻿namespace TalStart.Models.Interfaces
+﻿namespace TalStart.IServices
 {
     public interface IScenarioService
     {

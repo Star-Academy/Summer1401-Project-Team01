@@ -9,6 +9,7 @@ public class SqlService : ISqlService
 {
     private SqlService()
     {
+
     }
 
     private static SqlService? _instance;
@@ -23,6 +24,7 @@ public class SqlService : ISqlService
         await using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
         await using var cmd = new NpgsqlCommand(query);
+        cmd.Connection = conn;
         await cmd.ExecuteNonQueryAsync();
     }
 
