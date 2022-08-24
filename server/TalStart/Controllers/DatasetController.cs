@@ -19,17 +19,17 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDataset([FromForm] string username, [FromForm] string datasetName)
     {
-        if(_datasetService?.AddDataset(username, datasetName))
-            return OkResult();
+        if(_datasetService.AddDataset(username, datasetName))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpDelete("/dataset/remove")]
+    [HttpDelete("/dataset/remove/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromForm] string username, [FromForm] string datasetName)
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
-        if(_datasetService?.RemoveDataset(username, datasetName))
+        if(_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
         return new BadRequestResult();
     }

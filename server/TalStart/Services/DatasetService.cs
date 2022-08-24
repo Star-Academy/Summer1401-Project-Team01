@@ -1,5 +1,4 @@
 using TalStart.IServices;
-using TalStart.Models;
 
 namespace TalStart.Services
 {
