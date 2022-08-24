@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IPipelineService, PipelineService>();
 //builder.Services.AddTransient<ISqlService, SqlService>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>();
+builder.Services.AddTransient<IFileService, FileService>();
 
 
 builder.Services.AddControllers();
