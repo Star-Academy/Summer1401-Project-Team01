@@ -27,9 +27,9 @@ public class DatasetController : ControllerBase
     [HttpDelete("/dataset/remove/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromRoute] string datasetId)
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
-        if(_datasetService.RemoveDataset(datasetId))
+        if(_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
         return new BadRequestResult();
     }

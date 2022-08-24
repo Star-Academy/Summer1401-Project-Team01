@@ -9,7 +9,7 @@ public class DatasetService : IDatasetService
         throw new NotImplementedException();
     }
 
-    public bool RemoveDataset(string datasetId)
+    public bool RemoveDataset(string datasetName, string username)
     {
         throw new NotImplementedException();
     }
