@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TalStart.IServices;
 using TalStart.IServices.IParserService;
 
 namespace TalStart.Controllers;
@@ -8,26 +9,21 @@ namespace TalStart.Controllers;
 public class FileController : ControllerBase
 {
     // dependency injection 
-    private readonly IParser _parser;
+    private readonly IFileService _fileService;
 
-    public FileController(IParser parser)
+    public FileController(IFileService fileService)
     {
-        _parser = parser;
+        _fileService = fileService;
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
+    public IActionResult UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
 
     {
-        var fileName = $"{file.FileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", fileName);
-
-        await using var stream = new FileStream(path, FileMode.Create);
-        await file.CopyToAsync(stream);
         try
         {
-            _parser.ParseCsvToPostgresTable(columns, fileName, path);
+            _fileService.UploadFile(file, columns, username);
             return new OkResult();
         }
         catch (Exception e)
@@ -36,16 +32,13 @@ public class FileController : ControllerBase
         }
     }
 
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DownloadFile(string fileName, string username)
     {
-        var tableName = $"{fileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", fileName);
-
         try
         {
-            _parser.ParsePostgresTableToCsv(tableName, path);
-            await using var stream = new FileStream(path, FileMode.Open);
-            return new FileStreamResult(stream, "text/csv");
+            return await _fileService.DownloadFile(fileName, username);
         }
         catch (Exception e)
         {

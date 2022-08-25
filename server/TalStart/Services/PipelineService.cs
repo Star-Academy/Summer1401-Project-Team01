@@ -6,7 +6,7 @@ namespace TalStart.Services
     public class PipelineService : IPipelineService
     {
         TalStartContext db = new();
-
+        
         public bool AddPipeline(string pipelineName, string username)
         {
             try
@@ -20,6 +20,7 @@ namespace TalStart.Services
                 return false;
             }
         }
+
 
         public bool RemovePipeline(string pipelineName, string username)
         {

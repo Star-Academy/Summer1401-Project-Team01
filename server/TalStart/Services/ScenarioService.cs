@@ -63,6 +63,7 @@ namespace TalStart.Services
                 pipe.Destination = pipeDbo.DestinationDataset;
                 pipe.TreeOfProcesses = new List<IProcess>();
                 var res = JsonSerializer.Deserialize<List<Process>>(pipeDbo.Json);
+                res.OrderBy(r => r.Id);
                 foreach (var r in res)
                 {
                     switch (r.Name)

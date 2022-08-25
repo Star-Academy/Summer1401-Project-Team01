@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using TalStart.IServices;
+using TalStart.Models;
 
 namespace TalStart.Controllers;
 
@@ -7,33 +8,44 @@ namespace TalStart.Controllers;
 [Route("[controller]/[action]")]
 public class DatasetController : ControllerBase
 {
-
+    private readonly IDatasetService _datasetService;
+    public DatasetController(IDatasetService datasetService)
+    {
+        _datasetService = datasetService;
+    }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddDataset()
+    public async Task<IActionResult> AddDataset([FromForm] string username, [FromForm] string datasetName)
     {
-        await Task.Delay(3);
+        if(_datasetService.AddDataset(username, datasetName))
+            return new OkResult();
         return new BadRequestResult();
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromRoute] string datasetId)
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if(_datasetService.RemoveDataset(datasetName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
     [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ChangeDatasetName([FromBody] string name)
+    public async Task<IActionResult> RenameDataset([FromForm] string currentDatasetName, [FromForm] string username, [FromForm] string newDatasetName)
     {
-        await Task.Delay(3);
+        if(_datasetService.RenameDataset(currentDatasetName, username, newDatasetName))  
+            return new OkResult();
         return new BadRequestResult();
     }
 
     [HttpGet]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllDatasets()
     {
@@ -42,6 +54,7 @@ public class DatasetController : ControllerBase
     }
 
     [HttpGet("{count}")]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetDatasetSample(int count)
     {
