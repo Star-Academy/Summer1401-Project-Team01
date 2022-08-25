@@ -66,9 +66,15 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetSample(int count)
+    public async Task<IActionResult> GetDatasetSample([FromForm] string datasetName, [FromForm] string username, [FromRoute] int count)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
+        try
+        {
+            return Ok(_datasetService.PreviewDataset(datasetName, username, count));
+        }
+        catch (Exception)
+        {
+            return new BadRequestResult();
+        }
     }
 }
