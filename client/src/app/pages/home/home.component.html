@@ -1,4 +1,22 @@
 <div class="wrapper">
-    <app-drag-n-drop></app-drag-n-drop>
-    <app-list-of-items></app-list-of-items>
+    <div class="upload">
+        <h2>Upload a Dataset</h2>
+        <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
+        <div class="name">
+            <mat-form-field appearance="fill">
+                <mat-label>File Name</mat-label>
+                <input matInput [(ngModel)]="fileName" />
+            </mat-form-field>
+            <button
+                class="global-button add-processor-button"
+                (click)="openSelectTypeModal()"
+                [disabled]="disableContinue"
+            >
+                Continue
+            </button>
+        </div>
+    </div>
+    <div>
+        <app-list-of-items></app-list-of-items>
+    </div>
 </div>

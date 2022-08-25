@@ -1,0 +1,21 @@
+.select-container {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+
+  block-size: 20rem;
+  min-inline-size: 60rem;
+  max-inline-size: 140rem;
+
+  .select-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: var(--border-radius-small);
+
+    h3 {
+      font-size: var(--font-size-tertiary-heading);
+    }
+  }
+}

@@ -12,9 +12,14 @@ import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
 import {MatDialogContainer, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './pages/pipeline-designer/components/add-processor-modal/add-processor-modal.component';
 import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designer.module';
+import {ColumnTypesComponent} from './pages/home/components/column-types/column-types.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
-    declarations: [AppComponent, AddProcessorModalComponent],
+    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -26,6 +31,10 @@ import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designe
         HttpClientModule,
         MatDialogModule,
         PipelineDesignerModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

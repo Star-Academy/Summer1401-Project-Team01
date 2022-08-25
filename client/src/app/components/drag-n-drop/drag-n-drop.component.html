@@ -4,11 +4,11 @@
         type="file"
         #fileDropRef
         id="fileDropRef"
-        multiple
         (change)="fileBrowseHandler($event.target)"
+        accept=".csv"
     />
     <div class="info">
-        <span>فایل را بکشید و اینجا رها کنید یا </span>
-        <label for="fileDropRef">فایل را بارگذاری کنید</label>
+        <span>Drag And Drop File or</span>
+        <label for="fileDropRef">Upload File</label>
     </div>
 </div>

@@ -10,6 +10,15 @@
         display: flex;
         gap: 1.2rem;
 
+        inline-size: 100%;
+
+        h2 {
+            margin: 0;
+            margin-inline-end: auto;
+
+            font-size: var(--font-size-secondary-heading);
+        }
+
         button {
             background-color: var(--color-gray-90);
 
