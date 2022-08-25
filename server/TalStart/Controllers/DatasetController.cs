@@ -14,7 +14,7 @@ public class DatasetController : ControllerBase
         _datasetService = datasetService;
     }
 
-    [HttpPost("/dataset/add")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDataset([FromForm] string username, [FromForm] string datasetName)
@@ -24,7 +24,7 @@ public class DatasetController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete("/dataset/remove/{id}")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
@@ -53,7 +53,7 @@ public class DatasetController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpGet("/dataset/{count}")]
+    [HttpGet("{count}")]
     //[ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetDatasetSample(int count)

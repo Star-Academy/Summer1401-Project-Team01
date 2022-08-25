@@ -23,17 +23,17 @@ public class UserController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete("/user/{name}")]
+    [HttpDelete("{username}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveUser([FromRoute] string name)
+    public async Task<IActionResult> RemoveUser([FromRoute] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpPut("/user")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser([FromForm] Object user)
+    public async Task<IActionResult> UpdateUser([FromForm] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
