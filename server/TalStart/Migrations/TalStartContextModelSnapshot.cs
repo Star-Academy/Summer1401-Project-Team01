@@ -22,7 +22,7 @@ namespace TalStart.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TalStart.Models.DataSet", b =>
+            modelBuilder.Entity("TalStart.Models.Dataset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace TalStart.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("dataSets");
+                    b.ToTable("Datasets");
                 });
 
             modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
@@ -67,6 +67,7 @@ namespace TalStart.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -106,7 +107,7 @@ namespace TalStart.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TalStart.Models.DataSet", b =>
+            modelBuilder.Entity("TalStart.Models.Dataset", b =>
                 {
                     b.HasOne("TalStart.Models.User", "User")
                         .WithMany("ListOfDataSets")
@@ -119,17 +120,19 @@ namespace TalStart.Migrations
 
             modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
                 {
-                    b.HasOne("TalStart.Models.DataSet", "DestinationDataset")
+                    b.HasOne("TalStart.Models.Dataset", "DestinationDataset")
                         .WithMany()
                         .HasForeignKey("DestinationDatasetId");
 
-                    b.HasOne("TalStart.Models.DataSet", "SourceDataset")
+                    b.HasOne("TalStart.Models.Dataset", "SourceDataset")
                         .WithMany()
                         .HasForeignKey("SourceDatasetId");
 
                     b.HasOne("TalStart.Models.User", "User")
                         .WithMany("ListOfPipelines")
-                        .HasForeignKey("Username");
+                        .HasForeignKey("Username")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DestinationDataset");
 

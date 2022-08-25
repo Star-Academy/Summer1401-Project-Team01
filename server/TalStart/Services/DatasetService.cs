@@ -16,7 +16,7 @@ namespace TalStart.Services
         {
             try
             {
-                _db.datasets.Add(new Dataset { User = _db.Users.Single(user => user.Username == username), Name = datasetName });
+                _db.Datasets.Add(new Dataset { User = _db.Users.Single(user => user.Username == username), Name = datasetName });
                 _db.SaveChanges();
                 return true;
             }
@@ -30,8 +30,8 @@ namespace TalStart.Services
         {
             try
             {
-                var dataset = _db.datasets.Single(dataset => dataset.User.Username == username && dataset.Name == datasetName);
-                _db.datasets.Remove(dataset);
+                var dataset = _db.Datasets.Single(dataset => dataset.User.Username == username && dataset.Name == datasetName);
+                _db.Datasets.Remove(dataset);
                 _db.SaveChanges();
                 return true;
             }
@@ -45,7 +45,7 @@ namespace TalStart.Services
         {
             try
             {
-                var dataset = _db.datasets.Single(dataset => dataset.User.Username == username && dataset.Name == currentDatasetName);
+                var dataset = _db.Datasets.Single(dataset => dataset.User.Username == username && dataset.Name == currentDatasetName);
                 dataset.Name = newDatasetName;
                 _db.SaveChanges();
                 return true;
@@ -58,7 +58,7 @@ namespace TalStart.Services
 
         public List<string> GetAllDatasetNames(string username)
         {
-            return _db.datasets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name).ToList();
+            return _db.Datasets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name).ToList();
         }
 
         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)

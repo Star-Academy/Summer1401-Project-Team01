@@ -61,7 +61,7 @@ namespace TalStart.Services
             try
             {
                 var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var sourceDataset = _db.datasets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
+                var sourceDataset = _db.Datasets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
                 pipeline.SourceDataset = sourceDataset;
                 _db.SaveChanges();
                 return true;
@@ -92,7 +92,7 @@ namespace TalStart.Services
             try
             {
                 var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var destinationDataset = _db.datasets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
+                var destinationDataset = _db.Datasets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
                 pipeline.DestinationDataset = destinationDataset;
                 _db.SaveChanges();
                 return true;
