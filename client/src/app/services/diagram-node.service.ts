@@ -14,18 +14,22 @@ export class DiagramNodeService {
 
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
 
-    public diagram: go.Diagram | null = null;
+    public static diagram: go.Diagram | null = null;
 
     public selectedNode: SelectedNodeModel | null = null;
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
     public updateSelectedNode(_selectedNodeData: SelectedNodeDataModel): void {
-        if (!!_selectedNodeData) this.selectedNode = null;
+        if (!_selectedNodeData) {
+            this.selectedNode = null;
+            return;
+        }
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};
         this.selectedNodeData = JSON.parse(JSON.stringify(_selectedNodeData));
     }
 
     public addNode(type: string): void {
+        console.log(this.selectedNodeData, this.nodeDataArray);
         if (!this.selectedNodeData) {
             return;
         }
@@ -46,9 +50,11 @@ export class DiagramNodeService {
         this.nodeDataArray.splice(this.selectedNodeData.key + 1, 0, newNodeData);
 
         this.model = new go.TreeModel(this.nodeDataArray);
+        console.log(this.model);
 
         // @ts-ignore
-        this.diagram?.model = this.model;
+        DiagramNodeService.diagram?.model = this.model;
+        console.log(DiagramNodeService.diagram);
     }
 
     public removeNode(): void {
@@ -66,6 +72,6 @@ export class DiagramNodeService {
         this.model = new go.TreeModel(this.nodeDataArray);
 
         // @ts-ignore
-        this.diagram?.model = this.model;
+        DiagramNodeService.diagram?.model = this.model;
     }
 }
