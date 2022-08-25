@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Linq;
 using TalStart.IServices;
 using TalStart.Models;
 using TalStart.Models.Interfaces;
@@ -10,11 +9,11 @@ namespace TalStart.Services
 {
     public class ScenarioService : IScenarioService
     {
-        TalStartContext db = new TalStartContext();
-        ISqlService _SqlService;
+        TalStartContext _db = new();
+        ISqlService _sqlService;
         public ScenarioService()
         {
-            _SqlService = SqlService.GetInstance();
+            _sqlService = SqlService.GetInstance();
         }
 
         public bool RunPipeline(string pipelineName, string username) {
@@ -33,14 +32,14 @@ namespace TalStart.Services
             sourceTable = finalTable;
             finalTable = $"{pipe.Destination.Name}.{pipe.User.Username}";
             var query = $"DROP TABLE \"{pipe.Destination.Name}.{pipe.User.Username}\" ";
-            _SqlService.ExecuteNonQueryPostgres(query);
+            _sqlService.ExecuteNonQueryPostgres(query);
             query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-            _SqlService.ExecuteNonQueryPostgres(query);
+            _sqlService.ExecuteNonQueryPostgres(query);
 
             foreach (var temp in tempTables)
             {
                 query = $"DROP TABLE \"{temp}\" ";
-                _SqlService.ExecuteNonQueryPostgres(query);
+                _sqlService.ExecuteNonQueryPostgres(query);
 
             }
 
@@ -50,7 +49,7 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeDbo = db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
+                var pipeDbo = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
                 if (pipeDbo == null || pipeDbo.SourceDataset == null || pipeDbo.DestinationDataset == null)
                 {
@@ -63,6 +62,7 @@ namespace TalStart.Services
                 pipe.Destination = pipeDbo.DestinationDataset;
                 pipe.TreeOfProcesses = new List<IProcess>();
                 var res = JsonSerializer.Deserialize<List<Process>>(pipeDbo.Json);
+                res.OrderBy(r => r.Id);
                 foreach (var r in res)
                 {
                     switch (r.Name)

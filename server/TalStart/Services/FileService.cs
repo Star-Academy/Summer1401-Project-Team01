@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
+using TalStart.Services.ParserService;
 
 namespace TalStart.Services;
 
@@ -27,7 +28,8 @@ public class FileService : IFileService
     public async Task<FileStreamResult> DownloadFile(string fileName, string username)
     {
         var tableName = $"{fileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", fileName);
+
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
 
         _parser.ParsePostgresTableToCsv(tableName, path);
         await using var stream = new FileStream(path, FileMode.Open);

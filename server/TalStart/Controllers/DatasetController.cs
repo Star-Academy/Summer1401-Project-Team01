@@ -1,56 +1,74 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using TalStart.IServices;
 
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class DatasetController
+[Route("[controller]/[action]")]
+public class DatasetController : ControllerBase
 {
-
-
-    [HttpPost("/dataset")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddDataset()
+    private readonly IDatasetService _datasetService;
+    public DatasetController(IDatasetService datasetService)
     {
-        await Task.Delay(3);
+        _datasetService = datasetService;
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AddDataset([FromForm] string datasetName, [FromForm] string username)
+    {
+        if(_datasetService.AddDataset(username, datasetName))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpDelete("/dataset/{id}")]
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromRoute] string datasetId)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        if(_datasetService.RemoveDataset(datasetName, username))
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpPatch("/dataset")]
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ChangeDatasetName([FromBody] string name)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RenameDataset([FromForm] string currentDatasetName, [FromForm] string username, [FromForm] string newDatasetName)
     {
-        await Task.Delay(3);
+        if(_datasetService.RenameDataset(currentDatasetName, username, newDatasetName))  
+            return new OkResult();
         return new BadRequestResult();
     }
 
-    [HttpGet("/dataset/all")]
+    [HttpGet("{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllDatasets()
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllDatasets([FromRoute] string username)
+    { 
+        try
+        {
+            return Ok(_datasetService.GetAllDatasetNames(username));
+        }
+        catch (Exception)
+        {
+            return new BadRequestResult();
+        }
     }
 
-    [HttpGet("/dataset/{count}")]
+    [HttpGet("{count}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetDatasetSample(int count)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
-
-
-
-
-
 }

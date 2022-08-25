@@ -5,32 +5,33 @@ namespace TalStart.Services
 {
     public class PipelineService : IPipelineService
     {
-        TalStartContext db = new();
-
+        TalStartContext _db = new();
+        
         public bool AddPipeline(string pipelineName, string username)
         {
             try
             {
-                db.Pipelines.Add(new PipelineDbo() { Name = pipelineName, User = db.Users.Single(user => user.Username == username)});
-                db.SaveChanges();
+                _db.Pipelines.Add(new PipelineDbo() { Name = pipelineName, User = _db.Users.Single(user => user.Username == username)});
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
         }
 
+
         public bool RemovePipeline(string pipelineName, string username)
         {
             try
             {
-                db.Pipelines.Remove(db.Pipelines.Single(pipeline =>
+                _db.Pipelines.Remove(_db.Pipelines.Single(pipeline =>
                     pipeline.Name == pipelineName && pipeline.User.Username == username));
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -40,15 +41,15 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.FirstOrDefault(p=>p.Name == name);
+                var pipeline = _db.Pipelines.FirstOrDefault(p=>p.Name == name);
                 if (pipeline == null)
                 {
                     throw new Exception();
                 }
                 pipeline.Json = json;
-                db.SaveChanges();
+                _db.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -59,13 +60,13 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var sourceDataset = db.dataSets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var sourceDataset = _db.Datasets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
                 pipeline.SourceDataset = sourceDataset;
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -75,12 +76,12 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.SourceDataset = null;
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -90,13 +91,13 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var destinationDataset = db.dataSets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var destinationDataset = _db.Datasets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
                 pipeline.DestinationDataset = destinationDataset;
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -106,12 +107,12 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.DestinationDataset = null;
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -121,12 +122,12 @@ namespace TalStart.Services
         {
             try
             {
-                db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username)
+                _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username)
                     .Name = newPipelineName;
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -134,7 +135,7 @@ namespace TalStart.Services
 
         public List<string> GetAllPipelinesNames(string username)
         {
-            return db.Pipelines.Where(pipeline => pipeline.User.Username == username).Select(pipeline => pipeline.Name).ToList();
+            return _db.Pipelines.Where(pipeline => pipeline.User.Username == username).Select(pipeline => pipeline.Name).ToList();
         }
     }
 }

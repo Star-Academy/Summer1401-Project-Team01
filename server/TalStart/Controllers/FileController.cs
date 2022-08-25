@@ -5,8 +5,8 @@ using TalStart.IServices.IParserService;
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class FileController
+[Route("[controller]/[action]")]
+public class FileController : ControllerBase
 {
     // dependency injection 
     private readonly IFileService _fileService;
@@ -16,7 +16,7 @@ public class FileController
         _fileService = fileService;
     }
 
-    [HttpPost("upload")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFile([FromHeader] IFormFile file, Dictionary<string, string> columns,
         string username)
@@ -35,6 +35,8 @@ public class FileController
 
     [HttpPost("download")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DownloadFile(string fileName, string username)
     {
         try
