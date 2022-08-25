@@ -32,7 +32,7 @@ public class FileController
         }
     }
 
-    [HttpPost("download")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DownloadFile(string fileName, string username)
     {
