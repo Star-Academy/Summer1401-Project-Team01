@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
-using TalStart.Models;
 
 namespace TalStart.Controllers;
 
@@ -24,14 +23,14 @@ public class DatasetController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{datasetName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
+    public async Task<IActionResult> RemoveDataset([FromRoute] string datasetName, [FromRoute] string username)
     {
-        if(_datasetService.RemoveDataset(datasetName, username))
+       if(_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
-        return new BadRequestResult();
+       return new BadRequestResult();
     }
 
     [HttpPatch]
@@ -53,7 +52,7 @@ public class DatasetController : ControllerBase
         {
             return Ok(_datasetService.GetAllDatasetNames(username));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }
