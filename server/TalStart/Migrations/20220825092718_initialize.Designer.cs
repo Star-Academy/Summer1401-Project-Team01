@@ -12,8 +12,8 @@ using TalStart.Models;
 namespace TalStart.Migrations
 {
     [DbContext(typeof(TalStartContext))]
-    [Migration("20220823065826_seven")]
-    partial class seven
+    [Migration("20220825092718_initialize")]
+    partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace TalStart.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TalStart.Models.DataSet", b =>
+            modelBuilder.Entity("TalStart.Models.Dataset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace TalStart.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("dataSets");
+                    b.ToTable("Datasets");
                 });
 
             modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
@@ -58,8 +58,7 @@ namespace TalStart.Migrations
                     b.Property<int?>("DestinationDatasetId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("JSON")
-                        .IsRequired()
+                    b.Property<string>("Json")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -110,7 +109,7 @@ namespace TalStart.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TalStart.Models.DataSet", b =>
+            modelBuilder.Entity("TalStart.Models.Dataset", b =>
                 {
                     b.HasOne("TalStart.Models.User", "User")
                         .WithMany("ListOfDataSets")
@@ -123,11 +122,11 @@ namespace TalStart.Migrations
 
             modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
                 {
-                    b.HasOne("TalStart.Models.DataSet", "DestinationDataset")
+                    b.HasOne("TalStart.Models.Dataset", "DestinationDataset")
                         .WithMany()
                         .HasForeignKey("DestinationDatasetId");
 
-                    b.HasOne("TalStart.Models.DataSet", "SourceDataset")
+                    b.HasOne("TalStart.Models.Dataset", "SourceDataset")
                         .WithMany()
                         .HasForeignKey("SourceDatasetId");
 

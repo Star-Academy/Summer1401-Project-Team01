@@ -23,16 +23,20 @@ public class UserController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete("{username}")]
+    [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveUser([FromRoute] string username)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveUser([FromForm] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpPut]
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateUser([FromForm] string username)
     {
         await Task.Delay(3);

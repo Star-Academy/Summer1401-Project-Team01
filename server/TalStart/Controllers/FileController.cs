@@ -8,7 +8,6 @@ namespace TalStart.Controllers;
 [Route("[controller]/[action]")]
 public class FileController : ControllerBase
 {
-    // dependency injection 
     private readonly IFileService _fileService;
 
     public FileController(IFileService fileService)
@@ -18,8 +17,9 @@ public class FileController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
-
     {
         try
         {
@@ -34,6 +34,8 @@ public class FileController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DownloadFile(string fileName, string username)
     {
         try

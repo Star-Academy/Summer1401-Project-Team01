@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Runtime.ExceptionServices;
+using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
 
 namespace TalStart.Controllers;
@@ -16,7 +17,7 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
@@ -25,9 +26,10 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
     
-    [HttpPost]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.RemovePipeline(pipelineName, username))
@@ -35,9 +37,10 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPut]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
     {
         if(_pipelineService.UpdateJson(processes, name))
@@ -47,7 +50,9 @@ public class PipelineController : ControllerBase
 
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         await Task.Delay(3);
@@ -58,7 +63,8 @@ public class PipelineController : ControllerBase
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllPipelinesNames(string username)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllPipelinesNames([FromRoute] string username)
     {   
         try
         {
@@ -72,15 +78,19 @@ public class PipelineController : ControllerBase
     
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetFifty()
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpPost]
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         var res = _scenarioService.RunPipeline(pipelineName, username);
@@ -91,8 +101,8 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
     {
@@ -101,9 +111,10 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.RemoveSource(pipelineName, username))
@@ -111,8 +122,8 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
     {
@@ -121,9 +132,10 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.RemoveDestination(pipelineName, username))
@@ -134,6 +146,7 @@ public class PipelineController : ControllerBase
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] string newPipelineName)
     {
         if (_pipelineService.RenamePipeline(pipelineName, username, newPipelineName))
