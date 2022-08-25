@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
-using TalStart.Models;
 
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
-    public PipelineController(IPipelineService pipelineService)
+    private readonly IScenarioService _scenarioService;
+    public PipelineController(IPipelineService pipelineService, IScenarioService scenarioService)
     {
         _pipelineService = pipelineService;
+        _scenarioService = scenarioService;
     }
 
-    [HttpPost("/addPipeline")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
@@ -23,8 +24,18 @@ public class PipelineController : ControllerBase
             return new OkResult();
         return new BadRequestResult();
     }
+    
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
+    {
+        if (_pipelineService.RemovePipeline(pipelineName, username))
+            return new OkResult();
+        return new BadRequestResult();
+    }
 
-    [HttpPut("/pipeline/updateProcesses")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
@@ -34,54 +45,53 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpGet("/pipeline/{pipelineId}")]
-   // [ProducesResponseType(StatusCodes.Status200OK)]
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetPipeline([FromRoute] string pipelineId)
+    public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpGet("/pipeline/all")]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
+
+    [HttpGet("{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAll()
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
+    public async Task<IActionResult> GetAllPipelinesNames(string username)
+    {   
+        try
+        {
+            return Ok(_pipelineService.GetAllPipelinesNames(username));
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
     }
     
-    [HttpGet("/pipeline/50")]
-   // [ProducesResponseType(StatusCodes.Status200OK)]
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetFifty()
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
-    
-    [HttpGet("/pipeline/")]
-        
-    [HttpPatch("/pipeline")]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
+
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ChangePipelineName([FromBody] string name)
+    public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        await Task.Delay(3);
+        var res = _scenarioService.RunPipeline(pipelineName, username);
+        if (res)
+        {
+            return new OkResult();
+        }
         return new BadRequestResult();
     }
 
-    [HttpGet("/pipeline/run")]
-   // [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RunPipeline([FromQuery] string name)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }
-
-    [HttpPatch("/pipeline/add/source")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
@@ -91,7 +101,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/source")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
@@ -101,7 +111,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/add/destination")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
@@ -111,12 +121,22 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPatch("/pipeline/remove/destination")]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
     {
         if (_pipelineService.RemoveDestination(pipelineName, username))
+            return new OkResult();
+        return new BadRequestResult();
+    }
+    
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] string newPipelineName)
+    {
+        if (_pipelineService.RenamePipeline(pipelineName, username, newPipelineName))
             return new OkResult();
         return new BadRequestResult();
     }
