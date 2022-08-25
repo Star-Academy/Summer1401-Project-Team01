@@ -23,14 +23,14 @@ public class DatasetController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete("{datasetName}")]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveDataset([FromRoute] string datasetName, [FromRoute] string username)
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
-       if(_datasetService.RemoveDataset(datasetName, username))
+        if(_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
-       return new BadRequestResult();
+        return new BadRequestResult();
     }
 
     [HttpPatch]
