@@ -44,10 +44,25 @@ namespace TalStart.Services
 
         public bool RenameDataset(string currentDatasetName, string username, string newDatasetName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dataset = db.dataSets.Single(dataset => dataset.User.Username == username && dataset.Name == currentDatasetName);
+                dataset.Name = newDatasetName;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
-        
-         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
+
+        public List<string> GetAllDatasetNames(string username)
+        {
+            return db.dataSets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name).ToList();
+        }
+
+        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
         {
         await using var conn = new NpgsqlConnection(CString.connectionString);
         var compiler = new PostgresCompiler();

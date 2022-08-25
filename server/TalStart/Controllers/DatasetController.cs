@@ -45,12 +45,18 @@ public class DatasetController : ControllerBase
     }
 
     [HttpGet]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllDatasets()
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
+    public async Task<IActionResult> GetAllDatasets([FromForm] string username)
+    { 
+        try
+        {
+            return Ok(_datasetService.GetAllDatasetNames(username));
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
     }
 
     [HttpGet("{count}")]
