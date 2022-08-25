@@ -44,7 +44,17 @@ namespace TalStart.Services
 
         public bool RenameDataset(string currentDatasetName, string username, string newDatasetName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dataset = db.dataSets.Single(dataset => dataset.User.Username == username && dataset.Name == currentDatasetName);
+                dataset.Name = newDatasetName;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public List<string> GetAllDatasetNames(string username)
