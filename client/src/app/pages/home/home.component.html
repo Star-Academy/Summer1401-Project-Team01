@@ -5,7 +5,7 @@
         <div class="name">
             <mat-form-field appearance="fill">
                 <mat-label>File Name</mat-label>
-                <input matInput [(ngModel)]="fileName" />
+                <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()" />
             </mat-form-field>
             <button
                 class="global-button add-processor-button"

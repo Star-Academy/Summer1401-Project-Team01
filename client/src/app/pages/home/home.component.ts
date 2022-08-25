@@ -1,4 +1,4 @@
-import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
 
@@ -7,7 +7,7 @@ import {ColumnTypesComponent} from './components/column-types/column-types.compo
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnChanges {
+export class HomeComponent {
     public file?: File = undefined;
     public fileName: string = '';
     public columnTitles: string[] = [];
@@ -17,12 +17,6 @@ export class HomeComponent implements OnChanges {
     private dialogRefMouseClose: boolean = false;
 
     public constructor(public dialog: MatDialog) {}
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (this.file !== undefined && this.fileName !== '') {
-            this.disableContinue = false;
-        }
-    }
 
     public openSelectTypeModal(): void {
         const dialogRef = this.dialog.open(ColumnTypesComponent, {
@@ -45,6 +39,8 @@ export class HomeComponent implements OnChanges {
         this.fileName = this.parseName($event.name);
         this.columnTitles = this.parseColumnTitles($event);
         this.columnTypes.fill('String', 0, this.columnTypes.length);
+
+        this.validateContinue();
     }
 
     public parseName(fullName: string): string {
@@ -68,11 +64,15 @@ export class HomeComponent implements OnChanges {
     }
 
     public fileSubmitHandler(): void {
-        console.log(this.file);
-        console.log(this.fileName);
-        console.log(this.columnTypes);
-
         this.file = undefined;
         this.fileName = '';
+    }
+
+    public validateContinue(): void {
+        if (this.file !== undefined && this.fileName !== '') {
+            this.disableContinue = false;
+        } else {
+            this.disableContinue = true;
+        }
     }
 }
