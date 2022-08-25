@@ -18,7 +18,7 @@ public class FileService : IFileService
     public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
     {
         var fileName = $"{file.FileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", fileName);
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", $"{fileName}.csv");
 
         await using var stream = new FileStream(path, FileMode.Create);
         await file.CopyToAsync(stream);
