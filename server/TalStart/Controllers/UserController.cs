@@ -3,10 +3,10 @@
 namespace TalStart.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class UserController
+[Route("[controller]/[action]")]
+public class UserController : ControllerBase
 {
-    [HttpPost("/user")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddUser()
     {
@@ -14,17 +14,17 @@ public class UserController
         return new BadRequestResult();
     }
 
-    [HttpDelete("/user/{name}")]
+    [HttpDelete("{username}")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveUser([FromRoute] string name)
+    public async Task<IActionResult> RemoveUser([FromRoute] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
     }
 
-    [HttpPut("/user")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser([FromForm] Object user)
+    public async Task<IActionResult> UpdateUser([FromForm] string username)
     {
         await Task.Delay(3);
         return new BadRequestResult();
