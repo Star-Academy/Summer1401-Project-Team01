@@ -8,11 +8,33 @@ import {ConfigToggleComponent} from './config-components/config-toggle/config-to
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {ConfigInputComponent} from './config-components/config-input/config-input.component';
 import {MatInputModule} from '@angular/material/input';
-import { ConfigNumberInputComponent } from './config-components/config-number-input/config-number-input.component';
+import {ConfigNumberInputComponent} from './config-components/config-number-input/config-number-input.component';
+import {ConfigModeToggleComponent} from './config-components/config-mode-toggle/config-mode-toggle.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {ConfigChecklistComponent} from './config-components/config-checklist/config-checklist.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
-    declarations: [ProcessorConfigsComponent, ConfigSelectComponent, ConfigToggleComponent, ConfigInputComponent, ConfigNumberInputComponent],
+    declarations: [
+        ProcessorConfigsComponent,
+        ConfigSelectComponent,
+        ConfigToggleComponent,
+        ConfigInputComponent,
+        ConfigNumberInputComponent,
+        ConfigModeToggleComponent,
+        ConfigChecklistComponent,
+    ],
     exports: [ProcessorConfigsComponent],
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatSlideToggleModule, MatInputModule],
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatInputModule,
+        MatButtonToggleModule,
+        MatCheckboxModule,
+        FormsModule,
+    ],
 })
 export class ProcessorConfigsModule {}

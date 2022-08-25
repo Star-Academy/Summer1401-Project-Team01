@@ -5,9 +5,16 @@
     </header>
     <div class="configs__body">
         <app-config-select [inputTitle]="processorType"></app-config-select>
+
         <app-config-toggle></app-config-toggle>
+
         <app-config-input></app-config-input>
+
         <app-config-number-input></app-config-number-input>
+
+        <app-config-mode-toggle></app-config-mode-toggle>
+
+        <app-config-checklist></app-config-checklist>
     </div>
     <div class="configs__buttons">
         <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>

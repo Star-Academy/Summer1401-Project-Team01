@@ -1,7 +1,9 @@
-import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './components/add-processor-modal/add-processor-modal.component';
 import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
+import {SnackbarService} from '../../services/snackbar.service';
+import {snackbarType} from '../../models/snackbar-type.enum';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -26,7 +28,11 @@ export class PipelineDesignerComponent {
     //when no processor is selected the value should be ''.
     public selectedProcessor: string = 'Join, 1';
 
-    public constructor(private renderer: Renderer2, public dialog: MatDialog) {}
+    public constructor(
+        private renderer: Renderer2,
+        public dialog: MatDialog,
+        private snackbarService: SnackbarService
+    ) {}
 
     public dragVHandler(e: MouseEvent): void {
         this.isVResizing = true;
@@ -65,6 +71,10 @@ export class PipelineDesignerComponent {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
         });
+    }
+
+    public showSnackbar(): void {
+        this.snackbarService.show('salam salam salam salam salam salam salam ', snackbarType.WARNING);
     }
 
     public openSelectDataset(): void {
