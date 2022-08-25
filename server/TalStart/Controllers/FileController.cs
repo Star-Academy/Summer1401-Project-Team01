@@ -8,7 +8,6 @@ namespace TalStart.Controllers;
 [Route("[controller]/[action]")]
 public class FileController : ControllerBase
 {
-    // dependency injection 
     private readonly IFileService _fileService;
 
     public FileController(IFileService fileService)
