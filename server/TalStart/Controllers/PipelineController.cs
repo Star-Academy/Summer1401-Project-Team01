@@ -45,6 +45,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
@@ -52,6 +53,7 @@ public class PipelineController : ControllerBase
         await Task.Delay(3);
         return new BadRequestResult();
     }
+
 
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,6 +70,7 @@ public class PipelineController : ControllerBase
         }
     }
     
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetFifty()
@@ -75,8 +78,6 @@ public class PipelineController : ControllerBase
         await Task.Delay(3);
         return new BadRequestResult();
     }
-    
-    
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
