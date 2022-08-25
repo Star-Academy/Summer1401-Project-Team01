@@ -64,7 +64,7 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllPipelinesNames(string username)
+    public async Task<IActionResult> GetAllPipelinesNames([FromRoute] string username)
     {   
         try
         {
