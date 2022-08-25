@@ -46,8 +46,13 @@ namespace TalStart.Services
         {
             throw new NotImplementedException();
         }
-        
-         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
+
+        public List<string> GetAllDatasetNames(string username)
+        {
+            return db.dataSets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name).ToList();
+        }
+
+        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
         {
         await using var conn = new NpgsqlConnection(CString.connectionString);
         var compiler = new PostgresCompiler();
