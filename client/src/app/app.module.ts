@@ -17,6 +17,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
     declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
@@ -35,6 +36,7 @@ import {MatButtonModule} from '@angular/material/button';
         FormsModule,
         MatInputModule,
         MatButtonModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

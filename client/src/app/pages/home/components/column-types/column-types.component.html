@@ -5,13 +5,19 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Data Type</mat-label>
-                <select matInput matNativeControl [(ngModel)]="data.columnTypes[i]" [name]="'select-' + title" required>
-                    <option value="string">String</option>
-                    <option value="integer">Integer</option>
-                    <option value="double">Double</option>
-                    <option value="date">Date</option>
-                    <option value="boolean">Boolean</option>
-                </select>
+                <mat-select
+                    matInput
+                    matNativeControl
+                    [(ngModel)]="data.columnTypes[i]"
+                    [name]="'select-' + title"
+                    required
+                >
+                    <mat-option value="string">String</mat-option>
+                    <mat-option value="integer">Integer</mat-option>
+                    <mat-option value="double">Double</mat-option>
+                    <mat-option value="date">Date</mat-option>
+                    <mat-option value="boolean">Boolean</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
     </div>
