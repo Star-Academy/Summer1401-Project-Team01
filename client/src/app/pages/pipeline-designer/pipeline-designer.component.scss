@@ -1,0 +1,69 @@
+.designer {
+    &__header {
+        background-color: var(--color-gray-90);
+
+        inset-block-start: 10vh;
+
+        block-size: 5vh;
+        inline-size: 100%;
+    }
+
+    &__side {
+        background-color: var(--color-gray-100);
+        box-shadow: -10px 5px 20px -15px var(--color-gray-40);
+
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        overflow-y: hidden;
+        z-index: 4;
+
+        block-size: 88vh;
+        min-inline-size: 8rem;
+        inline-size: 30rem;
+        max-inline-size: 50rem;
+
+        .drag-h {
+            position: absolute;
+            inset-block: 0;
+            inset-inline-start: -4px;
+
+            inline-size: 8px;
+
+            cursor: ew-resize;
+        }
+    }
+
+    &__canvas {
+        background-color: var(--color-accent-lighter);
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScgLz4KICA8cmVjdCB4PScwJyB5PScwJyB3aWR0aD0nMScgaGVpZ2h0PScxJyBmaWxsPSdibGFjaycgLz4KPC9zdmc+");
+        background-repeat: repeat;
+
+        block-size: 88vh;
+    }
+
+    &__sample {
+        background-color: var(--color-gray-100);
+        box-shadow: 5px -10px 20px -15px var(--color-gray-40);
+
+        position: absolute;
+        inset-block-end: 0;
+        overflow-y: hidden;
+        z-index: 3;
+
+        min-block-size: 5rem;
+        block-size: 30rem;
+        max-block-size: 40rem;
+        inline-size: 100%;
+
+        .drag-v {
+            position: absolute;
+            inset-block-start: -4px;
+            inset-inline: 0;
+
+            block-size: 8px;
+
+            cursor: ns-resize;
+        }
+    }
+}

@@ -1,6 +1,22 @@
 <div class="wrapper">
-    <h1>Hello, friend!</h1>
-    <div class="icon">
-        <i class="fa-star-sharp">salam</i>
+    <div class="upload">
+        <h2>Upload a Dataset</h2>
+        <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
+        <div class="name">
+            <mat-form-field appearance="fill">
+                <mat-label>File Name</mat-label>
+                <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()" />
+            </mat-form-field>
+            <button
+                class="global-button add-processor-button"
+                (click)="openSelectTypeModal()"
+                [disabled]="disableContinue"
+            >
+                Continue
+            </button>
+        </div>
+    </div>
+    <div>
+        <app-list-of-items></app-list-of-items>
     </div>
 </div>

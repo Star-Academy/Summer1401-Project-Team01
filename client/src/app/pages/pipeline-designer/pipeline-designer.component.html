@@ -1,0 +1,18 @@
+<main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">
+    <div class="designer__header"></div>
+
+    <div #canvas class="designer__canvas">
+        <app-canvas-diagram></app-canvas-diagram>
+    </div>
+
+    <div #sample class="designer__sample">
+        <button class="global-button add-processor-button" (click)="openAddProcessorModal()" k>Add processor</button>
+        <button class="global-button" (click)="showSnackbar()" k>Show Snackbar</button>
+        <div class="drag-v" (mousedown)="dragVHandler($event)"></div>
+    </div>
+
+    <aside #side class="designer__side">
+        <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
+    </aside>
+</main>

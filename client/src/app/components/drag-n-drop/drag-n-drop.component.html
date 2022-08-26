@@ -1,0 +1,14 @@
+<div class="dnd-container" appDndEvents (fileDropped)="onFileDropped($event)">
+    <input
+        class="file-input"
+        type="file"
+        #fileDropRef
+        id="fileDropRef"
+        (change)="fileBrowseHandler($event.target)"
+        accept=".csv"
+    />
+    <div class="info">
+        <span>Drag And Drop File or</span>
+        <label for="fileDropRef">Upload File</label>
+    </div>
+</div>

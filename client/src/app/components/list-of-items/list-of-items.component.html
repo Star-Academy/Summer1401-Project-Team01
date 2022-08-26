@@ -1,0 +1,24 @@
+<div class="list-wrapper">
+    <div class="actions">
+        <h2>Your Datasets</h2>
+        <button title="download selected" (click)="clearData()"><i class="far fa-download"></i></button>
+        <button title="delete selected" (click)="onRemoveSelected()">
+            <i class="far fa-trash-can delete-icon"></i>
+        </button>
+    </div>
+
+    <ag-grid-angular
+        style="height: 100%; width: 100%"
+        class="ag-theme-alpine"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData$"
+        [animateRows]="true"
+        (gridReady)="onGridReady($event)"
+        (cellClicked)="onCellClicked($event)"
+        [paginationAutoPageSize]="true"
+        [pagination]="true"
+        [rowSelection]="rowSelection"
+        [rowMultiSelectWithClick]="true"
+    ></ag-grid-angular>
+</div>

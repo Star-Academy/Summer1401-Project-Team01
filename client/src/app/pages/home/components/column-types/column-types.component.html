@@ -1,0 +1,25 @@
+<form>
+    <div class="select-container">
+        <div class="select-item" *ngFor="let title of data.columnTitles; let i = index">
+            <h3>{{ title }}</h3>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Data Type</mat-label>
+                <select matInput matNativeControl [(ngModel)]="data.columnTypes[i]" [name]="'select-' + title" required>
+                    <option value="string">String</option>
+                    <option value="integer">Integer</option>
+                    <option value="double">Double</option>
+                    <option value="date">Date</option>
+                    <option value="boolean">Boolean</option>
+                </select>
+            </mat-form-field>
+        </div>
+    </div>
+    <button
+        class="global-button"
+        [mat-dialog-close]="true"
+        [disabled]="data.columnTypes.length !== data.columnTitles.length"
+    >
+        Submit
+    </button>
+</form>

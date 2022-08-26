@@ -1,0 +1,15 @@
+<div class="wrapper">
+    <ag-grid-angular
+        style="height: 50rem; width: 100rem"
+        class="ag-theme-alpine"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData$"
+        [animateRows]="true"
+        (gridReady)="onGridReady($event)"
+        [paginationAutoPageSize]="true"
+        [pagination]="true"
+        [rowSelection]="rowSelection"
+    ></ag-grid-angular>
+    <button class="global-button">Select</button>
+</div>
