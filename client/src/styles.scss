@@ -1,7 +1,9 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
+
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
 
 // Plus imports for other components in your app.
 
@@ -21,13 +23,15 @@ $boilera-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$boilera-theme: mat.define-light-theme((
-  color: (
-    primary: $boilera-primary,
-    accent: $boilera-accent,
-    warn: $boilera-warn,
-  )
-));
+$boilera-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $boilera-primary,
+            accent: $boilera-accent,
+            warn: $boilera-warn,
+        ),
+    )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -44,73 +48,223 @@ White spaces (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
 */
 
-
 // VARIABLES
 :root {
-  --color-gray-98: hsl(0deg 0% 98%);
-  --color-gray-90: hsl(0deg 0% 90%);
-  --color-gray-80: hsl(0deg 0% 80%);
-  --color-gray-70: hsl(0deg 0% 70%);
-  --color-gray-40: hsl(0deg 0% 40%);
-  --color-gray-30: hsl(0deg 0% 30%);
-  --color-gray-20: hsl(0deg 0% 20%);
-  --color-gray-10: hsl(0deg 0% 10%);
+    --color-gray-100: hsl(0deg 0% 100%);
+    --color-gray-98: hsl(0deg 0% 98%);
+    --color-gray-90: hsl(0deg 0% 90%);
+    --color-gray-80: hsl(0deg 0% 80%);
+    --color-gray-70: hsl(0deg 0% 70%);
+    --color-gray-40: hsl(0deg 0% 40%);
+    --color-gray-30: hsl(0deg 0% 30%);
+    --color-gray-20: hsl(0deg 0% 20%);
+    --color-gray-10: hsl(0deg 0% 10%);
 
-  --font-size-primary-heading: 3.6rem;
-  --font-size-secondary-heading: 3rem;
-  --font-size-tertiary-heading: 2.4rem;
-  --font-size-paragraph: 2rem;
+    --color-primary-darker: hsl(201deg 100% 3%);
+    --color-primary-dark: hsl(201deg 96% 10%);
+    --color-primary-normal: hsl(201deg 93% 12%);
+    --color-primary-light: hsl(201deg 34% 32%);
+    --color-primary-lighter: hsl(201deg 16% 57%);
 
-  --animation-duration-fast: 0.1s;
-  --animation-duration-normal: 0.5s;
-  --animation-duration-slow: 1s;
+    --color-accent-darker: hsl(192deg 70% 13%);
+    --color-accent-dark: hsl(192deg 70% 35%);
+    --color-accent-normal: hsl(192deg 70% 43%);
+    --color-accent-light: hsl(192deg 53% 55%);
+    --color-accent-lighter: hsl(192deg 53% 77%);
+    --color-accent-lightest: hsl(192deg 50% 94%);
+
+    --color-csv-format: hsl(205deg 100% 45%);
+    --color-xls-format: hsl(110deg 100% 35%);
+    --color-json-format: hsl(40deg 100% 45%);
+
+    --success-color: hsl(123deg 38% 57%);
+    --warning-color: var(--tertiary-color-light);
+    --error-color: hsl(4deg 90% 58%);
+    --error-color-dark: hsl(4deg 90% 50%);
+
+    --font-size-primary-heading: 3.6rem;
+    --font-size-secondary-heading: 3rem;
+    --font-size-tertiary-heading: 2.4rem;
+    --font-size-paragraph: 2rem;
+    --font-size-med-paragraph: 1.5rem;
+    --font-size-sub-paragraph: 1rem;
+
+    --border-radius-small: 0.4rem;
+    --border-radius-normal: 0.8rem;
+    --border-radius-big: 1.2rem;
+
+    --animation-duration-fast: 0.1s;
+    --animation-duration-normal: 0.5s;
+    --animation-duration-slow: 1s;
+
+    --flex-gap-large: 1rem;
+    --flex-gap-medium: 0.5rem;
+    --flex-gap-small: 0.1rem;
+
+    --padding-large: 4rem;
+    --padding-medium: 2rem;
+    --padding-small: 1rem;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    font-family: Vazirmatn, sans-serif;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 
-  font-family: Vazirmatn, sans-serif;
-  font-size: 62.5%;
+    font-family: Vazirmatn, sans-serif;
+    font-size: 62.5%;
 }
 
 body {
-  background-color: var(--color-gray-98);
-  color: var(--color-gray-20);
+    background-color: var(--color-gray-98);
+    color: var(--color-gray-20);
 
-  min-block-size: 100vh;
+    min-block-size: 100vh;
 
-  margin: 0;
+    margin: 0;
 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  
-  line-height: 1;
+    font-family: Vazirmatn, Roboto, "Helvetica Neue", sans-serif;
 
-  h1 {
-    font-size: var(--font-size-primary-heading);
-  }
+    line-height: 1;
 
-  h2 {
-    font-size: var(--font-size-secondary-heading);
-  }
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
 
-  h3 {
-    font-size: var(--font-size-tertiary-heading);
-  }
+    h1 {
+        font-size: var(--font-size-primary-heading);
+    }
 
-  p {
-    font-size: var(--font-size-paragraph);
-  }
+    h2 {
+        font-size: var(--font-size-secondary-heading);
+    }
+
+    h3 {
+        font-size: var(--font-size-tertiary-heading);
+    }
+
+    p {
+        font-size: var(--font-size-paragraph);
+    }
+
+    button {
+        background-color: transparent;
+
+        display: inline-flex;
+        align-items: center;
+
+        padding: 1.2rem 2.4rem;
+
+        border: none;
+        border-radius: var(--border-radius-small);
+
+        outline: none;
+
+        cursor: pointer;
+
+        &:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+    }
+
+    .border-element {
+        padding-inline: 1.2rem;
+
+        border-radius: 999rem;
+    }
+
+    .csv {
+        color: var(--color-csv-format);
+
+        & .border-element {
+            border: 1px solid var(--color-csv-format);
+        }
+    }
+
+    .xls {
+        color: var(--color-xls-format);
+
+        & .border-element {
+            border: 1px solid var(--color-xls-format);
+        }
+    }
+
+    .json {
+        color: var(--color-json-format);
+
+        & .border-element {
+            border: 1px solid var(--color-json-format);
+        }
+    }
+
+    .global-button {
+        background-color: var(--color-primary-normal);
+        color: var(--color-gray-90);
+
+        &:hover {
+            background-color: var(--color-primary-dark);
+        }
+    }
+
+    .global-button-reverse {
+        background-color: var(--color-primary-lighter);
+        color: var(--color-gray-10);
+
+        border-color: var(--color-primary-normal);
+        border-style: solid;
+        border-width: 2px;
+    }
+
+    //snackbar types styles
+    .snackbar-warning {
+        color: var(--error-color);
+    }
+
+    .snackbar-info {
+        color: var(--success-color);
+    }
+
+    .snackbar {
+        background-color: var(--color-accent-lightest);
+        box-shadow: hsl(0deg 0% 0% / 16%) 0 10px 36px 0, hsl(0deg 0% 0% / 6%) 0 0 0 1px;
+
+
+        margin-block: auto;
+        padding: var(--padding-medium);
+
+        font-size: var(--font-size-secondary-heading) !important;
+        font-weight: bold;
+
+        .mat-button-wrapper {
+            color: var(--color-gray-10);
+
+            font-size: var(--font-size-paragraph);
+        }
+    }
+
+    .mat-simple-snackbar {
+        font-size: var(--font-size-paragraph);
+        
+        line-height: 2.5rem;
+    }
 }
 
-
-
-html, body { height: 100%; }
+html,
+body {
+    height: 100%;
+}

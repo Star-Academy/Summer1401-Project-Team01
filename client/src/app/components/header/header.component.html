@@ -1,3 +1,30 @@
 <header>
-    <p>hello</p>
+    <nav class="navbar">
+        <span class="logo-container">
+            <a routerLink="/">
+                <img src="" alt="Our Logo" title="داده‌آرا" />
+            </a>
+        </span>
+        <span class="select-env-container">
+            <button class="option" mat-menu-item [matMenuTriggerFor]="menu" aria-label="Environment">
+                <i class="fa-regular fa-chevron-down"></i>
+                <span>{{ currentEnvTitle }}</span>
+            </button>
+            <mat-menu yPosition="below" xPosition="after" backdropClass="menu" #menu="matMenu">
+                <button class="option" mat-menu-item (click)="selectDataInventory()">
+                    <i class="fa-regular fa-database"></i>
+                    <span>Data Inventory</span>
+                </button>
+                <button class="option" mat-menu-item (click)="selectPipelineDesigner()">
+                    <i class="fa-regular fa-timeline-arrow"></i>
+                    <span>Pipeline Designer</span>
+                </button>
+            </mat-menu>
+        </span>
+        <span class="help-container">
+            <button mat-icon-button aria-label="FAQ" title="FAQ" class="help-button">
+                <mat-icon>question_answer</mat-icon>
+            </button>
+        </span>
+    </nav>
 </header>

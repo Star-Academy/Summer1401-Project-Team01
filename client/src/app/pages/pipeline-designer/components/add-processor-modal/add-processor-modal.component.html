@@ -1,0 +1,19 @@
+<main class="add-processor-modal">
+    <div class="header-container">
+        <h2 class="header">Add a processor</h2>
+    </div>
+
+    <div class="all-processors-container">
+        <div class="processor-container" *ngFor="let processor of allProcessors">
+            <div class="processor-icon-container" [innerHTML]="processor.icon"></div>
+            <div class="processor-data-container">
+                <div class="processor-title-container">
+                    <h3 class="processor-title">{{ processor.name }}</h3>
+                </div>
+                <div class="processor-description-container">
+                    <p class="processor-description">{{ processor.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
