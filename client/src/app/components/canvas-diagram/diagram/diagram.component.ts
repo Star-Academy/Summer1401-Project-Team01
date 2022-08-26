@@ -16,14 +16,14 @@ export class DiagramComponent {
 
     @Output() public nodeClicked = new EventEmitter();
 
-    public diagram: go.Diagram | null = null;
+    //@Input() public diagram: go.Diagram | null = null;
 
     public selectedNode!: any;
 
     constructor(private diagramNodeService: DiagramNodeService) {}
 
     public ngAfterViewInit(): void {
-        this.diagram = $(go.Diagram, 'diagram-div', {
+        DiagramNodeService.diagram = $(go.Diagram, 'diagram-div', {
             layout: $(go.TreeLayout, {
                 isOngoing: true,
                 treeStyle: go.TreeLayout.StyleLastParents,
@@ -43,7 +43,7 @@ export class DiagramComponent {
         });
 
         // define the Node template
-        this.diagram.nodeTemplate = $(
+        DiagramNodeService.diagram.nodeTemplate = $(
             go.Node,
             'Auto',
             // for sorting, have the Node.text be the data.name
@@ -140,18 +140,18 @@ export class DiagramComponent {
             ) // end Horizontal Panel
         ); // end Node
 
-        this.diagram.linkTemplate = $(
+        DiagramNodeService.diagram.linkTemplate = $(
             go.Link,
             {routing: go.Link.AvoidsNodes, corner: 10},
             $(go.Shape),
             $(go.Shape, {toArrow: 'Standard'})
         );
 
-        this.diagram.model = this.model;
+        DiagramNodeService.diagram.model = this.model;
 
         // when the selection changes, emit event to app-component updating the selected node
-        this.diagram.addDiagramListener('ChangedSelection', (e) => {
-            const node = this.diagram?.selection.first();
+        DiagramNodeService.diagram.addDiagramListener('ChangedSelection', (e) => {
+            const node = DiagramNodeService.diagram?.selection.first();
 
             this.selectedNode = node;
             this.diagramNodeService.updateSelectedNode(node?.data);

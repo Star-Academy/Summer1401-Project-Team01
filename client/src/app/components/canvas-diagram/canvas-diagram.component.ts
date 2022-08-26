@@ -9,7 +9,7 @@ import {DiagramNodeService} from '../../services/diagram-node.service';
     styleUrls: ['./canvas-diagram.component.scss'],
 })
 export class CanvasDiagramComponent {
-    public constructor(private diagramNodeService: DiagramNodeService) {}
+    public constructor(public diagramNodeService: DiagramNodeService) {}
     public selectedNode!: go.TreeVertex;
 
     public nodeDataArray: NodeDataModel[] = this.diagramNodeService.nodeDataArray;
