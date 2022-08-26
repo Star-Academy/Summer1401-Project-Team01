@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {IProcessor} from '../../../../interfaces/IProcessor';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DomSanitizer} from '@angular/platform-browser';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
 
 @Component({
     selector: 'app-add-processor-modal',
@@ -9,7 +10,11 @@ import {DomSanitizer} from '@angular/platform-browser';
     styleUrls: ['./add-processor-modal.component.scss'],
 })
 export class AddProcessorModalComponent {
-    public constructor(@Inject(MAT_DIALOG_DATA) public data: any, private sanitizer: DomSanitizer) {}
+    public constructor(
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private sanitizer: DomSanitizer,
+        private diagramNodeService: DiagramNodeService
+    ) {}
 
     public allProcessors: Array<Partial<IProcessor>> = [
         {
@@ -59,4 +64,8 @@ export class AddProcessorModalComponent {
             ),
         },
     ];
+
+    public createProcessor(name: string | undefined): void {
+        if (name) this.diagramNodeService.addNode(name);
+    }
 }
