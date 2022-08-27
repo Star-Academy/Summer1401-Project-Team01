@@ -70,7 +70,8 @@ export class HomeComponent {
             this.columnInfo[this.columnTitles[i]] = this.columnTypes[i];
         }
 
-        const columnInfoStr: string = JSON.stringify(this.columnInfo);
+        const columnInfoStr: string = JSON.stringify(this.columnInfo).replace(/\\r/, "");
+        //console.log(columnInfoStr)
 
         // username - datasetName - columnTypes - file
         const formData = new FormData();
@@ -80,6 +81,7 @@ export class HomeComponent {
         formData.append('columnTypes', columnInfoStr);
 
         formData.forEach((x) => console.log(x));
+        this.uploadService.uploadFile(formData).then();
 
         this.file = undefined;
         this.fileName = '';
