@@ -3,6 +3,8 @@ import {IProcessor} from '../../../../interfaces/IProcessor';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DomSanitizer} from '@angular/platform-browser';
 import {DiagramNodeService} from '../../../../services/diagram-node.service';
+import {SnackbarService} from '../../../../services/snackbar.service';
+import {snackbarType} from '../../../../models/snackbar-type.enum';
 
 @Component({
     selector: 'app-add-processor-modal',
@@ -13,7 +15,8 @@ export class AddProcessorModalComponent {
     public constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private sanitizer: DomSanitizer,
-        private diagramNodeService: DiagramNodeService
+        private diagramNodeService: DiagramNodeService,
+        private snackbarService: SnackbarService
     ) {}
 
     public allProcessors: Array<Partial<IProcessor>> = [
@@ -66,6 +69,9 @@ export class AddProcessorModalComponent {
     ];
 
     public createProcessor(name: string | undefined): void {
-        if (name) this.diagramNodeService.addNode(name);
+        if (name) {
+            this.diagramNodeService.addNode(name);
+            this.snackbarService.show('Processor has been added successfully.', snackbarType.INFO);
+        }
     }
 }

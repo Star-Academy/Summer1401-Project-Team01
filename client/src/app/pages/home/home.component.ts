@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
+import {UploadService} from '../../services/api/upload.service';
 
 @Component({
     selector: 'app-home',
@@ -12,11 +13,12 @@ export class HomeComponent {
     public fileName: string = '';
     public columnTitles: string[] = [];
     public columnTypes: string[] = [];
+    public columnInfo: {[key: string]: string} = {};
     public disableContinue: boolean = true;
 
     private dialogRefMouseClose: boolean = false;
 
-    public constructor(public dialog: MatDialog) {}
+    public constructor(public dialog: MatDialog, private uploadService: UploadService) {}
 
     public openSelectTypeModal(): void {
         const dialogRef = this.dialog.open(ColumnTypesComponent, {
@@ -64,8 +66,26 @@ export class HomeComponent {
     }
 
     public fileSubmitHandler(): void {
-        this.file = undefined;
-        this.fileName = '';
+        for (let i = 0; i < this.columnTypes.length; i++) {
+            this.columnInfo[this.columnTitles[i]] = this.columnTypes[i];
+        }
+
+        const columnInfoStr: string = JSON.stringify(this.columnInfo).replace(/\\r/g, '');
+        console.log(columnInfoStr);
+
+        // username - datasetName - columnTypes - file
+        const formData = new FormData();
+        formData.append('userName', 'admin');
+        formData.append('name', this.fileName);
+        formData.append('file', this.file as Blob);
+        formData.append('columnTypes', columnInfoStr);
+
+        formData.forEach((x) => console.log(x));
+        this.uploadService.uploadFile(formData).then();
+
+        // this.file = undefined;
+        // this.fileName = '';
+        // this.columnInfo = {};
     }
 
     public validateContinue(): void {

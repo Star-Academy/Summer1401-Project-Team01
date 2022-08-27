@@ -4,8 +4,21 @@
 
         inset-block-start: 10vh;
 
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: var(--flex-gap-large);
+
         block-size: 5vh;
         inline-size: 100%;
+
+        padding-block: var(--padding-small);
+        padding-inline: var(--padding-large);
+
+        .processor-button{
+            max-block-size: 3rem;
+            
+        }
     }
 
     &__side {
