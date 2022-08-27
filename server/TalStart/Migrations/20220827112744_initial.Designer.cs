@@ -12,8 +12,8 @@ using TalStart.Models;
 namespace TalStart.Migrations
 {
     [DbContext(typeof(TalStartContext))]
-    [Migration("20220825092718_initialize")]
-    partial class initialize
+    [Migration("20220827112744_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

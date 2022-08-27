@@ -70,6 +70,10 @@ namespace TalStart.Services
                         case "foo":
                             pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = r.Options});
                             break;
+                        case "select":
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
+
+                            break;
                     }
                 }
                 return pipe;
