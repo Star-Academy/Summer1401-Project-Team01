@@ -16,7 +16,8 @@ builder.Services.AddTransient<IQueryBuilder, QueryBuilder>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>();
 builder.Services.AddTransient<IParser>(x => new Parser(x.GetRequiredService<IQueryBuilder>()));
 builder.Services.AddTransient<IFileService>(x => new FileService(x.GetRequiredService<IParser>()));
-builder.Services.AddTransient<IDatasetService>(x => new DatasetService(x.GetRequiredService<IParser>()));
+builder.Services.AddTransient<IDatasetService>(x =>
+    new DatasetService(x.GetRequiredService<IParser>(), x.GetRequiredService<IQueryBuilder>()));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,10 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: allowCors,
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin().AllowAnyMethod();
-                      });
+        policy => { policy.AllowAnyOrigin().AllowAnyMethod(); });
 });
 
 var app = builder.Build();

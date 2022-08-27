@@ -83,4 +83,20 @@ public class DatasetController : ControllerBase
         await Task.Delay(3);
         return new BadRequestResult();
     }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetDatasetColumns(string datasetName, string username)
+    {
+        try
+        {
+            return Ok(_datasetService.GetDatasetColumns(datasetName, username));
+        }
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
+    }
 }
