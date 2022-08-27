@@ -17,13 +17,13 @@ public class FileController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
+    public async Task<IActionResult> UploadFile([FromHeader] IFormFile file, Dictionary<string, string> columns,
+        string username)
+
     {
         try
         {
-            _fileService.UploadFile(file, columns, username);
+            await _fileService.UploadFile(file, columns, username);
             return new OkResult();
         }
         catch (Exception e)
@@ -32,7 +32,7 @@ public class FileController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPost("download")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
