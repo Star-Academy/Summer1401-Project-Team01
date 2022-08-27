@@ -1,12 +1,15 @@
-﻿using TalStart.Models.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace TalStart.Models;
-
-public class Pipeline
+namespace TalStart.Models
 {
-    public string Name { get; set; }
-    public Dataset Source { get; set; }
-    public Dataset Destination{ get; set; }
-    public List<IProcess> TreeOfProcesses { get; set; } //*
-    public User User { get; set; }
+    public class Pipeline
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Dataset? SourceDataset{ get; set; }
+        public Dataset? DestinationDataset { get; set; }
+        public string? Json { get; set; }
+        public User User { get; set; }
+    }
 }

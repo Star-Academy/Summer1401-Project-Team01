@@ -5,7 +5,7 @@ namespace TalStart.Models
 {
     public class TalStartContext : DbContext
     {
-        public DbSet<PipelineDbo> Pipelines{ get; set; }
+        public DbSet<Pipeline> Pipelines{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Dataset> Datasets  { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

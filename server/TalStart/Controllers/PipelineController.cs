@@ -93,11 +93,8 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        var res = _scenarioService.RunPipeline(pipelineName, username);
-        if (res)
-        {
-            return new OkResult();
-        }
+        if (_scenarioService.RunPipeline(pipelineName, username))
+            return new OkResult(); 
         return new BadRequestResult();
     }
 
