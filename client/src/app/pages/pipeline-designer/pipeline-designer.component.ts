@@ -100,5 +100,6 @@ export class PipelineDesignerComponent {
             return;
         }
         this.isNodeSelectedForDeleteBtn = !!this.diagramNodeService.selectedNode;
+        this.isNodeSelectedForStartBtn = !!this.diagramNodeService.selectedNode;
     }
 }
