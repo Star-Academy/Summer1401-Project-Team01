@@ -1,6 +1,7 @@
 import {AfterViewChecked, Component, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {PipelineService} from '../../services/api/pipeline.service';
 
 @Component({
     selector: 'app-header',
@@ -9,7 +10,7 @@ import {Location} from '@angular/common';
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-    public constructor(private router: Router, private location: Location) {
+    public constructor(private router: Router, private location: Location, public pipelineService: PipelineService) {
         router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 console.log(event.url);
