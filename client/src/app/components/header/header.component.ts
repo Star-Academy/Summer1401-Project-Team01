@@ -10,7 +10,7 @@ import {PipelineService} from '../../services/api/pipeline.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-    public constructor(private router: Router, private location: Location, public pipelineService: PipelineService) {
+    public constructor(private router: Router, private location: Location) {
         router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 console.log(event.url);
