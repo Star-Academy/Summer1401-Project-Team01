@@ -102,4 +102,9 @@ export class PipelineDesignerComponent {
         this.isNodeSelectedForDeleteBtn = !!this.diagramNodeService.selectedNode;
         this.isNodeSelectedForStartBtn = !!this.diagramNodeService.selectedNode;
     }
+
+    public removeNode() {
+        this.diagramNodeService.removeNode();
+        this.snackbarService.show('Processor has been removed successfully.', snackbarType.INFO);
+    }
 }
