@@ -15,9 +15,10 @@ public class FileService : IFileService
         _parser = parser;
     }
 
-    public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
+    public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username,
+        string datasetName)
     {
-        var fileName = $"{file.FileName}.{username}";
+        var fileName = $"{datasetName}.{username}";
         var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", $"{fileName}.csv");
 
         await using var stream = new FileStream(path, FileMode.Create);
@@ -25,9 +26,9 @@ public class FileService : IFileService
         _parser.ParseCsvToPostgresTable(columns, fileName, path);
     }
 
-    public async Task<FileStreamResult> DownloadFile(string fileName, string username)
+    public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
     {
-        var tableName = $"{fileName}.{username}";
+        var tableName = $"{datasetName}.{username}";
 
         var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
 
