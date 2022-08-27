@@ -15,32 +15,15 @@ public class FileController : ControllerBase
         _fileService = fileService;
     }
 
-    [HttpPost]
+    [HttpPost("download")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
+    public async Task<IActionResult> DownloadFile(string datasetName, string username)
     {
         try
         {
-            _fileService.UploadFile(file, columns, username);
-            return new OkResult();
-        }
-        catch (Exception e)
-        {
-            return new BadRequestResult();
-        }
-    }
-
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DownloadFile(string fileName, string username)
-    {
-        try
-        {
-            return await _fileService.DownloadFile(fileName, username);
+            return await _fileService.DownloadFile(datasetName, username);
         }
         catch (Exception e)
         {
