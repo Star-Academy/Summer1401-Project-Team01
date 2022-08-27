@@ -4,6 +4,7 @@ import {AddProcessorModalComponent} from './components/add-processor-modal/add-p
 import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
 import {SnackbarService} from '../../services/snackbar.service';
 import {snackbarType} from '../../models/snackbar-type.enum';
+import {DiagramNodeService} from '../../services/diagram-node.service';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -27,12 +28,14 @@ export class PipelineDesignerComponent {
     //the value should be the processor key and type. -> 'Join, 1'
     //when no processor is selected the value should be ''.
     public selectedProcessor: string = 'Join, 1';
-    public isNodeSelected: boolean = false;
+    public isNodeSelectedForDeleteBtn: boolean = false;
+    public isNodeSelectedForStartBtn: boolean = false;
 
     public constructor(
         private renderer: Renderer2,
         public dialog: MatDialog,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        public diagramNodeService: DiagramNodeService
     ) {}
 
     public dragVHandler(e: MouseEvent): void {
@@ -84,5 +87,18 @@ export class PipelineDesignerComponent {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
         });
+    }
+
+    public checkSelectedNode(): void {
+        if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+            this.isNodeSelectedForDeleteBtn = false;
+            this.isNodeSelectedForStartBtn = false;
+            return;
+        } else if (this.diagramNodeService.selectedNode?.type === 'Start') {
+            this.isNodeSelectedForDeleteBtn = false;
+            this.isNodeSelectedForStartBtn = true;
+            return;
+        }
+        this.isNodeSelectedForDeleteBtn = !!this.diagramNodeService.selectedNode;
     }
 }

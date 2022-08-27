@@ -22,6 +22,7 @@ export class DiagramNodeService {
     public updateSelectedNode(_selectedNodeData: SelectedNodeDataModel): void {
         if (!_selectedNodeData) {
             this.selectedNode = null;
+            this.selectedNodeData = null;
             return;
         }
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};

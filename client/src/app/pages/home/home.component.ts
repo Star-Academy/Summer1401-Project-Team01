@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
-import {UploadService} from "../../services/api/upload.service";
+import {UploadService} from '../../services/api/upload.service';
 
 @Component({
     selector: 'app-home',
@@ -18,7 +18,7 @@ export class HomeComponent {
 
     private dialogRefMouseClose: boolean = false;
 
-    public constructor(public dialog: MatDialog,  private uploadService:UploadService) {}
+    public constructor(public dialog: MatDialog, private uploadService: UploadService) {}
 
     public openSelectTypeModal(): void {
         const dialogRef = this.dialog.open(ColumnTypesComponent, {
@@ -73,13 +73,13 @@ export class HomeComponent {
         const columnInfoStr: string = JSON.stringify(this.columnInfo);
 
         // username - datasetName - columnTypes - file
-        let formData = new FormData();
-        formData.append("userName", 'admin');
-        formData.append("name", this.fileName);
-        formData.append("file", this.file as Blob);
-        formData.append("columnTypes", columnInfoStr);
+        const formData = new FormData();
+        formData.append('userName', 'admin');
+        formData.append('name', this.fileName);
+        formData.append('file', this.file as Blob);
+        formData.append('columnTypes', columnInfoStr);
 
-        console.log(formData)
+        formData.forEach((x) => console.log(x));
 
         this.file = undefined;
         this.fileName = '';
