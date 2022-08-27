@@ -14,13 +14,20 @@ namespace TalStart.Services
             _sqlService = SqlService.GetInstance();
         }
 
-        public bool RunPipeline(string pipelineName, string username)
+        public bool RunPipeline(string pipelineName, string username, int numOfProcesses)
         {
             var pipe = _db.Pipelines.Single(pipeline =>
                 pipeline.Name == pipelineName && pipeline.User.Username == username);
 
             var treeOfProcesses = JsonSerializer.Deserialize<List<IProcess>>(pipe.Json);
 
+            var source = pipe.SourceDataset;
+            foreach (var process in treeOfProcesses)
+            {
+                process.Run(source);
+            }
+
+            /*
             var sourceTable = $"{pipe.SourceDataset.Name}.{pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
@@ -35,8 +42,9 @@ namespace TalStart.Services
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
             finalTable = $"{pipe.DestinationDataset.Name}.{pipe.User.Username}";
-
-            #region Drop Table
+            */
+            
+            /*#region Drop Table
 
             var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}.{pipe.User.Username}\" ";
             _sqlService.ExecuteNonQueryPostgres(query);
@@ -50,6 +58,7 @@ namespace TalStart.Services
             }
 
             #endregion
+            */
 
             return true;
         }

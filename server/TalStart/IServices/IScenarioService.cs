@@ -2,7 +2,7 @@
 {
     public interface IScenarioService
     {
-        public bool RunPipeline(string pipelineName, string username);
+        public bool RunPipeline(string pipelineName, string username, int numOfProcesses);
 
     }
 }

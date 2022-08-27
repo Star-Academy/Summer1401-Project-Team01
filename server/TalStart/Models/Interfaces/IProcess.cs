@@ -5,6 +5,6 @@
         public string Name { get; set; }
         public int Id { get; set; }
         public object? Options { get; set; }
-        public bool Run(string sourceTable, string finalTable );
+        public bool Run(Dataset sourceTable);
     }
 }

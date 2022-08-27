@@ -91,9 +91,9 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
+    public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] int numOfProcesses = -1)
     {
-        if (_scenarioService.RunPipeline(pipelineName, username))
+        if (_scenarioService.RunPipeline(pipelineName, username, numOfProcesses))
             return new OkResult(); 
         return new BadRequestResult();
     }

@@ -14,6 +14,10 @@ namespace TalStart.Models.ProcessType
         public string Name { get; set; }
         public int Id { get;set; }
         public object? Options { get; set; }
+        public bool Run(Dataset sourceTable)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool Run(string sourceTable, string finalTable)
         {
