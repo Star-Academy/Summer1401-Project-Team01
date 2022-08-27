@@ -3,6 +3,8 @@ using TalStart.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var allowCors = "allowCores";
+
 // Add services to the container.
 builder.Services.AddTransient<IPipelineService, PipelineService>();
 builder.Services.AddTransient<IDatasetService, DatasetService>();
@@ -17,6 +19,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowCors,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200");
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(allowCors);
 
 app.UseAuthorization();
 
