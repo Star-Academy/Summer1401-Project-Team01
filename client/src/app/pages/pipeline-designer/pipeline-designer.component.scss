@@ -32,9 +32,17 @@
         z-index: 4;
 
         block-size: 88vh;
-        min-inline-size: 8rem;
+        min-inline-size: 3rem;
         inline-size: 30rem;
         max-inline-size: 50rem;
+
+        transition: width 1s;
+
+        &.closed{
+            min-inline-size: 3rem;
+            inline-size: 3rem;
+            //max-inline-size: 3rem;
+        }
 
         .drag-h {
             position: absolute;
@@ -64,10 +72,18 @@
         overflow-y: hidden;
         z-index: 3;
 
-        min-block-size: 5rem;
+        min-block-size: 3rem;
         block-size: 30rem;
         max-block-size: 40rem;
         inline-size: 100%;
+
+        transition: height 1s;
+
+        &.closed{
+            min-block-size: 3rem;
+            block-size: 3rem;
+            //max-block-size: 3rem;
+        }
 
         .drag-v {
             position: absolute;
@@ -78,5 +94,25 @@
 
             cursor: ns-resize;
         }
+    }
+
+    .collapse-button{
+        position: absolute;
+        inset-block-start: 3px;
+        inset-inline-start: 3px;
+        z-index: 9999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        aspect-ratio: 1 ;
+
+        padding: var(--padding-small);
+
+        border-color: var(--color-gray-90);
+        border-radius: 50%;
+        border-style: solid;
+        border-width: 0.1px;
     }
 }

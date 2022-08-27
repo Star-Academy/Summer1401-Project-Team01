@@ -25,11 +25,21 @@
     <div #sample class="designer__sample">
 
 
-        <div class="drag-v" (mousedown)="dragVHandler($event)"></div>
+        <button class="collapse-button" (click)="collapseDownSample()">
+            <i *ngIf="!sample.classList.contains('closed')" class="fa-solid fa-chevron-down"></i>
+            <i *ngIf="sample.classList.contains('closed')" class="fa-solid fa-chevron-up"></i>
+        </button>
+        <div #dragV class="drag-v" (mousedown)="dragVHandler($event)">
+
+        </div>
     </div>
 
     <aside #side class="designer__side">
+        <button class="collapse-button" (click)="collapseRightSide()">
+            <i *ngIf="!side.classList.contains('closed')" class="fa-solid fa-chevron-right"></i>
+            <i *ngIf="side.classList.contains('closed')" class="fa-solid fa-chevron-left"></i>
+        </button>
         <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
-        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
+        <div #dragH class="drag-h" (mousedown)="dragHHandler($event)"></div>
     </aside>
 </main>
