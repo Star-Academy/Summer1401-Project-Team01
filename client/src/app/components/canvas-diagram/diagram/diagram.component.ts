@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import * as go from 'gojs';
 import {DiagramNodeService} from '../../../services/diagram-node.service';
 import {NodeDataModel} from '../../../models/node-data.model';
+import {Point, Spot} from 'gojs';
 
 const $ = go.GraphObject.make;
 
@@ -40,6 +41,7 @@ export class DiagramComponent {
             'undoManager.isEnabled': true,
             initialAutoScale: go.Diagram.Uniform,
             isTreePathToChildren: true,
+            initialContentAlignment: new Spot(0, 0, -100, -100),
         });
 
         // define the Node template

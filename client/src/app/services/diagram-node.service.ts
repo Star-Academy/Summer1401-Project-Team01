@@ -9,7 +9,7 @@ import * as go from 'gojs';
 export class DiagramNodeService {
     public nodeDataArray: NodeDataModel[] = [
         {key: 0, name: 'Start'},
-        {key: 1, name: 'Filter', parent: 0},
+        {key: 1, name: 'Destination', parent: 0},
     ];
 
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
@@ -22,6 +22,7 @@ export class DiagramNodeService {
     public updateSelectedNode(_selectedNodeData: SelectedNodeDataModel): void {
         if (!_selectedNodeData) {
             this.selectedNode = null;
+            this.selectedNodeData = null;
             return;
         }
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};

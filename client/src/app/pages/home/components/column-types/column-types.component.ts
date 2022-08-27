@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, EventEmitter, Inject, Output} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -8,4 +8,5 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class ColumnTypesComponent {
     public constructor(@Inject(MAT_DIALOG_DATA) public data: {columnTypes: string[]; columnTitles: string[]}) {}
+
 }
