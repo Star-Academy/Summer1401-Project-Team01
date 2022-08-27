@@ -4,7 +4,7 @@
     </div>
 
     <div class="all-processors-container">
-        <div class="processor-container" *ngFor="let processor of allProcessors">
+        <div class="processor-container" *ngFor="let processor of allProcessors" (click)="createProcessor(processor?.name)" [mat-dialog-close]="true">
             <div class="processor-icon-container" [innerHTML]="processor.icon"></div>
             <div class="processor-data-container">
                 <div class="processor-title-container">

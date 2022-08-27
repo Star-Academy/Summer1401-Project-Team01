@@ -27,6 +27,7 @@ export class PipelineDesignerComponent {
     //the value should be the processor key and type. -> 'Join, 1'
     //when no processor is selected the value should be ''.
     public selectedProcessor: string = 'Join, 1';
+    public isNodeSelected: boolean = false;
 
     public constructor(
         private renderer: Renderer2,

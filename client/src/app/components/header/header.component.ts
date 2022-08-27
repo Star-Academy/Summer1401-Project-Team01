@@ -1,6 +1,7 @@
 import {AfterViewChecked, Component, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavigationStart, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {PipelineService} from '../../services/api/pipeline.service';
 
 @Component({
     selector: 'app-header',
