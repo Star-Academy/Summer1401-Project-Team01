@@ -15,9 +15,8 @@
         padding-block: var(--padding-small);
         padding-inline: var(--padding-large);
 
-        .processor-button{
+        .processor-button {
             max-block-size: 3rem;
-            
         }
     }
 
@@ -38,7 +37,7 @@
 
         transition: width 1s;
 
-        &.closed{
+        &.closed {
             min-inline-size: 3rem;
             inline-size: 3rem;
             //max-inline-size: 3rem;
@@ -79,7 +78,7 @@
 
         transition: height 1s;
 
-        &.closed{
+        &.closed {
             min-block-size: 3rem;
             block-size: 3rem;
             //max-block-size: 3rem;
@@ -96,7 +95,7 @@
         }
     }
 
-    .collapse-button{
+    .collapse-button {
         position: absolute;
         inset-block-start: 3px;
         inset-inline-start: 3px;
@@ -106,7 +105,7 @@
         align-items: center;
         justify-content: center;
 
-        aspect-ratio: 1 ;
+        aspect-ratio: 1;
 
         padding: var(--padding-small);
 

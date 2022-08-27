@@ -14,11 +14,12 @@ import {AddProcessorModalComponent} from './pages/pipeline-designer/components/a
 import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designer.module';
 import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {ColumnTypesComponent} from './pages/home/components/column-types/column-types.component';
+import {ColumnTypesComponent} from './pages/data-inventory/components/column-types/column-types.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
 
 @NgModule({
     declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
@@ -38,6 +39,7 @@ import {MatButtonModule} from '@angular/material/button';
         FormsModule,
         MatInputModule,
         MatButtonModule,
+        DataInventoryModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
