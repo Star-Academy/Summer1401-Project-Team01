@@ -1,4 +1,12 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {
+    AfterContentChecked,
+    Component,
+    ElementRef,
+    OnChanges,
+    Renderer2,
+    SimpleChanges,
+    ViewChild,
+} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './components/add-processor-modal/add-processor-modal.component';
 import {SelectDatasetComponent} from './components/select-dataset/select-dataset.component';
@@ -11,7 +19,7 @@ import {DiagramNodeService} from '../../services/diagram-node.service';
     templateUrl: './pipeline-designer.component.html',
     styleUrls: ['./pipeline-designer.component.scss'],
 })
-export class PipelineDesignerComponent {
+export class PipelineDesignerComponent implements AfterContentChecked {
     @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
     @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
     @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
@@ -26,7 +34,7 @@ export class PipelineDesignerComponent {
     //there should be a function to change this field whenever the selected processor on canvas changes.
     //the value should be the processor key and type. -> 'Join, 1'
     //when no processor is selected the value should be ''.
-    public selectedProcessor: string = 'Join, 1';
+    public selectedProcessor: string = '';
     public isNodeSelectedForDeleteBtn: boolean = false;
     public isNodeSelectedForStartBtn: boolean = false;
 
@@ -36,6 +44,12 @@ export class PipelineDesignerComponent {
         private snackbarService: SnackbarService,
         public diagramNodeService: DiagramNodeService
     ) {}
+
+    public ngAfterContentChecked() {
+        this.selectedProcessor = this.diagramNodeService.selectedNode
+            ? this.diagramNodeService.selectedNode.type + ',' + this.diagramNodeService.selectedNode.id.toString()
+            : '';
+    }
 
     public dragVHandler(e: MouseEvent): void {
         this.isVResizing = true;
@@ -104,7 +118,6 @@ export class PipelineDesignerComponent {
     }
 
     public collapseDownSample() {
-        console.log(this.sample!.nativeElement.classList);
         if (this.sample!.nativeElement.classList.contains('closed')) {
             this.sample!.nativeElement.classList.remove('closed');
             this.dragV!.nativeElement.hidden = false;
@@ -115,7 +128,6 @@ export class PipelineDesignerComponent {
     }
 
     public collapseRightSide() {
-        console.log(this.side!.nativeElement.classList);
         if (this.side!.nativeElement.classList.contains('closed')) {
             this.side!.nativeElement.classList.remove('closed');
             this.dragH!.nativeElement.hidden = false;

@@ -20,6 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
+import {ProcessorConfigsModule} from './components/processor-configs/processor-configs.module';
 
 @NgModule({
     declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
@@ -40,6 +41,7 @@ import {DataInventoryModule} from './pages/data-inventory/data-inventory.module'
         MatInputModule,
         MatButtonModule,
         DataInventoryModule,
+        ProcessorConfigsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
