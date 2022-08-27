@@ -23,7 +23,6 @@ public class DatasetController : ControllerBase
     public async Task<IActionResult> AddDataset([FromForm] IFormFile file, [FromForm] string datasetName,
         [FromForm] Dictionary<string, string> columnTypes, [FromForm] string username)
     {
-        Console.WriteLine("salam");
         try
         {
             await _fileService.UploadFile(file, columnTypes, username, datasetName);

@@ -18,12 +18,12 @@ public class FileService : IFileService
     public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username,
         string datasetName)
     {
-        var fileName = $"{datasetName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", $"{fileName}.csv");
+        var tableName = $"{datasetName}.{username}";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
 
         await using var stream = new FileStream(path, FileMode.Create);
         await file.CopyToAsync(stream);
-        _parser.ParseCsvToPostgresTable(columns, fileName, path);
+        _parser.ParseCsvToPostgresTable(columns, tableName, path);
     }
 
     public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
