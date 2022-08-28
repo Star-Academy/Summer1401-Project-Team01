@@ -11,5 +11,5 @@ public class User
     public string Email { get; set; }//*
     public string Password { get; set; }
     public virtual List<Dataset> ListOfDataSets { get; set; }
-    public virtual List<PipelineDbo> ListOfPipelines { get; set; }
+    public virtual List<Pipeline> ListOfPipelines { get; set; }
 }

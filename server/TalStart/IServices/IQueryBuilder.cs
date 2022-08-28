@@ -5,6 +5,7 @@ public interface IQueryBuilder
     public string ExportCsvQuery(string tableName, string filePath);
 
     public string ImportCsvQuery(string tableName, string filePath);
+    public string DropTableQuery(string tableName);
 
     public string BuildTableQuery(Dictionary<string, string> columnType, string tableName);
 

@@ -36,18 +36,26 @@ public class FileService : IFileService
     public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
     {
         var tableName = $"{datasetName}.{username}";
-
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
+        
+        var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
         _parser.ParsePostgresTableToCsv(tableName, path);
         await using var stream = new FileStream(path, FileMode.Open);
         return new FileStreamResult(stream, "text/csv");
     }
 
+    public void DeleteFile(string datasetName, string username)
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(),
+            $"resources\\{username}", $"{datasetName}.csv");
+        FileSystem.DeleteFile(path);
+    }
+    
     public void RenameCsvFile(string finalDirectoryName, string oldName, string newName)
     {
+        var path = $"{AppContext.BaseDirectory}../../../resources/{finalDirectoryName}/";
         FileSystem.RenameFile(
-            Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{finalDirectoryName}", $"{oldName}.csv")
+            Path.Combine(path, $"{oldName}.csv")
             , $"{newName}.csv");
     }
 }

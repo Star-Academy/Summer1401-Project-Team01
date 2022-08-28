@@ -45,7 +45,7 @@ namespace TalStart.Migrations
                     b.ToTable("Datasets");
                 });
 
-            modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
+            modelBuilder.Entity("TalStart.Models.Pipeline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace TalStart.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
+            modelBuilder.Entity("TalStart.Models.Pipeline", b =>
                 {
                     b.HasOne("TalStart.Models.Dataset", "DestinationDataset")
                         .WithMany()

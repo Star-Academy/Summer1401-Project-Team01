@@ -51,9 +51,9 @@ namespace TalStart.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Json = table.Column<string>(type: "text", nullable: true),
                     SourceDatasetId = table.Column<int>(type: "integer", nullable: true),
                     DestinationDatasetId = table.Column<int>(type: "integer", nullable: true),
-                    Json = table.Column<string>(type: "text", nullable: true),
                     Username = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
