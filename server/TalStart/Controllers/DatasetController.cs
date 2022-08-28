@@ -74,14 +74,19 @@ public class DatasetController : ControllerBase
             return new BadRequestResult();
         }
     }
-
-  /*  [HttpGet("{count}")]
+    [HttpGet("{datasetName}/{username}/{count}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetSample(int count)
+    public async Task<IActionResult> GetDatasetSample([FromRoute] string datasetName, [FromRoute] string username, [FromRoute] int count)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }*/
+        try
+        {
+            return Ok(_datasetService.PreviewDataset(datasetName, username, count));
+        }
+        catch (Exception)
+        {
+            return new BadRequestResult();
+        }
+    }
 }
