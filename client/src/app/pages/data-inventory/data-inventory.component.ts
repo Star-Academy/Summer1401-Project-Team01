@@ -77,7 +77,7 @@ export class DataInventoryComponent {
         const formData = new FormData();
         formData.append('username', 'admin');
         formData.append('datasetName', this.fileName);
-        formData.append('file', fileToUpload);
+        formData.append('file', fileToUpload, fileToUpload.name);
         formData.append('columnTypes', columnInfoStr);
 
         formData.forEach((x) => console.log(x));
