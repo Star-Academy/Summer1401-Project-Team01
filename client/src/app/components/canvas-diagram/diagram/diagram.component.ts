@@ -160,5 +160,14 @@ export class DiagramComponent {
 
             this.nodeClicked.emit(node);
         });
+
+        DiagramNodeService.diagram.addDiagramListener('ObjectSingleClicked', (e) => {
+            const partName = e.subject.part.data.name;
+            if (partName === 'Start') {
+                this.diagramNodeService.openSelectDatasetModal();
+            } else if (partName === 'Destination') {
+                this.diagramNodeService.openSelectDatasetModal();
+            }
+        });
     }
 }

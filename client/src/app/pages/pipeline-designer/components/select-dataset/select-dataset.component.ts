@@ -1,14 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
 import {CellClassParams, ColDef, GridApi, GridReadyEvent, ICellRendererParams} from 'ag-grid-community';
 import {HttpClient} from '@angular/common/http';
+import {DatasetService} from "../../../../services/api/dataset.service";
+import {DiagramNodeService} from "../../../../services/diagram-node.service";
 
 @Component({
     selector: 'app-select-dataset',
     templateUrl: './select-dataset.component.html',
     styleUrls: ['./select-dataset.component.scss'],
 })
-export class SelectDatasetComponent {
+export class SelectDatasetComponent implements OnInit {
     @ViewChild(AgGridAngular) public agGrid!: AgGridAngular;
 
     private gridApi!: GridApi;
@@ -30,7 +32,6 @@ export class SelectDatasetComponent {
                 return SelectDatasetComponent.spanMaker(params);
             },
         },
-        {field: 'createdAt'},
     ];
 
     private static determineFileType(params: CellClassParams): string {
@@ -55,22 +56,33 @@ export class SelectDatasetComponent {
         filter: true,
     };
 
-    public rowData$: any[] = [
-        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
-        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
-        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
-        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
-        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
-        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
-        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
-        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
-        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
-        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
-    ];
+    public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient) {}
+    public constructor(private http: HttpClient, private datasetService: DatasetService, private diagramNodeService: DiagramNodeService) {}
 
     public onGridReady(params: GridReadyEvent): void {
         this.gridApi = params.api;
     }
+
+    public async ngOnInit(): Promise<void> {
+        let data = await this.datasetService.getDatasets();
+        let newRowData = []
+
+        for (let i = 0; i < data.length; i++) {
+            newRowData.push({fileName: data[i], dataType: 'csv'})
+        }
+        this.gridApi.setRowData(newRowData);
+        console.log(this.rowData$)
+    }
+
+    public async selectDataset(): Promise<void> {
+        const selectedData = this.gridApi.getSelectedRows();
+        const fileName = selectedData[0].fileName;
+
+        if (this.diagramNodeService.selectedNode?.type === 'Start') {
+
+        }
+        else if (this.diagramNodeService.selectedNode?.type === 'Destination') {}
+    }
+
 }

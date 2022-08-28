@@ -12,4 +12,6 @@ export class PipelineService {
         const response = await fetch(PIPELINE_GET_ALL_PIPELINE_NAMES + name);
         console.log(response);
     }
+
+    public async addDataset(username: string, datasetName: string, pipelineName: string) {}
 }
