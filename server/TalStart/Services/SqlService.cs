@@ -21,6 +21,7 @@ public class SqlService : ISqlService
 
     public async void ExecuteNonQueryPostgres(string query)
     {
+        Console.WriteLine(query);
         await using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
         await using var cmd = new NpgsqlCommand(query);
