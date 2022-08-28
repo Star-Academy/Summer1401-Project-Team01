@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-config-input',
-  templateUrl: './config-input.component.html',
-  styleUrls: ['./config-input.component.scss']
+    selector: 'app-config-input',
+    templateUrl: './config-input.component.html',
+    styleUrls: ['./config-input.component.scss'],
 })
 export class ConfigInputComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void {}
 }
