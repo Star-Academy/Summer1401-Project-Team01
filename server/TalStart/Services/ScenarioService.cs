@@ -18,7 +18,7 @@ namespace TalStart.Services
 
         public bool RunPipeline(string pipelineName, string username) {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.Source.Name}.{ pipe.User.Username}";
+            var sourceTable = $"{pipe.SourceDataset.Name}.{ pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -30,8 +30,8 @@ namespace TalStart.Services
             }
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
-            finalTable = $"{pipe.Destination.Name}.{pipe.User.Username}";
-            var query = $"DROP TABLE \"{pipe.Destination.Name}.{pipe.User.Username}\" ";
+            finalTable = $"{pipe.DestinationDataset.Name}.{pipe.User.Username}";
+            var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}.{pipe.User.Username}\" ";
             _sqlService.ExecuteNonQueryPostgres(query);
             query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
             _sqlService.ExecuteNonQueryPostgres(query);
@@ -49,19 +49,14 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeDbo = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
+                var pipe = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeDbo == null || pipeDbo.SourceDataset == null || pipeDbo.DestinationDataset == null)
+                if (pipe == null || pipe.SourceDataset == null || pipe.DestinationDataset == null)
                 {
                     return null;
                 }
-                var  pipe = new Pipeline();
-                pipe.Name = pipeDbo.Name;
-                pipe.User = pipeDbo.User;
-                pipe.Source = pipeDbo.SourceDataset;
-                pipe.Destination = pipeDbo.DestinationDataset;
                 pipe.TreeOfProcesses = new List<IProcess>();
-                var res = JsonSerializer.Deserialize<List<Process>>(pipeDbo.Json);
+                var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
                 res.OrderBy(r => r.Id);
                 foreach (var r in res)
                 {
