@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Data;
+using System.Text.Json;
 using TalStart.IServices;
 using TalStart.Models;
 using TalStart.Models.Interfaces;
@@ -11,14 +12,18 @@ namespace TalStart.Services
     {
         TalStartContext _db = new();
         ISqlService _sqlService;
-        public ScenarioService()
+        IDatasetService _datasetService;
+
+        public ScenarioService(IDatasetService datasetService)
         {
             _sqlService = SqlService.GetInstance();
+            _datasetService = datasetService;
         }
 
-        public bool RunPipeline(string pipelineName, string username) {
+        public async Task<DataTable> RunPipeline(string pipelineName, string username)
+        {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.Source.Name}.{ pipe.User.Username}";
+            var sourceTable = $"{pipe.Source.Name}.{pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -28,6 +33,7 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
+
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
             finalTable = $"{pipe.Destination.Name}.{pipe.User.Username}";
@@ -40,11 +46,11 @@ namespace TalStart.Services
             {
                 query = $"DROP TABLE \"{temp}\" ";
                 _sqlService.ExecuteNonQueryPostgres(query);
-
             }
 
-            return true;
+            return await _datasetService.PreviewDataset(username, pipe.Destination.Name, 50);
         }
+
         private Pipeline? MakePipeline(string pipelineName, string username)
         {
             try
@@ -55,7 +61,8 @@ namespace TalStart.Services
                 {
                     return null;
                 }
-                var  pipe = new Pipeline();
+
+                var pipe = new Pipeline();
                 pipe.Name = pipeDbo.Name;
                 pipe.User = pipeDbo.User;
                 pipe.Source = pipeDbo.SourceDataset;
@@ -68,7 +75,7 @@ namespace TalStart.Services
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = r.Options});
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = r.Options});
                             break;
                         case "select":
                             pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
@@ -76,14 +83,13 @@ namespace TalStart.Services
                             break;
                     }
                 }
-                return pipe;
 
+                return pipe;
             }
             catch (Exception e)
             {
                 throw;
             }
         }
-
     }
 }
