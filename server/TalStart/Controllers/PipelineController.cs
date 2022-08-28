@@ -49,7 +49,7 @@ public class PipelineController : ControllerBase
     }
 
 
-    [HttpGet]
+  /*  [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,7 +57,7 @@ public class PipelineController : ControllerBase
     {
         await Task.Delay(3);
         return new BadRequestResult();
-    }
+    }*/
 
 
     [HttpGet("{username}")]
@@ -70,14 +70,14 @@ public class PipelineController : ControllerBase
         {
             return Ok(_pipelineService.GetAllPipelinesNames(username));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }
     }
     
 
-    [HttpGet]
+    /*[HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -85,7 +85,7 @@ public class PipelineController : ControllerBase
     {
         await Task.Delay(3);
         return new BadRequestResult();
-    }
+    }*/
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
