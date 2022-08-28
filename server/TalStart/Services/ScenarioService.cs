@@ -12,15 +12,18 @@ namespace TalStart.Services
     {
         private TalStartContext _db = new();
         private ISqlService _sqlService;
-        public ScenarioService(ISqlService SqlService)
+        private IDatasetService _datasetService;
+
+        public ScenarioService(IDatasetService datasetService)
         {
-            _sqlService = SqlService;
+            _sqlService = SqlService.GetInstance();
+            _datasetService = datasetService;
         }
 
         public async Task<DataTable> RunPipeline(string pipelineName, string username)
         {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.SourceDataset.Name}.{ pipe.User.Username}";
+            var sourceTable = $"{pipe.SourceDataset.Name}.{pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -33,8 +36,8 @@ namespace TalStart.Services
 
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
-            finalTable = $"{pipe.DestinationDataset.Name}.{pipe.User.Username}";
-            var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}.{pipe.User.Username}\" ";
+            finalTable = $"{pipe.DestinationDataset.Name}_{pipe.User.Username}";
+            var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}_{pipe.User.Username}\" ";
             _sqlService.ExecuteNonQueryPostgres(query);
             query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
             _sqlService.ExecuteNonQueryPostgres(query);
@@ -45,7 +48,7 @@ namespace TalStart.Services
                 _sqlService.ExecuteNonQueryPostgres(query);
             }
 
-            return await _datasetService.PreviewDataset(username, pipe.Destination.Name, 50);
+            return await _datasetService.PreviewDataset(username, pipe.DestinationDataset.Name, 50);
         }
 
         private Pipeline? MakePipeline(string pipelineName, string username)
@@ -58,6 +61,7 @@ namespace TalStart.Services
                 {
                     return null;
                 }
+
                 pipe.TreeOfProcesses = new List<IProcess>();
                 var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
                 res.OrderBy(r => r.Id);

@@ -30,12 +30,12 @@ public class FileService : IFileService
         {
             file.CopyTo(stream);
         }
-        _parser.ParseCsvToPostgresTable(columns, $"{datasetName}.{username}", path);
+        _parser.ParseCsvToPostgresTable(columns, $"{datasetName}_{username}", path);
     }
 
     public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
     {
-        var tableName = $"{datasetName}.{username}";
+        var tableName = $"{datasetName}_{username}";
         
         var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 

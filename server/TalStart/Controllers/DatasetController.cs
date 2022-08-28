@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Newtonsoft.Json;
 using TalStart.IServices;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TalStart.Controllers;
 
@@ -35,7 +36,7 @@ public class DatasetController : ControllerBase
                     columns[columnName] = "text";
                 }
             }
-            await _fileService.UploadFile(file, columns, username, datasetName);
+            _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
@@ -91,10 +92,13 @@ public class DatasetController : ControllerBase
     {
         try
         {
-            return Ok(_datasetService.PreviewDataset(datasetName, username, count));
+            var dt = await  _datasetService.PreviewDataset(username, datasetName, count);
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }

@@ -17,11 +17,10 @@ builder.Services.AddTransient<IQueryBuilder, QueryBuilder>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>(x =>
     new ScenarioService(x.GetRequiredService<IDatasetService>()));
 builder.Services.AddTransient<IParser>(x => new Parser(x.GetRequiredService<IQueryBuilder>()
-    ,x.GetRequiredService<ISqlService>()));
+    , x.GetRequiredService<ISqlService>()));
 builder.Services.AddTransient<IFileService>(x => new FileService(x.GetRequiredService<IParser>()));
 builder.Services.AddTransient<IDatasetService>(x => new DatasetService(x.GetRequiredService<IParser>(),
-    x.GetRequiredService<ISqlService>(), x.GetRequiredService<IQueryBuilder>(), 
-    x.GetRequiredService<IFileService>()));
+    x.GetRequiredService<IQueryBuilder>(), x.GetRequiredService<IFileService>()));
 //builder.Services.AddScoped<FooProcess>(x => new FooProcess(x.GetRequiredService<SqlService>()));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

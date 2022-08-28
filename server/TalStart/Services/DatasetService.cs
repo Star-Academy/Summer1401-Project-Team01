@@ -35,8 +35,9 @@ namespace TalStart.Services
                 _db.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -121,8 +122,8 @@ namespace TalStart.Services
             await using var conn = new NpgsqlConnection(CString.connectionString);
             var compiler = new PostgresCompiler();
             var db = new QueryFactory(conn, compiler);
-            var tableName = $"{datasetName}.{username}";
-
+            var tableName = $"{datasetName}_{username}";
+            Console.WriteLine(tableName);
             var query = await db.Query(tableName).Limit(count).GetAsync();
             var json = JsonConvert.SerializeObject(query);
             var dataTable = (DataTable) JsonConvert.DeserializeObject(json, typeof(DataTable))!;
