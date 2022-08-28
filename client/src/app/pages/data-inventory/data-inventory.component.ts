@@ -70,12 +70,14 @@ export class DataInventoryComponent {
             this.columnInfo[this.columnTitles[i]] = this.columnTypes[i];
         }
 
+        let fileToUpload = <File>this.file;
+
         const columnInfoStr: string = JSON.stringify(this.columnInfo).replace(/\\r/g, '');
 
         const formData = new FormData();
         formData.append('username', 'admin');
         formData.append('datasetName', this.fileName);
-        formData.append('file', this.file as Blob);
+        formData.append('file', fileToUpload);
         formData.append('columnTypes', columnInfoStr);
 
         formData.forEach((x) => console.log(x));
