@@ -1,7 +1,4 @@
 using System.Data;
-using System.Net;
-using System.Runtime.InteropServices;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Npgsql;
 using SqlKata.Execution;
