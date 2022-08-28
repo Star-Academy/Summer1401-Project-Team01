@@ -25,12 +25,12 @@ export class UploadService {
         //         error: (error) => console.log(error),
         //     });
 
-        // let xhr = new XMLHttpRequest();
-        // xhr.open('POST', UPLOAD_FILE, true);
-        // xhr.onload = function () {
-        //     // do something to response
-        //     console.log(this.responseText);
-        // };
-        // xhr.send(formData);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', UPLOAD_FILE, true);
+        xhr.onload = function () {
+            // do something to response
+            console.log(this.responseText);
+        };
+        xhr.send(formData);
     }
 }
