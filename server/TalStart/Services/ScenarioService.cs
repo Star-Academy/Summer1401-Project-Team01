@@ -49,19 +49,14 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeDbo = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
+                var pipe = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
-                if (pipeDbo == null || pipeDbo.SourceDataset == null || pipeDbo.DestinationDataset == null)
+                if (pipe == null || pipe.SourceDataset == null || pipe.DestinationDataset == null)
                 {
                     return null;
                 }
-                var  pipe = new Pipeline();
-                pipe.Name = pipeDbo.Name;
-                pipe.User = pipeDbo.User;
-                pipe.SourceDataset = pipeDbo.SourceDataset;
-                pipe.DestinationDataset = pipeDbo.DestinationDataset;
                 pipe.TreeOfProcesses = new List<IProcess>();
-                var res = JsonSerializer.Deserialize<List<Process>>(pipeDbo.Json);
+                var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
                 res.OrderBy(r => r.Id);
                 foreach (var r in res)
                 {

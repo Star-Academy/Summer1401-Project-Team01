@@ -537,3 +537,4 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,webstorm,visualstudio
 /server/TalStart/Properties/CString.cs
+/server/TalStart/resources/admin/test_(1).csv
