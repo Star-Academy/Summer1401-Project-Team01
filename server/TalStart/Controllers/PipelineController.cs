@@ -41,9 +41,9 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name)
+    public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name, [FromForm] string username)
     {
-        if(_pipelineService.UpdateJson(processes, name))
+        if(_pipelineService.UpdateJson(processes, name,username))
             return new OkResult();
         return new BadRequestResult();
     }
