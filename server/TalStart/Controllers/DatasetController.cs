@@ -21,12 +21,13 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddDataset([FromForm] IFormFile file, [FromForm] string datasetName,
+    public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
         [FromForm] string columnTypes, [FromForm] string username)
     {
         Console.WriteLine("salam");
         try
         {
+            var file = Request.Form.Files[0];
             var columns = JsonSerializer.Deserialize<Dictionary<string, string>>(columnTypes); 
             await _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);

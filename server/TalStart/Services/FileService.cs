@@ -24,10 +24,12 @@ public class FileService : IFileService
             Directory.CreateDirectory(dir);
         }
         //var fileName = $"{datasetName}.{username}";
-        var path = $"{System.AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
+        var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
-        await using var stream = new FileStream(path, FileMode.Create);
-        await file.CopyToAsync(stream);
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            file.CopyTo(stream);
+        }
         _parser.ParseCsvToPostgresTable(columns, $"{datasetName}.{username}", path);
     }
 
