@@ -136,4 +136,15 @@ export class PipelineDesignerComponent implements AfterContentChecked {
             this.dragH!.nativeElement.hidden = true;
         }
     }
+
+    public runProcess(): void {
+        this.snackbarService.show('Please Wait', snackbarType.INFO);
+
+        /* const response = fetch(URL, {
+            method: 'patch',
+            body: {"pipelineName": "this.diagramNodeService.pipelineName",
+                "username": "this.diagramNodeService.username",
+                ...init,
+        } */
+    }
 }

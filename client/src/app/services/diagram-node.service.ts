@@ -75,4 +75,13 @@ export class DiagramNodeService {
         // @ts-ignore
         DiagramNodeService.diagram?.model = this.model;
     }
+
+    public async fetchDiagram(): Promise<void> {
+        // fetch( URL , {
+        //     method: 'post',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify(this.nodeDataArray),
+        //     ...init,
+        // })
+    }
 }
