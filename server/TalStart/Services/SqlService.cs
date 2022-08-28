@@ -7,7 +7,7 @@ namespace TalStart.Services;
 
 public class SqlService : ISqlService
 {
-    private SqlService()
+    public SqlService()
     {
 
     }
