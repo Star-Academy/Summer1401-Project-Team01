@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.FileIO;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
-using TalStart.Services.ParserService;
 
 namespace TalStart.Services;
 
@@ -35,5 +35,12 @@ public class FileService : IFileService
         _parser.ParsePostgresTableToCsv(tableName, path);
         await using var stream = new FileStream(path, FileMode.Open);
         return new FileStreamResult(stream, "text/csv");
+    }
+
+    public void RenameCsvFile(string finalDirectoryName, string oldName, string newName)
+    {
+        FileSystem.RenameFile(
+            Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{finalDirectoryName}", $"{oldName}.csv")
+            , $"{newName}.csv");
     }
 }
