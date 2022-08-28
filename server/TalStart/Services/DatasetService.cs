@@ -19,10 +19,10 @@ namespace TalStart.Services
         private readonly IQueryBuilder _queryBuilder;
         private readonly IFileService _fileService;
 
-        public DatasetService(IParser parser, ISqlService sqlService, IQueryBuilder queryBuilder, IFileService fileService)
+        public DatasetService(IParser parser, IQueryBuilder queryBuilder, IFileService fileService)
         {
             _parser = parser;
-            _sqlService = sqlService;
+            _sqlService = SqlService.GetInstance();
             _queryBuilder = queryBuilder;
             _fileService = fileService;
         }
