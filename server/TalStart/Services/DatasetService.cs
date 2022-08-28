@@ -26,6 +26,7 @@ namespace TalStart.Services
             _queryBuilder = queryBuilder;
             _fileService = fileService;
         }
+
         public bool AddDataset(string username, string datasetName)
         {
             try
@@ -37,7 +38,6 @@ namespace TalStart.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -49,7 +49,7 @@ namespace TalStart.Services
                 var dataset = _db.Datasets.Single(dataset =>
                     dataset.User.Username == username && dataset.Name == datasetName);
                 _db.Datasets.Remove(dataset);
-                var query =_queryBuilder.DropTableQuery($"{datasetName}.{username}");
+                var query = _queryBuilder.DropTableQuery($"\"{datasetName}_{username}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _fileService.DeleteFile(datasetName, username);
                 _db.SaveChanges();
@@ -123,7 +123,6 @@ namespace TalStart.Services
             var compiler = new PostgresCompiler();
             var db = new QueryFactory(conn, compiler);
             var tableName = $"{datasetName}_{username}";
-            Console.WriteLine(tableName);
             var query = await db.Query(tableName).Limit(count).GetAsync();
             var json = JsonConvert.SerializeObject(query);
             var dataTable = (DataTable) JsonConvert.DeserializeObject(json, typeof(DataTable))!;
