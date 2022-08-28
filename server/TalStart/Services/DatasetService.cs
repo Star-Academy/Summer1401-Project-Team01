@@ -26,8 +26,6 @@ namespace TalStart.Services
             _queryBuilder = queryBuilder;
             _fileService = fileService;
         }
-
-
         public bool AddDataset(string username, string datasetName)
         {
             try
@@ -43,13 +41,16 @@ namespace TalStart.Services
             }
         }
 
-        public bool RemoveDataset(string username, string datasetName)
+        public bool RemoveDataset(string datasetName, string username)
         {
             try
             {
                 var dataset = _db.Datasets.Single(dataset =>
                     dataset.User.Username == username && dataset.Name == datasetName);
                 _db.Datasets.Remove(dataset);
+                var query =_queryBuilder.DropTableQuery($"{datasetName}.{username}");
+                _sqlService.ExecuteNonQueryPostgres(query);
+                _fileService.DeleteFile(datasetName, username);
                 _db.SaveChanges();
                 return true;
             }

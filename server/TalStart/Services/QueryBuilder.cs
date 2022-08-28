@@ -14,7 +14,12 @@ public class QueryBuilder : IQueryBuilder
     {
         return $"TRUNCATE TABLE \"{tableName}\";\n COPY \"{tableName}\" FROM '{filePath}'  DELIMITER ',' CSV HEADER;";
     }
-
+    
+    public string DropTableQuery(string tableName)
+    {
+        return $"DROP TABLE [ IF EXISTS ] {tableName};\n";
+    }
+    
     public string GetColumnNamesQuery(string tableName)
     {
         return

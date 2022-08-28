@@ -22,7 +22,6 @@ builder.Services.AddTransient<IDatasetService>(x => new DatasetService(x.GetRequ
     x.GetRequiredService<ISqlService>(), x.GetRequiredService<IQueryBuilder>(), 
     x.GetRequiredService<IFileService>()));
 //builder.Services.AddScoped<FooProcess>(x => new FooProcess(x.GetRequiredService<SqlService>()));
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
