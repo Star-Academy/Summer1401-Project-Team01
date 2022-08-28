@@ -10,6 +10,7 @@ import {UploadService} from '../../services/api/upload.service';
 })
 export class DataInventoryComponent {
     public file?: File = undefined;
+    public fileStr: string = '';
     public fileName: string = '';
     public columnTitles: string[] = [];
     public columnTypes: string[] = [];
@@ -38,6 +39,7 @@ export class DataInventoryComponent {
 
     public fillNameInput($event: File): void {
         this.file = $event;
+        this.fileStr = this.parseCsv($event);
         this.fileName = this.parseName($event.name);
         this.columnTitles = this.parseColumnTitles($event);
         this.columnTypes.fill('String', 0, this.columnTypes.length);
@@ -65,6 +67,16 @@ export class DataInventoryComponent {
         return titles;
     }
 
+    public parseCsv($event: File): string {
+        const reader = new FileReader();
+        let lines = '';
+        reader.onload = (): void => {
+            lines = reader.result as string;
+        }
+        reader.readAsText($event);
+        return lines;
+    }
+
     public fileSubmitHandler(): void {
         for (let i = 0; i < this.columnTypes.length; i++) {
             this.columnInfo[this.columnTitles[i]] = this.columnTypes[i];
@@ -77,7 +89,8 @@ export class DataInventoryComponent {
         const formData = new FormData();
         formData.append('username', 'admin');
         formData.append('datasetName', this.fileName);
-        formData.append('file', fileToUpload, fileToUpload.name);
+        //formData.append('file', this.fileStr);
+        formData.append('file', fileToUpload);
         formData.append('columnTypes', columnInfoStr);
 
         formData.forEach((x) => console.log(x));

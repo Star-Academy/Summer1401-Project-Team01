@@ -12,22 +12,22 @@ export class UploadService {
     public async uploadFile(formData: FormData): Promise<void> {
         //await this.apiService.postRequest({url: UPLOAD_FILE, body: formData});
 
-        // await fetch(UPLOAD_FILE, {
-        //     method: 'post',
-        //     body: formData,
-        //
-        // })
+        await fetch(UPLOAD_FILE, {
+            method: 'post',
+            body: formData,
+        })
 
-        this.http.post(UPLOAD_FILE, formData, {reportProgress: true, observe: 'events'}).subscribe(
-            (event) => {
-                if (event.type === HttpEventType.Response) {
-                    console.log(event);
-                }
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        // this.http.post(UPLOAD_FILE, formData, {reportProgress: true, observe: 'events'}).subscribe(
+        //     (event) => {
+        //         if (event.type === HttpEventType.Response) {
+        //             console.log(event);
+        //         }
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //     }
+        // );
+
         //     .subscribe({
         //     next: (response) => console.log(response),
         //     error: (error) => console.log(error),
