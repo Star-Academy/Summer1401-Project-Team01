@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {UPLOAD_FILE} from '../../utilities/urls';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -12,24 +12,22 @@ export class UploadService {
     public async uploadFile(formData: FormData): Promise<void> {
         //await this.apiService.postRequest({url: UPLOAD_FILE, body: formData});
 
-        await fetch(UPLOAD_FILE, {
-            method: 'post',
-            body: formData,
-        
-        })
+        // await fetch(UPLOAD_FILE, {
+        //     method: 'post',
+        //     body: formData,
+        //
+        // })
 
-        // this.http
-        //     .post(UPLOAD_FILE, formData)
-        //     .subscribe({
-        //         next: (response) => console.log(response),
-        //         error: (error) => console.log(error),
-        //     });
+        this.http.post(UPLOAD_FILE, formData).subscribe({
+            next: (response) => console.log(response),
+            error: (error) => console.log(error),
+        });
 
         // let xhr = new XMLHttpRequest();
         // xhr.open('POST', UPLOAD_FILE, true);
         // xhr.onload = function () {
-            // // do something to response
-            // console.log(this.responseText);
+        //     // do something to response
+        //     console.log(this.responseText);
         // };
         // xhr.send(formData);
     }
