@@ -36,11 +36,11 @@ public class SqlService : ISqlService
         return await cmd.ExecuteScalarAsync();
     }
 
-    public async Task<DbDataReader>  ExecuteReaderPostgres(string query)
+    public DbDataReader  ExecuteReaderPostgres(string query)
     {
-        await using var conn = new NpgsqlConnection(CString.connectionString);
+        using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
-        await using var cmd = new NpgsqlCommand(query);
-        return await cmd.ExecuteReaderAsync();
+        using var cmd = new NpgsqlCommand(query);
+        return cmd.ExecuteReader();
     }
 }

@@ -24,7 +24,6 @@ public class DatasetController : ControllerBase
     public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
         [FromForm] string columnTypes, [FromForm] string username)
     {
-        Console.WriteLine("salam");
         try
         {
             var file = Request.Form.Files[0];
@@ -88,6 +87,22 @@ public class DatasetController : ControllerBase
             return Ok(_datasetService.PreviewDataset(datasetName, username, count));
         }
         catch (Exception)
+        {
+            return new BadRequestResult();
+        }
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetDatasetColumns(string datasetName, string username)
+    {
+        try
+        {
+            return Ok(_datasetService.GetDatasetColumns(datasetName, username));
+        }
+        catch (Exception e)
         {
             return new BadRequestResult();
         }
