@@ -21,6 +21,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
 import {ProcessorConfigsModule} from './components/processor-configs/processor-configs.module';
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
     declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
@@ -42,6 +44,8 @@ import {ProcessorConfigsModule} from './components/processor-configs/processor-c
         MatButtonModule,
         DataInventoryModule,
         ProcessorConfigsModule,
+        MatOptionModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

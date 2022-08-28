@@ -71,12 +71,10 @@ export class DataInventoryComponent {
         }
 
         const columnInfoStr: string = JSON.stringify(this.columnInfo).replace(/\\r/g, '');
-        console.log(columnInfoStr);
 
-        // username - datasetName - columnTypes - file
         const formData = new FormData();
-        formData.append('userName', 'admin');
-        formData.append('name', this.fileName);
+        formData.append('username', 'admin');
+        formData.append('datasetName', this.fileName);
         formData.append('file', this.file as Blob);
         formData.append('columnTypes', columnInfoStr);
 
