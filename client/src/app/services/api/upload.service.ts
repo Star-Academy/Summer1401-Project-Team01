@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {UPLOAD_FILE} from '../../utilities/urls';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEventType} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -18,10 +18,20 @@ export class UploadService {
         //
         // })
 
-        this.http.post(UPLOAD_FILE, formData).subscribe({
-            next: (response) => console.log(response),
-            error: (error) => console.log(error),
-        });
+        this.http.post(UPLOAD_FILE, formData, {reportProgress: true, observe: 'events'}).subscribe(
+            (event) => {
+                if (event.type === HttpEventType.Response) {
+                    console.log(event);
+                }
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+        //     .subscribe({
+        //     next: (response) => console.log(response),
+        //     error: (error) => console.log(error),
+        // });
 
         // let xhr = new XMLHttpRequest();
         // xhr.open('POST', UPLOAD_FILE, true);
