@@ -1,0 +1,35 @@
+<main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">
+    <div class="designer__header">
+        <button
+                class="global-button processor-button"
+                (click)="openAddProcessorModal()"
+                k
+                [disabled]="!isNodeSelectedForStartBtn"
+        >
+            Add processor After This
+        </button>
+        <button
+                class="global-button processor-button"
+                (click)="removeNode()"
+                k
+                [disabled]="!isNodeSelectedForDeleteBtn"
+        >
+            Delete processor
+        </button>
+    </div>
+
+    <div #canvas class="designer__canvas">
+        <app-canvas-diagram (click)="checkSelectedNode()"></app-canvas-diagram>
+    </div>
+
+    <div #sample class="designer__sample">
+
+
+        <div class="drag-v" (mousedown)="dragVHandler($event)"></div>
+    </div>
+
+    <aside #side class="designer__side">
+        <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        <div class="drag-h" (mousedown)="dragHHandler($event)"></div>
+    </aside>
+</main>

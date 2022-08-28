@@ -7,30 +7,30 @@ namespace TalStart.Services;
 
 public class FileService : IFileService
 {
-    private IQueryBuilder _queryBuilder;
-    private IParser _parser;
+    private readonly IParser _parser;
 
-    public FileService()
+
+    public FileService(IParser parser)
     {
-        _queryBuilder = new QueryBuilder();
-        _parser = new Parser(_queryBuilder);
+        _parser = parser;
     }
 
-    public async void UploadFile(IFormFile file, Dictionary<string, string> columns, string username)
+    public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username,
+        string datasetName)
     {
-        var tableName = $"{file.FileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
+        var fileName = $"{datasetName}.{username}";
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"/resources/{username}", $"{fileName}.csv");
 
-        await using var stream = File.Create(path);
+        await using var stream = new FileStream(path, FileMode.Create);
         await file.CopyToAsync(stream);
-        _parser.ParseCsvToPostgresTable(columns, tableName, path);
+        _parser.ParseCsvToPostgresTable(columns, fileName, path);
     }
 
-    public async Task<FileStreamResult> DownloadFile(string fileName, string username)
+    public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
     {
-        var tableName = $"{fileName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
+        var tableName = $"{datasetName}.{username}";
 
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
 
         _parser.ParsePostgresTableToCsv(tableName, path);
         await using var stream = new FileStream(path, FileMode.Open);

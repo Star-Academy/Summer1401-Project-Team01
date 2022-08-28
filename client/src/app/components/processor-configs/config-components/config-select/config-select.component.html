@@ -1,0 +1,7 @@
+<h4>{{ inputTitle }}</h4>
+<mat-form-field appearance="fill">
+    <mat-label>{{ inputPlaceHolder }}</mat-label>
+    <mat-select [required]="inputRequired" [(value)]="inputValue">
+        <mat-option *ngFor="let option of inputOptions" [value]="option"> {{ option }} </mat-option>
+    </mat-select>
+</mat-form-field>

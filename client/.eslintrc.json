@@ -10,10 +10,8 @@
             },
             "extends": [
                 "plugin:@angular-eslint/recommended",
-                "plugin:@angular-eslint/template/process-inline-templates",
-                "prettier"
+                "plugin:@angular-eslint/template/process-inline-templates"
             ],
-            "plugins": ["prettier"],
             "rules": {
                 "@angular-eslint/directive-selector": [
                     "error",
@@ -27,20 +25,16 @@
                     "error",
                     {
                         "type": "element",
-                        "prefix": ["app", "icon", "illustration"],
+                        "prefix": "app",
                         "style": "kebab-case"
                     }
-                ],
-                "@typescript-eslint/explicit-member-accessibility": ["error"],
-                "@typescript-eslint/explicit-function-return-type": ["error"],
-                "prettier/prettier": ["error", {"endOfLine": "auto"}]
+                ]
             }
         },
         {
             "files": ["*.html"],
-            "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
-            "plugins": ["prettier"],
-            "rules": {"prettier/prettier": ["error", {"endOfLine": "auto"}]}
+            "extends": ["plugin:@angular-eslint/template/recommended"],
+            "rules": {}
         }
     ]
 }
