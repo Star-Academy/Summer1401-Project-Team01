@@ -1,4 +1,4 @@
-<div class="dnd-container" appDndEvents (fileDropped)="onFileDropped($event)">
+<form class="dnd-container" appDndEvents (fileDropped)="onFileDropped($event)" enctype="multipart/form-data" #formRef>
     <input
         class="file-input"
         type="file"
@@ -11,4 +11,4 @@
         <span>Drag And Drop File or</span>
         <label for="fileDropRef">Upload File</label>
     </div>
-</div>
+</form>

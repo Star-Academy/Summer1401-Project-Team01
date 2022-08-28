@@ -12,14 +12,20 @@ public class QueryBuilder : IQueryBuilder
 
     public string ImportCsvQuery(string tableName, string filePath)
     {
-        return $"TRUNCATE TABLE {tableName};\n COPY {tableName} FROM {filePath}  DELIMITER ',' CSV HEADER;";
+        return $"TRUNCATE TABLE {tableName};\n COPY {tableName} FROM '{filePath}'  DELIMITER ',' CSV HEADER;";
     }
 
-    public string BuildTableQuery(Dictionary<string,string> columnType, string tableName)
+    public string GetColumnNamesQuery(string tableName)
+    {
+        return
+            $"SELECT column_name FROM information_schema.columns where table_schema = 'public' and table_name = '{tableName}';";
+    }
+
+    public string BuildTableQuery(Dictionary<string, string> columnType, string tableName)
     {
         var query = new StringBuilder($"CREATE TABLE [IF NOT EXISTS]  {tableName} (\n");
-        
-        foreach(var (key, value) in columnType)
+
+        foreach (var (key, value) in columnType)
         {
             query.Append($"{key} {value},\n");
         }

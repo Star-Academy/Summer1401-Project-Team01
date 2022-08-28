@@ -1,11 +1,13 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {AfterContentChecked, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {DiagramNodeService} from '../../services/diagram-node.service';
 
 @Component({
     selector: 'app-processor-configs',
     templateUrl: './processor-configs.component.html',
     styleUrls: ['./processor-configs.component.scss'],
 })
-export class ProcessorConfigsComponent implements OnChanges {
+export class ProcessorConfigsComponent implements AfterContentChecked {
     @Input() public selectedProcessor: string = '';
     public processorName: string = '';
     public processorType: string = '';
@@ -13,8 +15,13 @@ export class ProcessorConfigsComponent implements OnChanges {
 
     public constructor() {}
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        this.processorType = this.selectedProcessor.split(', ')[0];
-        this.processorName = 'my processor';
+    public ngAfterContentChecked(): void {
+        if (this.selectedProcessor === '') {
+            this.processorName = 'Pipeline Designer';
+            this.processorType = '';
+        } else {
+            this.processorName = this.selectedProcessor.replace(',', ' ');
+            this.processorType = this.selectedProcessor.split(',')[0];
+        }
     }
 }

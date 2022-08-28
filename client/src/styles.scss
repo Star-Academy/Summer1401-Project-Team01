@@ -243,7 +243,6 @@ body {
         background-color: var(--color-accent-lightest);
         box-shadow: hsl(0deg 0% 0% / 16%) 0 10px 36px 0, hsl(0deg 0% 0% / 6%) 0 0 0 1px;
 
-
         margin-block-start: 7rem;
         padding: var(--padding-medium);
 
@@ -259,7 +258,7 @@ body {
 
     .mat-simple-snackbar {
         font-size: var(--font-size-paragraph);
-        
+
         line-height: 2.5rem;
     }
 }

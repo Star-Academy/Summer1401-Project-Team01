@@ -1,22 +1,7 @@
-<div class="wrapper">
-    <div class="upload">
-        <h2>Upload a Dataset</h2>
-        <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
-        <div class="name">
-            <mat-form-field appearance="fill">
-                <mat-label>File Name</mat-label>
-                <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()" />
-            </mat-form-field>
-            <button
-                class="global-button add-processor-button"
-                (click)="openSelectTypeModal()"
-                [disabled]="disableContinue"
-            >
-                Continue
-            </button>
-        </div>
+<main class="home">
+    <h1 class="welcome">Welcome to Data Area!</h1>
+    <div class="button-container">
+        <button class="global-button" (click)="goDataInventory()">Data Inventory</button>
+        <button class="global-button" (click)="goPipelineDesigner()">Pipeline Designer</button>
     </div>
-    <div>
-        <app-list-of-items></app-list-of-items>
-    </div>
-</div>
+</main>

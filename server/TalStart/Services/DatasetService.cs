@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Newtonsoft.Json;
 using Npgsql;
 using SqlKata.Execution;
@@ -98,6 +99,20 @@ namespace TalStart.Services
         {
             return _db.Datasets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name)
                 .ToList();
+        }
+
+        public List<string> GetDatasetColumns(string datasetName, string username)
+        {
+            var columnNames = new List<string>();
+            var query = _queryBuilder.GetColumnNamesQuery($"{datasetName}.{username}");
+            using var reader = SqlService.GetInstance().ExecuteReaderPostgres(query);
+
+            while (reader.Read())
+            {
+                columnNames.Add(reader.GetString(0));
+            }
+
+            return columnNames;
         }
 
         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)

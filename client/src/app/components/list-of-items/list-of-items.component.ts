@@ -7,7 +7,6 @@ import {
     GridReadyEvent,
     GridApi,
     ICellRendererParams,
-    RowNodeTransaction,
 } from 'ag-grid-community';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
