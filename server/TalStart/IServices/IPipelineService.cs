@@ -4,7 +4,7 @@
     {
         public bool AddPipeline(string pipelineName, string username);
         public bool RemovePipeline(string pipelineName, string username);
-        public bool UpdateJson(string json, string name);
+        public bool UpdateJson(string json, string name, string username);
         public bool AddSource(string datasetName, string pipelineName, string username);
 
         public bool RemoveSource(string pipelineName, string username);

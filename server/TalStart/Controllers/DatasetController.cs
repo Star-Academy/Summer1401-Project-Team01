@@ -27,7 +27,14 @@ public class DatasetController : ControllerBase
         try
         {
             var file = Request.Form.Files[0];
-            var columns = JsonSerializer.Deserialize<Dictionary<string, string>>(columnTypes); 
+            var columns = JsonSerializer.Deserialize<Dictionary<string, string>>(columnTypes);
+            foreach (var columnName in columns.Keys)
+            {
+                if (columns[columnName] == "string")
+                {
+                    columns[columnName] = "text";
+                }
+            }
             await _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();

@@ -37,11 +37,11 @@ namespace TalStart.Services
             }
         }
 
-        public bool UpdateJson(string json, string name) 
+        public bool UpdateJson(string json, string pipeName, string username) 
         {
             try
             {
-                var pipeline = _db.Pipelines.FirstOrDefault(p=>p.Name == name);
+                var pipeline = _db.Pipelines.FirstOrDefault(p=>p.Name == pipeName && p.User.Username == username);
                 if (pipeline == null)
                 {
                     throw new Exception();
