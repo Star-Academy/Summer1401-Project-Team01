@@ -7,12 +7,12 @@ public class QueryBuilder : IQueryBuilder
 {
     public string ExportCsvQuery(string tableName, string filePath)
     {
-        return $"COPY {tableName} to '{filePath}' WITH (FORMAT CSV, HEADER);";
+        return $"COPY \"{tableName}\" to '{filePath}' WITH (FORMAT CSV, HEADER);";
     }
 
     public string ImportCsvQuery(string tableName, string filePath)
     {
-        return $"TRUNCATE TABLE {tableName};\n COPY {tableName} FROM '{filePath}'  DELIMITER ',' CSV HEADER;";
+        return $"TRUNCATE TABLE \"{tableName}\";\n COPY \"{tableName}\" FROM '{filePath}'  DELIMITER ',' CSV HEADER;";
     }
 
     public string GetColumnNamesQuery(string tableName)
@@ -23,13 +23,13 @@ public class QueryBuilder : IQueryBuilder
 
     public string BuildTableQuery(Dictionary<string, string> columnType, string tableName)
     {
-        var query = new StringBuilder($"CREATE TABLE [IF NOT EXISTS]  {tableName} (\n");
+        var query = new StringBuilder($"CREATE TABLE IF NOT EXISTS  \"{tableName}\" (\n");
 
         foreach (var (key, value) in columnType)
         {
-            query.Append($"{key} {value},\n");
+            query.Append($"{key} {value},");
         }
-
+        query.Remove(query.Length - 1, 1);
         query.Append(");\n");
         return query.ToString();
     }
