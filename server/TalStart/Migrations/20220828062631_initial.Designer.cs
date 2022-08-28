@@ -12,7 +12,7 @@ using TalStart.Models;
 namespace TalStart.Migrations
 {
     [DbContext(typeof(TalStartContext))]
-    [Migration("20220827112744_initial")]
+    [Migration("20220828062631_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace TalStart.Migrations
                     b.ToTable("Datasets");
                 });
 
-            modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
+            modelBuilder.Entity("TalStart.Models.Pipeline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,7 +120,7 @@ namespace TalStart.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TalStart.Models.PipelineDbo", b =>
+            modelBuilder.Entity("TalStart.Models.Pipeline", b =>
                 {
                     b.HasOne("TalStart.Models.Dataset", "DestinationDataset")
                         .WithMany()

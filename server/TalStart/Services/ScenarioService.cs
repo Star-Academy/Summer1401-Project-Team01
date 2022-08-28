@@ -18,7 +18,7 @@ namespace TalStart.Services
 
         public bool RunPipeline(string pipelineName, string username) {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.Source.Name}.{ pipe.User.Username}";
+            var sourceTable = $"{pipe.SourceDataset.Name}.{ pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -30,8 +30,8 @@ namespace TalStart.Services
             }
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
-            finalTable = $"{pipe.Destination.Name}.{pipe.User.Username}";
-            var query = $"DROP TABLE \"{pipe.Destination.Name}.{pipe.User.Username}\" ";
+            finalTable = $"{pipe.DestinationDataset.Name}.{pipe.User.Username}";
+            var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}.{pipe.User.Username}\" ";
             _sqlService.ExecuteNonQueryPostgres(query);
             query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
             _sqlService.ExecuteNonQueryPostgres(query);
@@ -58,8 +58,8 @@ namespace TalStart.Services
                 var  pipe = new Pipeline();
                 pipe.Name = pipeDbo.Name;
                 pipe.User = pipeDbo.User;
-                pipe.Source = pipeDbo.SourceDataset;
-                pipe.Destination = pipeDbo.DestinationDataset;
+                pipe.SourceDataset = pipeDbo.SourceDataset;
+                pipe.DestinationDataset = pipeDbo.DestinationDataset;
                 pipe.TreeOfProcesses = new List<IProcess>();
                 var res = JsonSerializer.Deserialize<List<Process>>(pipeDbo.Json);
                 res.OrderBy(r => r.Id);
