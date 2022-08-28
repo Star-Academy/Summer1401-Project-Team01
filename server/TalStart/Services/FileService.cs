@@ -43,11 +43,14 @@ public class FileService : IFileService
         await using var stream = new FileStream(path, FileMode.Open);
         return new FileStreamResult(stream, "text/csv");
     }
+
     public void DeleteFile(string datasetName, string username)
     {
         var path = Path.Combine(Directory.GetCurrentDirectory(),
-                        $"resources\\{username}", $"{datasetName}.csv");
+            $"resources\\{username}", $"{datasetName}.csv");
         FileSystem.DeleteFile(path);
+    }
+    
     public void RenameCsvFile(string finalDirectoryName, string oldName, string newName)
     {
         var path = $"{AppContext.BaseDirectory}../../../resources/{finalDirectoryName}/";
