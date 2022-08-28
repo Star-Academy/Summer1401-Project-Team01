@@ -7,4 +7,6 @@ public interface IQueryBuilder
     public string ImportCsvQuery(string tableName, string filePath);
 
     public string BuildTableQuery(Dictionary<string, string> columnType, string tableName);
+
+    public string RenameTableQuery(string tableName, string newTableName);
 }
