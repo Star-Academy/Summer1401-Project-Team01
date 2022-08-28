@@ -6,6 +6,7 @@ import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/c
     styleUrls: ['./drag-n-drop.component.scss'],
 })
 export class DragNDropComponent {
+    @ViewChild('formRef', {static: false}) public formEl!: ElementRef<HTMLFormElement>;
     @ViewChild('fileDropRef', {static: false}) public fileDropEl!: ElementRef<HTMLInputElement>;
 
     @Output() public uploadedFile = new EventEmitter<File>();
@@ -23,7 +24,13 @@ export class DragNDropComponent {
     public prepareFilesList(files: File[] | null): void {
         if (files === null) return;
 
-        this.uploadedFile.emit(files[0]);
+        const formData = new FormData(this.formEl.nativeElement);
+        if (!this.fileDropEl.nativeElement.files) return;
+
+        let file = <File>this.fileDropEl.nativeElement.files[0];
+        formData.append('file', file)
+
+        this.uploadedFile.emit(file);
         this.fileDropEl.nativeElement.value = '';
     }
 }

@@ -7,7 +7,7 @@ namespace TalStart.Services;
 
 public class SqlService : ISqlService
 {
-    private SqlService()
+    public SqlService()
     {
 
     }
@@ -21,6 +21,8 @@ public class SqlService : ISqlService
 
     public async void ExecuteNonQueryPostgres(string query)
     {
+        Console.WriteLine("Salam");
+        Console.WriteLine(query);
         await using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
         await using var cmd = new NpgsqlCommand(query);
@@ -36,11 +38,11 @@ public class SqlService : ISqlService
         return await cmd.ExecuteScalarAsync();
     }
 
-    public async Task<DbDataReader>  ExecuteReaderPostgres(string query)
+    public DbDataReader  ExecuteReaderPostgres(string query)
     {
-        await using var conn = new NpgsqlConnection(CString.connectionString);
+        using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
-        await using var cmd = new NpgsqlCommand(query);
-        return await cmd.ExecuteReaderAsync();
+        using var cmd = new NpgsqlCommand(query);
+        return cmd.ExecuteReader();
     }
 }

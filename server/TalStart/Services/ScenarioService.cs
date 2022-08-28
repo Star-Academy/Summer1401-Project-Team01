@@ -9,11 +9,11 @@ namespace TalStart.Services
 {
     public class ScenarioService : IScenarioService
     {
-        TalStartContext _db = new();
-        ISqlService _sqlService;
-        public ScenarioService()
+        private TalStartContext _db = new();
+        private ISqlService _sqlService;
+        public ScenarioService(ISqlService SqlService)
         {
-            _sqlService = SqlService.GetInstance();
+            _sqlService = SqlService;
         }
 
         public bool RunPipeline(string pipelineName, string username) {

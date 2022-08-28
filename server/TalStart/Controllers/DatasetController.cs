@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TalStart.IServices;
 
 namespace TalStart.Controllers;
@@ -20,13 +21,14 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddDataset([FromForm] IFormFile file, [FromForm] string datasetName,
-        [FromForm] Dictionary<string, string> columnTypes, [FromForm] string username)
+    public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
+        [FromForm] string columnTypes, [FromForm] string username)
     {
-        Console.WriteLine("salam");
         try
         {
-            await _fileService.UploadFile(file, columnTypes, username, datasetName);
+            var file = Request.Form.Files[0];
+            var columns = JsonSerializer.Deserialize<Dictionary<string, string>>(columnTypes); 
+            await _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
@@ -85,6 +87,22 @@ public class DatasetController : ControllerBase
             return Ok(_datasetService.PreviewDataset(datasetName, username, count));
         }
         catch (Exception)
+        {
+            return new BadRequestResult();
+        }
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetDatasetColumns(string datasetName, string username)
+    {
+        try
+        {
+            return Ok(_datasetService.GetDatasetColumns(datasetName, username));
+        }
+        catch (Exception e)
         {
             return new BadRequestResult();
         }

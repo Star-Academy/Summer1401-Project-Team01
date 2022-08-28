@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
-using TalStart.IServices.IParserService;
 
 namespace TalStart.Controllers;
 

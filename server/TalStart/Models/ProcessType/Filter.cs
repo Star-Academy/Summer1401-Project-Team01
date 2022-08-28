@@ -6,10 +6,11 @@ using TalStart.Services;
 
 namespace TalStart.Models.ProcessType;
 
-public class Select : IProcess
+public class Filter : IProcess
 {
     private readonly ISqlService _sqlService;
-    public Select()
+
+    public Filter()
     {
         _sqlService = SqlService.GetInstance();
     }
@@ -17,24 +18,21 @@ public class Select : IProcess
     public string Name { get; set; }
     public int Id { get; set; }
     public object? Options { get; set; }
+
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var selectOptions = JsonSerializer.Deserialize<SelectOptions>(Options.ToString());
+            var filterOptions = JsonSerializer.Deserialize<FilterOptions>(Options.ToString());
 
-            var query = $"SELECT ";
-            foreach (var column in selectOptions.columns)
-            {
-                query += $"\"{column}\"" +',';
-            }
-            query = query.Substring(0,query.Length - 1);
-            query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-
+            var query = $"SELECT *\n";
+            query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\" \n";
+            query += $" WHERE\n";
+            query += filterOptions + ";";
             _sqlService.ExecuteNonQueryPostgres(query);
             return true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
             return false;
         }

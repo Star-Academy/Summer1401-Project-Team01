@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Newtonsoft.Json;
 using Npgsql;
 using SqlKata.Execution;
@@ -14,14 +15,15 @@ namespace TalStart.Services
     {
         private readonly TalStartContext _db = new();
         private readonly IParser _parser;
-        private readonly IQueryBuilder _queryBuilder;
         private readonly ISqlService _sqlService;
+        private readonly IQueryBuilder _queryBuilder;
         private readonly IFileService _fileService;
-        public DatasetService(IParser parser, IQueryBuilder queryBuilder, ISqlService sqlService, IFileService fileService)
+
+        public DatasetService(IParser parser, ISqlService sqlService, IQueryBuilder queryBuilder, IFileService fileService)
         {
             _parser = parser;
-            _queryBuilder = queryBuilder;
             _sqlService = sqlService;
+            _queryBuilder = queryBuilder;
             _fileService = fileService;
         }
         public bool AddDataset(string username, string datasetName)
@@ -62,10 +64,23 @@ namespace TalStart.Services
         {
             try
             {
-                var dataset = _db.Datasets.Single(dataset =>
+                var dataset = _db.Datasets.SingleOrDefault(dataset =>
                     dataset.User.Username == username && dataset.Name == currentDatasetName);
+                if (dataset == null)
+                {
+                    return false;
+                }
+
+                if (_db.Datasets.SingleOrDefault(dataset =>
+                        dataset.User.Username == username && dataset.Name == newDatasetName) != null)
+                    return false;
                 dataset.Name = newDatasetName;
+                var query = _queryBuilder.RenameTableQuery($"{currentDatasetName}.{username}",
+                    $"{newDatasetName}.{username}");
+                _sqlService.ExecuteNonQueryPostgres(query);
                 _db.SaveChanges();
+                _fileService.RenameCsvFile(username, $"{currentDatasetName}.{username}",
+                    $"{newDatasetName}.{username}");
                 return true;
             }
             catch (Exception)
@@ -85,6 +100,20 @@ namespace TalStart.Services
         {
             return _db.Datasets.Where(dataset => dataset.User.Username == username).Select(dataset => dataset.Name)
                 .ToList();
+        }
+
+        public List<string> GetDatasetColumns(string datasetName, string username)
+        {
+            var columnNames = new List<string>();
+            var query = _queryBuilder.GetColumnNamesQuery($"{datasetName}.{username}");
+            using var reader = SqlService.GetInstance().ExecuteReaderPostgres(query);
+
+            while (reader.Read())
+            {
+                columnNames.Add(reader.GetString(0));
+            }
+
+            return columnNames;
         }
 
         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)

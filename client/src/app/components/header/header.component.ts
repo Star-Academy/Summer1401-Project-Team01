@@ -31,7 +31,7 @@ export class HeaderComponent {
 
     public async selectDataInventory(): Promise<void> {
         this.currentEnvTitle = this.DATA_INVENTORY;
-        await this.router.navigateByUrl('/');
+        await this.router.navigateByUrl('data-inventory');
     }
 
     public async selectPipelineDesigner(): Promise<void> {

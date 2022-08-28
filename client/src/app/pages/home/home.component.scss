@@ -1,40 +1,30 @@
-.wrapper {
+.home {
+    background-image: linear-gradient(to right bottom,
+            hsl(192deg 53% 77%), hsl(192deg 52% 81%), hsl(193deg 51% 85%), hsl(192deg 50% 90%), hsl(192deg 48% 94%));
+
     display: flex;
     flex-direction: column;
-    gap: 6.4rem;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--flex-gap-large);
 
-    inline-size: 100rem;
+    block-size: 93vh;
 
-    margin-inline: auto;
-    padding-block: 2.4rem;
+    padding: var(--padding-large);
 
-    h2 {
-        margin: 0;
+    .welcome {
+        font-size: 8rem;
 
-        font-size: var(--font-size-secondary-heading);
+        text-align: center;
+        line-height: 8rem;
     }
 
-    .upload {
+    .button-container {
         display: flex;
-        flex-direction: column;
-        gap: 2.4rem;
+        align-items: center;
+        justify-content: center;
+        gap: var(--flex-gap-large);
 
-        .name {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.2rem;
-
-        }
+        inline-size: 100%;
     }
-}
-
-.icon {
-    color: blue;
-
-    display: flex;
-
-    width: 10rem;
-    height: 10rem;
-
-    font-size: 5rem;
 }
