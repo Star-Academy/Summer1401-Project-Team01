@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TalStart.IServices;
 
 namespace TalStart.Controllers;
@@ -20,16 +21,18 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddDataset([FromForm] IFormFile file, [FromForm] string datasetName,
-        [FromForm] Dictionary<string, string> columnTypes, [FromForm] string username)
+    public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
+        [FromForm] string columnTypes, [FromForm] string username)
     {
         try
         {
-            await _fileService.UploadFile(file, columnTypes, username, datasetName);
+            var file = Request.Form.Files[0];
+            var columns = JsonSerializer.Deserialize<Dictionary<string, string>>(columnTypes); 
+            await _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }
@@ -73,15 +76,20 @@ public class DatasetController : ControllerBase
             return new BadRequestResult();
         }
     }
-
-    [HttpGet("{count}")]
+    [HttpGet("{datasetName}/{username}/{count}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetSample(int count)
+    public async Task<IActionResult> GetDatasetSample([FromRoute] string datasetName, [FromRoute] string username, [FromRoute] int count)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
+        try
+        {
+            return Ok(_datasetService.PreviewDataset(datasetName, username, count));
+        }
+        catch (Exception)
+        {
+            return new BadRequestResult();
+        }
     }
 
     [HttpGet]

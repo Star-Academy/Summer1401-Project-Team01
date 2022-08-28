@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ConfigNumberInputComponent} from './config-number-input.component';
+import {DataInventoryComponent} from './data-inventory.component';
 
-describe('ConfigNumberInputComponent', () => {
-    let component: ConfigNumberInputComponent;
-    let fixture: ComponentFixture<ConfigNumberInputComponent>;
+describe('DataInventoryComponent', () => {
+    let component: DataInventoryComponent;
+    let fixture: ComponentFixture<DataInventoryComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ConfigNumberInputComponent],
+            declarations: [DataInventoryComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ConfigNumberInputComponent);
+        fixture = TestBed.createComponent(DataInventoryComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

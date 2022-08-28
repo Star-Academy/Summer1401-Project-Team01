@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.FileIO;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
-using TalStart.Services.ParserService;
 
 namespace TalStart.Services;
 
@@ -18,12 +18,19 @@ public class FileService : IFileService
     public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username,
         string datasetName)
     {
-        var tableName = $"{datasetName}.{username}";
-        var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
+        string dir = $"{AppContext.BaseDirectory}../../../resources/{username}"; // If directory does not exist, create it.
+        if (!Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+        }
+        //var fileName = $"{datasetName}.{username}";
+        var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
-        await using var stream = new FileStream(path, FileMode.Create);
-        await file.CopyToAsync(stream);
-        _parser.ParseCsvToPostgresTable(columns, tableName, path);
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            file.CopyTo(stream);
+        }
+        _parser.ParseCsvToPostgresTable(columns, $"{datasetName}.{username}", path);
     }
 
     public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
@@ -35,5 +42,12 @@ public class FileService : IFileService
         _parser.ParsePostgresTableToCsv(tableName, path);
         await using var stream = new FileStream(path, FileMode.Open);
         return new FileStreamResult(stream, "text/csv");
+    }
+
+    public void RenameCsvFile(string finalDirectoryName, string oldName, string newName)
+    {
+        FileSystem.RenameFile(
+            Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{finalDirectoryName}", $"{oldName}.csv")
+            , $"{newName}.csv");
     }
 }

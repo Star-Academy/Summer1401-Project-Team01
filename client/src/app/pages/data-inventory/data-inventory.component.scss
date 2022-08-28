@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6.4rem;
+
+    inline-size: 100rem;
+
+    margin-inline: auto;
+    padding-block: 2.4rem;
+
+    h2 {
+        margin: 0;
+
+        font-size: var(--font-size-secondary-heading);
+    }
+
+    .upload {
+        display: flex;
+        flex-direction: column;
+        gap: 2.4rem;
+
+        .name {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+    }
+}
+
+.icon {
+    color: blue;
+
+    display: flex;
+
+    width: 10rem;
+    height: 10rem;
+
+    font-size: 5rem;
+}

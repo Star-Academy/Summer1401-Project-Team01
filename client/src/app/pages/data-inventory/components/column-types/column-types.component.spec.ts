@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ConfigNumberInputComponent} from './config-number-input.component';
+import {ColumnTypesComponent} from './column-types.component';
 
-describe('ConfigNumberInputComponent', () => {
-    let component: ConfigNumberInputComponent;
-    let fixture: ComponentFixture<ConfigNumberInputComponent>;
+describe('ColumnTypesComponent', () => {
+    let component: ColumnTypesComponent;
+    let fixture: ComponentFixture<ColumnTypesComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ConfigNumberInputComponent],
+            declarations: [ColumnTypesComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ConfigNumberInputComponent);
+        fixture = TestBed.createComponent(ColumnTypesComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

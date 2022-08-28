@@ -33,4 +33,9 @@ public class QueryBuilder : IQueryBuilder
         query.Append(");\n");
         return query.ToString();
     }
+
+    public string RenameTableQuery(string tableName, string newTableName)
+    {
+        return $"ALTER TABLE {tableName} RENAME TO {newTableName}";
+    }
 }

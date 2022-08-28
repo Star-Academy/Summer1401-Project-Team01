@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
-using TalStart.IServices.IParserService;
 
 namespace TalStart.Controllers;
 
@@ -25,7 +24,7 @@ public class FileController : ControllerBase
         {
             return await _fileService.DownloadFile(datasetName, username);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }
