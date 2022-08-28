@@ -14,7 +14,10 @@ public class QueryBuilder : IQueryBuilder
     {
         return $"TRUNCATE TABLE {tableName};\n COPY {tableName} FROM {filePath}  DELIMITER ',' CSV HEADER;";
     }
-
+    public string DropTableQuery(string tableName)
+    {
+        return $"DROP TABLE [ IF EXISTS ] {tableName};\n";
+    }
     public string BuildTableQuery(Dictionary<string,string> columnType, string tableName)
     {
         var query = new StringBuilder($"CREATE TABLE [IF NOT EXISTS]  {tableName} (\n");

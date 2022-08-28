@@ -14,13 +14,16 @@ namespace TalStart.Services
     {
         private readonly TalStartContext _db = new();
         private readonly IParser _parser;
-
-        public DatasetService(IParser parser)
+        private readonly IQueryBuilder _queryBuilder;
+        private readonly ISqlService _sqlService;
+        private readonly IFileService _fileService;
+        public DatasetService(IParser parser, IQueryBuilder queryBuilder, ISqlService sqlService, IFileService fileService)
         {
             _parser = parser;
+            _queryBuilder = queryBuilder;
+            _sqlService = sqlService;
+            _fileService = fileService;
         }
-
-
         public bool AddDataset(string username, string datasetName)
         {
             try
@@ -36,13 +39,16 @@ namespace TalStart.Services
             }
         }
 
-        public bool RemoveDataset(string username, string datasetName)
+        public bool RemoveDataset(string datasetName, string username)
         {
             try
             {
                 var dataset = _db.Datasets.Single(dataset =>
                     dataset.User.Username == username && dataset.Name == datasetName);
                 _db.Datasets.Remove(dataset);
+                var query =_queryBuilder.DropTableQuery($"{datasetName}.{username}");
+                _sqlService.ExecuteNonQueryPostgres(query);
+                _fileService.DeleteFile(datasetName, username);
                 _db.SaveChanges();
                 return true;
             }
