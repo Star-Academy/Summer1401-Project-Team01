@@ -23,7 +23,7 @@ public class UserController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpDelete]
+   /* [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,5 +41,5 @@ public class UserController : ControllerBase
     {
         await Task.Delay(3);
         return new BadRequestResult();
-    }
+    }*/
 }

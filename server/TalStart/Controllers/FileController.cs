@@ -25,7 +25,7 @@ public class FileController : ControllerBase
         {
             return await _fileService.DownloadFile(datasetName, username);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }

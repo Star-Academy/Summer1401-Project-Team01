@@ -30,7 +30,7 @@ public class DatasetController : ControllerBase
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return new BadRequestResult();
         }
@@ -75,7 +75,7 @@ public class DatasetController : ControllerBase
         }
     }
 
-    [HttpGet("{count}")]
+  /*  [HttpGet("{count}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,5 +83,5 @@ public class DatasetController : ControllerBase
     {
         await Task.Delay(3);
         return new BadRequestResult();
-    }
+    }*/
 }
