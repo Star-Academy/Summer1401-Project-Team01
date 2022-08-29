@@ -35,6 +35,10 @@ public class DatasetController : ControllerBase
                 {
                     columns[columnName] = "text";
                 }
+                if (columns[columnName] == "double")
+                {
+                    columns[columnName] = "DOUBLE PRECISION";
+                }
             }
             _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);

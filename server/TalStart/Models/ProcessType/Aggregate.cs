@@ -12,18 +12,18 @@ public class Aggregate : IProcess
     
     public Aggregate()
     {
-        _sqlService = new SqlService();
+        _sqlService = SqlService.GetInstance();
         _queryBuilder = new QueryBuilder();
     }
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public string? Options { get; set; }
+    public object? Options { get; set; }
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var aggregateOptions = JsonConvert.DeserializeObject<AggregateOptions>(Options!);
+            var aggregateOptions = JsonConvert.DeserializeObject<AggregateOptions>(Options.ToString());
         
             var query = _queryBuilder.AggregateQuery(sourceTable, 
                 aggregateOptions!.ColumnToBeGroupedBy, aggregateOptions.OperationColumn, 

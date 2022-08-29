@@ -23,7 +23,7 @@ namespace TalStart.Services
         public async Task<DataTable> RunPipeline(string pipelineName, string username)
         {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.SourceDataset.Name}.{pipe.User.Username}";
+            var sourceTable = $"{pipe.SourceDataset.Name}_{pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -70,11 +70,13 @@ namespace TalStart.Services
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = r.Options});
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
-
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "aggregate":
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }

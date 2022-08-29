@@ -16,13 +16,13 @@ public class FieldRemover : IProcess
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public string? Options { get; set; }
+    public object? Options { get; set; }
 
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var selectOptions = JsonSerializer.Deserialize<FieldRemoverOptions>(Options);
+            var selectOptions = JsonSerializer.Deserialize<FieldRemoverOptions>(Options.ToString());
             var query = $"ALTER TABLE \"{sourceTable}\" \n";
             query = selectOptions.columns.Aggregate(query, (current, column) => current + $"DROP COLUMN {column},\n");
 
