@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Newtonsoft.Json;
 using TalStart.IServices;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TalStart.Controllers;
 
@@ -35,7 +36,7 @@ public class DatasetController : ControllerBase
                     columns[columnName] = "text";
                 }
             }
-            await _fileService.UploadFile(file, columns, username, datasetName);
+            _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
@@ -83,17 +84,19 @@ public class DatasetController : ControllerBase
             return new BadRequestResult();
         }
     }
-    [HttpGet("{datasetName}/{username}/{count}")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetSample([FromRoute] string datasetName, [FromRoute] string username, [FromRoute] int count)
+    public async Task<IActionResult> GetDatasetSample([FromForm] string datasetName, [FromForm] string username, [FromForm] int count)
     {
         try
         {
-            return Ok(_datasetService.PreviewDataset(datasetName, username, count));
+            var dt = await  _datasetService.PreviewDataset(username, datasetName, count);
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
         }
-        catch (Exception)
+        catch (Exception e)
         {
             return new BadRequestResult();
         }

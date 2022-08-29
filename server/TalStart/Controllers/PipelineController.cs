@@ -1,5 +1,6 @@
 ﻿using System.Runtime.ExceptionServices;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TalStart.IServices;
 
 namespace TalStart.Controllers;
@@ -10,6 +11,7 @@ public class PipelineController : ControllerBase
 {
     private readonly IPipelineService _pipelineService;
     private readonly IScenarioService _scenarioService;
+
     public PipelineController(IPipelineService pipelineService, IScenarioService scenarioService)
     {
         _pipelineService = pipelineService;
@@ -25,7 +27,7 @@ public class PipelineController : ControllerBase
             return new OkResult();
         return new BadRequestResult();
     }
-    
+
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -49,15 +51,15 @@ public class PipelineController : ControllerBase
     }
 
 
-  /*  [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
-    {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }*/
+    /*  [HttpGet]
+      [ProducesResponseType(StatusCodes.Status200OK)]
+      [ProducesResponseType(StatusCodes.Status400BadRequest)]
+      [ProducesResponseType(StatusCodes.Status404NotFound)]
+      public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
+      {
+          await Task.Delay(3);
+          return new BadRequestResult();
+      }*/
 
 
     [HttpGet("{username}")]
@@ -65,7 +67,7 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllPipelinesNames([FromRoute] string username)
-    {   
+    {
         try
         {
             return Ok(_pipelineService.GetAllPipelinesNames(username));
@@ -75,7 +77,7 @@ public class PipelineController : ControllerBase
             return new BadRequestResult();
         }
     }
-    
+
 
     /*[HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -93,18 +95,23 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RunPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        var res = _scenarioService.RunPipeline(pipelineName, username);
-        if (res)
+        try
         {
-            return new OkResult();
+            var dt = await  _scenarioService.RunPipeline(pipelineName, username);
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
         }
-        return new BadRequestResult();
+        catch (Exception e)
+        {
+            return new BadRequestResult();
+        }
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddSource([FromForm] string sourceName,[FromForm] string pipelineName, [FromForm] string username)
+    public async Task<IActionResult> AddSource([FromForm] string sourceName, [FromForm] string pipelineName,
+        [FromForm] string username)
     {
         if (_pipelineService.AddSource(sourceName, pipelineName, username))
             return new OkResult();
@@ -125,7 +132,8 @@ public class PipelineController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName, [FromForm] string username)
+    public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName,
+        [FromForm] string username)
     {
         if (_pipelineService.AddDestination(destinationName, pipelineName, username))
             return new OkResult();
@@ -142,12 +150,13 @@ public class PipelineController : ControllerBase
             return new OkResult();
         return new BadRequestResult();
     }
-    
+
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username, [FromForm] string newPipelineName)
+    public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username,
+        [FromForm] string newPipelineName)
     {
         if (_pipelineService.RenamePipeline(pipelineName, username, newPipelineName))
             return new OkResult();
