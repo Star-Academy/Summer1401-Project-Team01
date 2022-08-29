@@ -53,6 +53,9 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
 
     public ngOnInit(): void {
         this.pipelineName = this.route.snapshot.paramMap.get('pipelineName');
+
+        // @ts-ignore
+        this.diagramNodeService.pipelinePage = this.pipelineName;
     }
 
     public ngAfterContentChecked() {

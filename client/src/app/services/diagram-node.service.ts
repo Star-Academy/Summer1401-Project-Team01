@@ -11,6 +11,8 @@ import {Subject} from 'rxjs';
     providedIn: 'root',
 })
 export class DiagramNodeService {
+    public pipelinePage: string = '';
+
     public nodeDataArray: NodeDataModel[] = [
         {key: 0, name: 'Start', option: null},
         {key: 1, name: 'Destination', parent: 0, option: null},
