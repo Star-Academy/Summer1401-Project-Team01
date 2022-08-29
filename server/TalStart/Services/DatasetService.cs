@@ -105,16 +105,8 @@ namespace TalStart.Services
 
         public List<string> GetDatasetColumns(string datasetName, string username)
         {
-            var columnNames = new List<string>();
-            var query = _queryBuilder.GetColumnNamesQuery($"{datasetName}.{username}");
-            using var reader = SqlService.GetInstance().ExecuteReaderPostgres(query);
-
-            while (reader.Read())
-            {
-                columnNames.Add(reader.GetString(0));
-            }
-
-            return columnNames;
+            var query = _queryBuilder.GetColumnNamesQuery($"{datasetName}_{username}");
+            return SqlService.GetInstance().ExecuteReaderPostgres(query);
         }
 
         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)

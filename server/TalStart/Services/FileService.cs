@@ -23,7 +23,6 @@ public class FileService : IFileService
         {
             Directory.CreateDirectory(dir);
         }
-        //var fileName = $"{datasetName}.{username}";
         var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
         using (var stream = new FileStream(path, FileMode.Create))
