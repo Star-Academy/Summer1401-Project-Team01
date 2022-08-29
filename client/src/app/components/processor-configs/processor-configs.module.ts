@@ -25,6 +25,7 @@ import {FormsModule} from '@angular/forms';
         ConfigModeToggleComponent,
         ConfigChecklistComponent,
     ],
+    entryComponents: [ConfigSelectComponent],
     exports: [ProcessorConfigsComponent],
     imports: [
         CommonModule,
