@@ -162,5 +162,7 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
             method: 'patch',
             body: formDataForRun,
         });
+
+        console.log(response.json());
     }
 }
