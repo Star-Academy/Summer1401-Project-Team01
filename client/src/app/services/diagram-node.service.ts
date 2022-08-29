@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SelectedNodeDataModel, SelectedNodeModel} from '../models/selected-node.model';
-import {NodeDataModel} from '../models/node-data.model';
+import {NodeDataModel, NodeModel} from '../models/node-data.model';
 import * as go from 'gojs';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
@@ -17,6 +17,8 @@ export class DiagramNodeService {
         {key: 0, name: 'Start', option: null},
         {key: 1, name: 'Destination', parent: 0, option: null},
     ];
+
+    public nodeArray: NodeModel[] = [];
 
     private isSourceSelected: boolean = false;
     private isDestinationSelected: boolean = false;
@@ -43,7 +45,6 @@ export class DiagramNodeService {
     }
 
     public addNode(type: string): void {
-        console.log(this.selectedNodeData, this.nodeDataArray);
         if (!this.selectedNodeData) {
             return;
         }
@@ -72,6 +73,8 @@ export class DiagramNodeService {
 
         this.selectedNode = null;
         this.selectedNodeData = null;
+
+        this.fetchDiagram().then();
     }
 
     public removeNode(): void {
@@ -93,6 +96,8 @@ export class DiagramNodeService {
 
         this.selectedNode = null;
         this.selectedNodeData = null;
+
+        this.fetchDiagram().then();
     }
 
     public openSelectDatasetModal(state: string) {
@@ -117,16 +122,32 @@ export class DiagramNodeService {
     }
 
     public async fetchDiagram(): Promise<void> {
-        const formDataForDiagram = new FormData();
-        const diagramData = JSON.stringify(this.nodeDataArray.slice(1, this.nodeDataArray.length - 1));
+        this.createNodeArray();
 
-        formDataForDiagram.append('processes', diagramData);
-        formDataForDiagram.append('name', '' /* pipelineName */);
+        const formDataForDiagram = new FormData();
+        const diagramData = this.nodeArray.slice(1, this.nodeArray.length - 1);
+
+        formDataForDiagram.append('processes', JSON.stringify(diagramData));
+        formDataForDiagram.append('name', this.pipelinePage);
         formDataForDiagram.append('username', 'admin');
 
         await fetch(PIPELINE_UPDATE_PROCESSES, {
             method: 'patch',
             body: formDataForDiagram,
         });
+    }
+
+    public createNodeArray(): void {
+        for (let i = 0; i < this.nodeDataArray.length; i++) {
+            const newNode = {
+                id: this.nodeDataArray[i].key + 1,
+                name: this.nodeDataArray[i].name,
+                option: this.nodeDataArray[i].option,
+            };
+
+            this.nodeArray.push(newNode);
+            console.log(newNode);
+        }
+        console.log(this.nodeArray);
     }
 }
