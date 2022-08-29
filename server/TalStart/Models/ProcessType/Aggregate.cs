@@ -8,10 +8,10 @@ public class Aggregate : IProcess
 {
     public string Name { get; set; }
     public int Id { get; set; }
-    public object? Options { get; set; }
+    public string? Options { get; set; }
     public bool Run(string sourceTable, string finalTable)
     {
-        var aggregateOptions = JsonConvert.DeserializeObject<AggregateOptions>(Options.ToString());
+        var aggregateOptions = JsonConvert.DeserializeObject<AggregateOptions>(Options);
         
         return true;
     }
