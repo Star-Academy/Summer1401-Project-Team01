@@ -91,7 +91,9 @@ export class ListOfItemsComponent implements OnInit {
 
     public downloadSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
-        this.datasetService.downloadDataset(selectedData[0].fileName)
+        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName)
+        console.log(downloadUrl)
+        //this.datasetService.downloadDataset(downloadUrl)
     }
 
     public clearData(): void {

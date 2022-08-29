@@ -23,9 +23,11 @@ import {DataInventoryModule} from './pages/data-inventory/data-inventory.module'
 import {ProcessorConfigsModule} from './components/processor-configs/processor-configs.module';
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {PipelineListModule} from "./pages/pipeline-list/pipeline-list.module";
+import {RouterLinkRendererComponent} from "./components/router-link-renderer/router-link-renderer";
 
 @NgModule({
-    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
+    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent, RouterLinkRendererComponent,],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -46,6 +48,7 @@ import {MatSelectModule} from "@angular/material/select";
         ProcessorConfigsModule,
         MatOptionModule,
         MatSelectModule,
+        PipelineListModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

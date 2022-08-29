@@ -22,12 +22,16 @@ export class DatasetService {
     //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
   }
 
-  public downloadDataset(datasetName: string): any {
+  public async getDownloadDataset(datasetName: string): Promise<any> {
     let formData = new FormData();
     formData.append("datasetName", datasetName)
     formData.append("username", "admin")
-    fetch(DOWNLOAD_FILE, {body: formData, method: 'post'}).then()
+    // return await fetch(DOWNLOAD_FILE, {body: formData, method: 'post'}).then()
 
     //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
+  }
+
+  public async downloadDataset(url: string): Promise<void> {
+    await fetch(url)
   }
 }
