@@ -49,7 +49,7 @@ namespace TalStart.Services
                 var dataset = _db.Datasets.Single(dataset =>
                     dataset.User.Username == username && dataset.Name == datasetName);
                 _db.Datasets.Remove(dataset);
-                var query = _queryBuilder.DropTableQuery($"\"{datasetName}_{username}\"");
+                var query = _queryBuilder.DropTableQuery($"\"{datasetName}.{username}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _fileService.DeleteFile(datasetName, username);
                 _db.SaveChanges();
@@ -76,12 +76,12 @@ namespace TalStart.Services
                         dataset.User.Username == username && dataset.Name == newDatasetName) != null)
                     return false;
                 dataset.Name = newDatasetName;
-                var query = _queryBuilder.RenameTableQuery($"{currentDatasetName}.{username}",
-                    $"{newDatasetName}.{username}");
+                var query = _queryBuilder.RenameTableQuery($"\"{currentDatasetName}_{username}\"",
+                    $"\"{newDatasetName}_{username}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _db.SaveChanges();
-                _fileService.RenameCsvFile(username, $"{currentDatasetName}.{username}",
-                    $"{newDatasetName}.{username}");
+                _fileService.RenameCsvFile(username, $"{currentDatasetName}",
+                    $"{newDatasetName}");
                 return true;
             }
             catch (Exception)
@@ -123,7 +123,7 @@ namespace TalStart.Services
             var compiler = new PostgresCompiler();
             var db = new QueryFactory(conn, compiler);
             var tableName = $"{datasetName}_{username}";
-            var query = await db.Query(tableName).Limit(count).GetAsync();
+            var query = db.Query(tableName).Limit(count).Get();
             var json = JsonConvert.SerializeObject(query);
             var dataTable = (DataTable) JsonConvert.DeserializeObject(json, typeof(DataTable))!;
             return dataTable;
