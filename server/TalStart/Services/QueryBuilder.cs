@@ -43,4 +43,11 @@ public class QueryBuilder : IQueryBuilder
     {
         return $"ALTER TABLE {tableName} RENAME TO {newTableName}";
     }
+
+    public string AggregateQuery(string sourceTable, string columnToBeGroupedBy, string operationColumn,
+        string operationType, string finalTable)
+    {
+        return
+            $"CREATE TABLE {finalTable} as SELECT {columnToBeGroupedBy}, {operationType}({operationColumn}) From {sourceTable} GROUP BY {columnToBeGroupedBy}";
+    }
 }
