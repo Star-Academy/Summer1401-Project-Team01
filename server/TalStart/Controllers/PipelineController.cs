@@ -79,15 +79,25 @@ public class PipelineController : ControllerBase
     }
 
 
-    /*[HttpGet]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetFifty()
+    public IActionResult GetPipeLine(string pipelineName,string username)
     {
-        await Task.Delay(3);
-        return new BadRequestResult();
-    }*/
+        try
+        {
+            Console.WriteLine("salam");
+            var pipeline = _pipelineService.GetPipeline(pipelineName, username);
+            var JSONresult = JsonConvert.SerializeObject(pipeline);
+            return Ok(JSONresult);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     
 

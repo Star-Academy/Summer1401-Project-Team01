@@ -1,4 +1,5 @@
-﻿using TalStart.IServices;
+﻿using Microsoft.EntityFrameworkCore;
+using TalStart.IServices;
 using TalStart.Models;
 
 namespace TalStart.Services
@@ -6,12 +7,13 @@ namespace TalStart.Services
     public class PipelineService : IPipelineService
     {
         TalStartContext _db = new();
-        
+
         public bool AddPipeline(string pipelineName, string username)
         {
             try
             {
-                _db.Pipelines.Add(new Pipeline() { Name = pipelineName, User = _db.Users.Single(user => user.Username == username)});
+                _db.Pipelines.Add(new Pipeline()
+                    {Name = pipelineName, User = _db.Users.Single(user => user.Username == username)});
                 _db.SaveChanges();
                 return true;
             }
@@ -37,15 +39,16 @@ namespace TalStart.Services
             }
         }
 
-        public bool UpdateJson(string json, string pipeName, string username) 
+        public bool UpdateJson(string json, string pipeName, string username)
         {
             try
             {
-                var pipeline = _db.Pipelines.FirstOrDefault(p=>p.Name == pipeName && p.User.Username == username);
+                var pipeline = _db.Pipelines.FirstOrDefault(p => p.Name == pipeName && p.User.Username == username);
                 if (pipeline == null)
                 {
                     throw new Exception();
                 }
+
                 pipeline.Json = json;
                 _db.SaveChanges();
             }
@@ -53,15 +56,18 @@ namespace TalStart.Services
             {
                 return false;
             }
-            return true; 
+
+            return true;
         }
 
         public bool AddSource(string sourceName, string pipelineName, string username)
         {
             try
             {
-                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var sourceDataset = _db.Datasets.Single(dataset => dataset.Name == sourceName && dataset.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline =>
+                    pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var sourceDataset = _db.Datasets.Single(dataset =>
+                    dataset.Name == sourceName && dataset.User.Username == username);
                 pipeline.SourceDataset = sourceDataset;
                 _db.SaveChanges();
                 return true;
@@ -76,7 +82,8 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline =>
+                    pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.SourceDataset = null;
                 _db.SaveChanges();
                 return true;
@@ -91,8 +98,10 @@ namespace TalStart.Services
         {
             try
             {
-                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
-                var destinationDataset = _db.Datasets.Single(dataset => dataset.Name == destinationName && dataset.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline =>
+                    pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var destinationDataset = _db.Datasets.Single(dataset =>
+                    dataset.Name == destinationName && dataset.User.Username == username);
                 pipeline.DestinationDataset = destinationDataset;
                 _db.SaveChanges();
                 return true;
@@ -102,12 +111,13 @@ namespace TalStart.Services
                 return false;
             }
         }
-        
+
         public bool RemoveDestination(string pipelineName, string username)
         {
             try
             {
-                var pipeline = _db.Pipelines.Single(pipeline => pipeline.Name == pipelineName && pipeline.User.Username == username);
+                var pipeline = _db.Pipelines.Single(pipeline =>
+                    pipeline.Name == pipelineName && pipeline.User.Username == username);
                 pipeline.DestinationDataset = null;
                 _db.SaveChanges();
                 return true;
@@ -135,7 +145,15 @@ namespace TalStart.Services
 
         public List<string> GetAllPipelinesNames(string username)
         {
-            return _db.Pipelines.Where(pipeline => pipeline.User.Username == username).Select(pipeline => pipeline.Name).ToList();
+            return _db.Pipelines.Where(pipeline => pipeline.User.Username == username).Select(pipeline => pipeline.Name)
+                .ToList();
+        }
+
+        public Pipeline GetPipeline(string pipelineName, string username)
+        {
+            var pipe = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
+                .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+            return pipe;
         }
     }
 }

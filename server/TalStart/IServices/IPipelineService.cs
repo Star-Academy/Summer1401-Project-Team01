@@ -1,4 +1,6 @@
-﻿namespace TalStart.IServices
+﻿using TalStart.Models;
+
+namespace TalStart.IServices
 {
     public interface IPipelineService
     {
@@ -13,5 +15,7 @@
 
         public bool RenamePipeline(string pipelineName, string username, string newPipelineName);
         public List<string> GetAllPipelinesNames(string username);
+
+        public Pipeline GetPipeline(string pipelineName, string username);
     }
 }
