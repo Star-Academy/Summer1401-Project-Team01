@@ -8,6 +8,7 @@ export const DATASET_REMOVE = BASE_URL + '/Dataset/RemoveDataset';
 
 export const PIPELINE_GET_ALL_PIPELINE_NAMES = BASE_URL + '/Pipeline/GetAllPipelinesNames/';
 export const PIPELINE_UPDATE_PROCESSES = BASE_URL + '/Pipeline/UpdateProcesses/';
+export const PIPELINE_RUNPIPELINE = BASE_URL + '/Pipeline/RunPipeline/';
 
 export const DEFAULT_POST_REQUEST_INIT: RequestInit = {
     method: 'post',
