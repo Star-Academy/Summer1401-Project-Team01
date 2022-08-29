@@ -86,16 +86,21 @@ export class SelectDatasetComponent implements OnInit {
         const fileName = selectedData[0].fileName;
 
         const formDataForSrcDes = new FormData();
-        formDataForSrcDes.append('sourceName', fileName);
-        formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
-        formDataForSrcDes.append('username', 'admin');
 
         if (this.diagramNodeService.selectedNode?.type === 'Start') {
+            formDataForSrcDes.append('sourceName', fileName);
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
             await fetch(PIPELINE_ADD_SOURCE, {
                 method: 'post',
                 body: formDataForSrcDes,
             });
         } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+            formDataForSrcDes.append('destinationName', fileName);
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
             await fetch(PIPELINE_ADD_DESTINATION, {
                 method: 'post',
                 body: formDataForSrcDes,
