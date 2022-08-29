@@ -3,6 +3,7 @@ import {
     Component,
     ElementRef,
     OnChanges,
+    OnInit,
     Renderer2,
     SimpleChanges,
     ViewChild,
@@ -14,13 +15,14 @@ import {SnackbarService} from '../../services/snackbar.service';
 import {snackbarType} from '../../models/snackbar-type.enum';
 import {DiagramNodeService} from '../../services/diagram-node.service';
 import {PIPELINE_RUNPIPELINE} from '../../utilities/urls';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-pipeline-designer',
     templateUrl: './pipeline-designer.component.html',
     styleUrls: ['./pipeline-designer.component.scss'],
 })
-export class PipelineDesignerComponent implements AfterContentChecked {
+export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
     @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
     @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
     @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
@@ -39,12 +41,19 @@ export class PipelineDesignerComponent implements AfterContentChecked {
     public isNodeSelectedForDeleteBtn: boolean = false;
     public isNodeSelectedForStartBtn: boolean = false;
 
+    public pipelineName: string | null = '';
+
     public constructor(
         private renderer: Renderer2,
         public dialog: MatDialog,
         private snackbarService: SnackbarService,
-        public diagramNodeService: DiagramNodeService
+        public diagramNodeService: DiagramNodeService,
+        private route: ActivatedRoute
     ) {}
+
+    public ngOnInit(): void {
+        this.pipelineName = this.route.snapshot.paramMap.get('pipelineName');
+    }
 
     public ngAfterContentChecked() {
         this.selectedProcessor = this.diagramNodeService.selectedNode
