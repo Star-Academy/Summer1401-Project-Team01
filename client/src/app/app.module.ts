@@ -21,13 +21,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
 import {ProcessorConfigsModule} from './components/processor-configs/processor-configs.module';
-import {MatOptionModule} from "@angular/material/core";
-import {MatSelectModule} from "@angular/material/select";
-import {PipelineListModule} from "./pages/pipeline-list/pipeline-list.module";
-import {RouterLinkRendererComponent} from "./components/router-link-renderer/router-link-renderer";
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {PipelineListModule} from './pages/pipeline-list/pipeline-list.module';
+import {RouterLinkRendererComponent} from './components/router-link-renderer/router-link-renderer';
+import {ConfigSelectComponent} from './components/processor-configs/config-components/config-select/config-select.component';
 
 @NgModule({
-    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent, RouterLinkRendererComponent,],
+    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent, RouterLinkRendererComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
