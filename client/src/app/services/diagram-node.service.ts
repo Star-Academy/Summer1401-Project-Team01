@@ -90,6 +90,11 @@ export class DiagramNodeService {
         dialog.afterClosed().subscribe((result) => console.log(`${result}`));
     }
 
+    public changeNodeOption(option: any): void {
+        if (!this.selectedNodeData) return;
+        this.nodeDataArray[this.selectedNodeData.key].option = option;
+    }
+
     public async fetchDiagram(): Promise<void> {
         // fetch( URL , {
         //     method: 'post',
