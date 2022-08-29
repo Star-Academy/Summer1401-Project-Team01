@@ -236,6 +236,10 @@ body {
     }
 
     .snackbar-info {
+        color: var(--warning-color);
+    }
+
+    .snackbar-success{
         color: var(--success-color);
     }
 
@@ -249,6 +253,11 @@ body {
         font-size: var(--font-size-secondary-heading) !important;
         font-weight: bold;
 
+
+
+
+
+
         .mat-button-wrapper {
             color: var(--color-gray-10);
 
@@ -260,6 +269,7 @@ body {
         font-size: var(--font-size-paragraph);
 
         line-height: 2.5rem;
+
     }
 }
 

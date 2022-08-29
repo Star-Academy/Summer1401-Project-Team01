@@ -10,8 +10,8 @@ export class SnackbarService {
 
     public show(massage: string, type: snackbarType): void {
         this._snackBar.open(massage, 'x', {
-            horizontalPosition: 'end',
-            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
             duration: 4000,
             panelClass: [type, 'snackbar'],
         });
