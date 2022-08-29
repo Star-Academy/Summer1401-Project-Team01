@@ -17,18 +17,17 @@ export class DatasetService {
     let formData = new FormData();
     formData.append("datasetName", datasetName)
     formData.append("username", "admin")
-    fetch(DATASET_REMOVE, {body: formData, method: 'post'}).then()
-
-    //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
+    fetch(DATASET_REMOVE, {body: formData, method: 'delete'}).then()
   }
 
-  public async getDownloadDataset(datasetName: string): Promise<any> {
+  public async getDownloadDataset(datasetName: string): Promise<string> {
     let formData = new FormData();
     formData.append("datasetName", datasetName)
     formData.append("username", "admin")
-    // return await fetch(DOWNLOAD_FILE, {body: formData, method: 'post'}).then()
-
-    //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
+    const response = await fetch(DOWNLOAD_FILE, {body: formData, method: 'post'})
+    const data = await response.json()
+    console.log(data)
+    return response.url
   }
 
   public async downloadDataset(url: string): Promise<void> {

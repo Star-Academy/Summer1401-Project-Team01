@@ -10,8 +10,6 @@ export class UploadService {
     constructor(public apiService: ApiService, private http: HttpClient) {}
 
     public async uploadFile(formData: FormData): Promise<void> {
-        //await this.apiService.postRequest({url: UPLOAD_FILE, body: formData});
-
         await fetch(UPLOAD_FILE, {
             method: 'post',
             body: formData,

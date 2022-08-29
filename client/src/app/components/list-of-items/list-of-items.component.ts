@@ -80,7 +80,6 @@ export class ListOfItemsComponent implements OnInit {
             newRowData.push({fileName: data[i], dataType: 'csv'})
         }
         this.gridApi.setRowData(newRowData);
-        console.log(this.rowData$)
     }
 
     public onRemoveSelected(): void {
@@ -89,12 +88,13 @@ export class ListOfItemsComponent implements OnInit {
         this.gridApi.applyTransaction({remove: selectedData});
     }
 
-    public downloadSelected(): void {
+    public async downloadSelected(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
-        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName)
-        console.log(downloadUrl)
+        const downloadUrl = await this.datasetService.getDownloadDataset(selectedData[0].fileName)
         //this.datasetService.downloadDataset(downloadUrl)
     }
+
+    public async viewDataset(): Promise<void> {}
 
     public clearData(): void {
         this.gridApi.setRowData([]);
@@ -106,6 +106,15 @@ export class ListOfItemsComponent implements OnInit {
     }
 
     public onCellClicked(e: CellClickedEvent): void {
-        console.log('cellClicked', e);
+    }
+
+    public async updateGrid(): Promise<void> {
+        let data = await this.datasetService.getDatasets();
+        let newRowData = []
+
+        for (let i = 0; i < data.length; i++) {
+            newRowData.push({fileName: data[i], dataType: 'csv'})
+        }
+        this.gridApi.setRowData(newRowData);
     }
 }
