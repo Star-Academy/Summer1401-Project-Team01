@@ -23,7 +23,7 @@ namespace TalStart.Services
         public async Task<DataTable> RunPipeline(string pipelineName, string username)
         {
             var pipe = MakePipeline(pipelineName, username);
-            var sourceTable = $"{pipe.SourceDataset.Name}.{pipe.User.Username}";
+            var sourceTable = $"{pipe.SourceDataset.Name}_{pipe.User.Username}";
             var finalTable = sourceTable + 1;
             var tempTables = new List<string>();
             foreach (var process in pipe.TreeOfProcesses)
@@ -49,6 +49,69 @@ namespace TalStart.Services
             }
 
             return await _datasetService.PreviewDataset(username, pipe.DestinationDataset.Name, 50);
+        }
+
+        public async Task<DataTable> PreviewRun(string pipelineName, string username, int lastProcessId)
+        {
+            var pipe = MakePartialPipeline(pipelineName, username, lastProcessId);
+            var sourceTable = $"{pipe.SourceDataset.Name}_{pipe.User.Username}";
+            var finalTable = sourceTable + 1;
+            var tempTables = new List<string>();
+            foreach (var process in pipe.TreeOfProcesses)
+            {
+                tempTables.Add(finalTable);
+                process.Run(sourceTable, finalTable);
+                sourceTable = finalTable;
+                finalTable += '1';
+            }
+
+            finalTable = finalTable[..^1];
+
+            foreach (var query in tempTables.Select(temp => $"DROP TABLE \"{temp}\" "))
+            {
+                _sqlService.ExecuteNonQueryPostgres(query);
+            }
+
+            return await _datasetService.PreviewDataset(username, finalTable, 50);
+        }
+
+        private Pipeline? MakePartialPipeline(string pipelineName, string username, int lastProcessId)
+        {
+            try
+            {
+                var pipe = _db.Pipelines.Include(a => a.SourceDataset)
+                    .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+                if (pipe?.SourceDataset == null)
+                {
+                    return null;
+                }
+
+                pipe.TreeOfProcesses = new List<IProcess>();
+                var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
+                foreach (var r in res.OrderBy(r => r.Id))
+                {
+                    if (r.Id > lastProcessId)
+                        break;
+                    switch (r.Name)
+                    {
+                        case "foo":
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = r.Options});
+                            break;
+                        case "select":
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
+
+
+                            break;
+                    }
+                }
+
+                return pipe;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         private Pipeline? MakePipeline(string pipelineName, string username)
@@ -82,7 +145,8 @@ namespace TalStart.Services
             }
             catch (Exception e)
             {
-                throw;
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
     }

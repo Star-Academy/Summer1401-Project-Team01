@@ -88,6 +88,8 @@ public class PipelineController : ControllerBase
         await Task.Delay(3);
         return new BadRequestResult();
     }*/
+    
+    
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -104,6 +106,26 @@ public class PipelineController : ControllerBase
         catch (Exception e)
         {
             return new BadRequestResult();
+        }
+    }
+
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetRunPreview([FromForm] string pipelineName, [FromForm] string username, [FromForm]
+        int lastProcessId)
+    {
+        try
+        {
+            var dt = await _scenarioService.PreviewRun(pipelineName, username, lastProcessId);
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 
