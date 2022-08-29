@@ -1,5 +1,6 @@
 ﻿using System.Runtime.ExceptionServices;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TalStart.IServices;
 
 namespace TalStart.Controllers;
@@ -96,7 +97,9 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            return Ok(_scenarioService.RunPipeline(pipelineName, username));
+            var dt = await  _scenarioService.RunPipeline(pipelineName, username);
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
         }
         catch (Exception e)
         {
