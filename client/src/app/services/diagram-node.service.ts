@@ -5,6 +5,7 @@ import * as go from 'gojs';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
 import {PIPELINE_UPDATE_PROCESSES} from '../utilities/urls';
+import {Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -15,14 +16,15 @@ export class DiagramNodeService {
         {key: 1, name: 'Destination', parent: 0, option: null},
     ];
 
-    public constructor(public dialog: MatDialog) {}
-
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
 
     public static diagram: go.Diagram | null = null;
 
     public selectedNode: SelectedNodeModel | null = null;
+    public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
     public selectedNodeData: SelectedNodeDataModel | null = null;
+
+    public constructor(public dialog: MatDialog) {}
 
     public updateSelectedNode(_selectedNodeData: SelectedNodeDataModel): void {
         if (!_selectedNodeData) {
@@ -31,6 +33,7 @@ export class DiagramNodeService {
             return;
         }
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};
+        this.selectedNodeChange.next(this.selectedNode);
         this.selectedNodeData = JSON.parse(JSON.stringify(_selectedNodeData));
     }
 

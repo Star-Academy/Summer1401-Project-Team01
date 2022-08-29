@@ -4,17 +4,7 @@
         <h3 class="configs__header--type">{{ processorType }}</h3>
     </header>
     <div class="configs__body">
-        <app-config-select [inputTitle]="processorType"></app-config-select>
-
-        <app-config-toggle></app-config-toggle>
-
-        <app-config-input></app-config-input>
-
-        <app-config-number-input></app-config-number-input>
-
-        <app-config-mode-toggle></app-config-mode-toggle>
-
-        <app-config-checklist></app-config-checklist>
+        <ng-template #viewContainerRef></ng-template>
     </div>
     <div class="configs__buttons">
         <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>

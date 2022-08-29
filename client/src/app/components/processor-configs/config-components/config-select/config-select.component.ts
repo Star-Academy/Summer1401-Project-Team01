@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ProcessorConfigsComponent} from '../../processor-configs.component';
 
 @Component({
     selector: 'app-config-select',
@@ -11,6 +12,8 @@ export class ConfigSelectComponent {
     @Input() public inputRequired: boolean = false;
     @Input() public inputPlaceHolder: string = '';
     @Input() public inputValue: string = '';
+
+    public parentRef: ProcessorConfigsComponent | undefined;
 
     public constructor() {}
 }

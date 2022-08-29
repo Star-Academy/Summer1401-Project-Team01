@@ -2,8 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
 import {CellClassParams, ColDef, GridApi, GridReadyEvent, ICellRendererParams} from 'ag-grid-community';
 import {HttpClient} from '@angular/common/http';
-import {DatasetService} from "../../../../services/api/dataset.service";
-import {DiagramNodeService} from "../../../../services/diagram-node.service";
+import {DatasetService} from '../../../../services/api/dataset.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
+import {PIPELINE_ADD_DESTINATION, PIPELINE_ADD_SOURCE} from '../../../../utilities/urls';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-select-dataset',
@@ -58,31 +60,51 @@ export class SelectDatasetComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient, private datasetService: DatasetService, private diagramNodeService: DiagramNodeService) {}
+    public pipelineName: string | null = '';
+
+    public constructor(
+        private http: HttpClient,
+        private datasetService: DatasetService,
+        private diagramNodeService: DiagramNodeService,
+        private route: ActivatedRoute
+    ) {}
 
     public onGridReady(params: GridReadyEvent): void {
         this.gridApi = params.api;
     }
 
     public async ngOnInit(): Promise<void> {
+        this.pipelineName = this.route.snapshot.paramMap.get('pipelineName');
+
         let data = await this.datasetService.getDatasets();
-        let newRowData = []
+        let newRowData = [];
 
         for (let i = 0; i < data.length; i++) {
-            newRowData.push({fileName: data[i], dataType: 'csv'})
+            newRowData.push({fileName: data[i], dataType: 'csv'});
         }
         this.gridApi.setRowData(newRowData);
-        console.log(this.rowData$)
+        console.log(this.rowData$);
     }
 
     public async selectDataset(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
         const fileName = selectedData[0].fileName;
 
+        const formDataForSrcDes = new FormData();
+        formDataForSrcDes.append('sourceName', fileName);
+        formDataForSrcDes.append('pipelineName', this.pipelineName as string);
+        formDataForSrcDes.append('username', 'admin');
+
         if (this.diagramNodeService.selectedNode?.type === 'Start') {
-
+            await fetch(PIPELINE_ADD_SOURCE, {
+                method: 'post',
+                body: formDataForSrcDes,
+            });
+        } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+            await fetch(PIPELINE_ADD_DESTINATION, {
+                method: 'post',
+                body: formDataForSrcDes,
+            });
         }
-        else if (this.diagramNodeService.selectedNode?.type === 'Destination') {}
     }
-
 }
