@@ -10,8 +10,8 @@ import {SelectDatasetComponent} from '../pages/pipeline-designer/components/sele
 })
 export class DiagramNodeService {
     public nodeDataArray: NodeDataModel[] = [
-        {key: 0, name: 'Start'},
-        {key: 1, name: 'Destination', parent: 0},
+        {key: 0, name: 'Start', option: null},
+        {key: 1, name: 'Destination', parent: 0, option: null},
     ];
 
     public constructor(public dialog: MatDialog) {}
@@ -43,6 +43,7 @@ export class DiagramNodeService {
             key: this.selectedNodeData.key + 1,
             name: type,
             parent: this.selectedNodeData?.key,
+            option: null,
         };
 
         for (let i = this.selectedNodeData.key + 1; i < this.nodeDataArray.length; i++) {
