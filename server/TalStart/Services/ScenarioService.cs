@@ -132,11 +132,13 @@ namespace TalStart.Services
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = r.Options});
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
-
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "aggregate":
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }
