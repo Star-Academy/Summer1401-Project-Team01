@@ -64,8 +64,7 @@ namespace TalStart.Services
 
                 pipe.TreeOfProcesses = new List<IProcess>();
                 var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
-                res.OrderBy(r => r.Id);
-                foreach (var r in res)
+                foreach (var r in res.OrderBy(r => r.Id))
                 {
                     switch (r.Name)
                     {
