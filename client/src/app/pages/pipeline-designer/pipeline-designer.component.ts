@@ -152,8 +152,8 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
 
         const formDataForRun = new FormData();
 
-        formDataForRun.append('pipelineName', '' /*"this.pipelineName*/);
-        formDataForRun.append('username', 'admin' /*"this.pipelineName*/);
+        formDataForRun.append('pipelineName', this.pipelineName as string);
+        formDataForRun.append('username', 'admin');
 
         const response = await fetch(PIPELINE_RUNPIPELINE, {
             method: 'patch',
