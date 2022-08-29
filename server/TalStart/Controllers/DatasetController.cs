@@ -84,11 +84,11 @@ public class DatasetController : ControllerBase
             return new BadRequestResult();
         }
     }
-    [HttpGet("{datasetName}/{username}/{count}")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetSample([FromRoute] string datasetName, [FromRoute] string username, [FromRoute] int count)
+    public async Task<IActionResult> GetDatasetSample([FromForm] string datasetName, [FromForm] string username, [FromForm] int count)
     {
         try
         {

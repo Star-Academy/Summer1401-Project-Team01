@@ -22,7 +22,7 @@ public class FileController : ControllerBase
     {
         try
         {
-            return await _fileService.DownloadFile(datasetName, username);
+            return new OkObjectResult(_fileService.DownloadFile(datasetName, username));
         }
         catch (Exception)
         {

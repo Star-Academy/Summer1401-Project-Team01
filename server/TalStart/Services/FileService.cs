@@ -33,15 +33,16 @@ public class FileService : IFileService
         _parser.ParseCsvToPostgresTable(columns, $"{datasetName}_{username}", path);
     }
 
-    public async Task<FileStreamResult> DownloadFile(string datasetName, string username)
+    public string DownloadFile(string datasetName, string username)
     {
         var tableName = $"{datasetName}_{username}";
         
         var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
         _parser.ParsePostgresTableToCsv(tableName, path);
-        await using var stream = new FileStream(path, FileMode.Open);
-        return new FileStreamResult(stream, "text/csv");
+        using var stream = new FileStream(path, FileMode.Open);
+        var res = new FileStreamResult(stream, "text/csv");
+        return path;
     }
 
     public void DeleteFile(string datasetName, string username)
