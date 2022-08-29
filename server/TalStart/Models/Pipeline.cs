@@ -11,8 +11,7 @@ public class Pipeline
     public string? Json { get; set; }
     public Dataset? SourceDataset { get; set; }
     public Dataset? DestinationDataset { get; set; }
-
-    [JsonIgnore]
+    
     public User User { get; set; }
     [Key]
     public int Id { get; set; }

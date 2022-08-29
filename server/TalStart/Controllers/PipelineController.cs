@@ -87,7 +87,6 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            Console.WriteLine("salam");
             var pipeline = _pipelineService.GetPipeline(pipelineName, username);
             var JSONresult = JsonConvert.SerializeObject(pipeline);
             return Ok(JSONresult);

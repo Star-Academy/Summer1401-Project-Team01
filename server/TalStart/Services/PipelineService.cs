@@ -151,8 +151,7 @@ namespace TalStart.Services
 
         public Pipeline GetPipeline(string pipelineName, string username)
         {
-            var pipe = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset)
-                .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
+            var pipe = _db.Pipelines.Include(a => a.DestinationDataset).Include(a => a.SourceDataset).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
             return pipe;
         }
     }
