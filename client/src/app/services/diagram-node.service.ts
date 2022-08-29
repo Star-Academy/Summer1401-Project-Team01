@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {SelectedNodeDataModel, SelectedNodeModel} from '../models/selected-node.model';
 import {NodeDataModel} from '../models/node-data.model';
 import * as go from 'gojs';
-import {MatDialog} from "@angular/material/dialog";
-import {SelectDatasetComponent} from "../pages/pipeline-designer/components/select-dataset/select-dataset.component";
+import {MatDialog} from '@angular/material/dialog';
+import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
 
 @Injectable({
     providedIn: 'root',
@@ -59,7 +59,9 @@ export class DiagramNodeService {
 
         // @ts-ignore
         DiagramNodeService.diagram?.model = this.model;
-        console.log(DiagramNodeService.diagram);
+
+        this.selectedNode = null;
+        this.selectedNodeData = null;
     }
 
     public removeNode(): void {
@@ -78,11 +80,14 @@ export class DiagramNodeService {
 
         // @ts-ignore
         DiagramNodeService.diagram?.model = this.model;
+
+        this.selectedNode = null;
+        this.selectedNodeData = null;
     }
 
     public openSelectDatasetModal() {
         const dialog = this.dialog.open(SelectDatasetComponent);
-        dialog.afterClosed().subscribe(result => console.log(`${result}`))
+        dialog.afterClosed().subscribe((result) => console.log(`${result}`));
     }
 
     public async fetchDiagram(): Promise<void> {
