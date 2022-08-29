@@ -13,10 +13,10 @@ public class JoinOptions
 
 public enum JoinType
 {
-    Inner,
-    Left,
-    Right,
-    Full
+    Inner = 0,
+    Left = 1,
+    Right = 2,
+    Full = 3
 }
 
 
