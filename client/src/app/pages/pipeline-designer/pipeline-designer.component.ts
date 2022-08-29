@@ -13,6 +13,7 @@ import {SelectDatasetComponent} from './components/select-dataset/select-dataset
 import {SnackbarService} from '../../services/snackbar.service';
 import {snackbarType} from '../../models/snackbar-type.enum';
 import {DiagramNodeService} from '../../services/diagram-node.service';
+import {PIPELINE_RUNPIPELINE} from '../../utilities/urls';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -137,14 +138,17 @@ export class PipelineDesignerComponent implements AfterContentChecked {
         }
     }
 
-    public runProcess(): void {
+    public async runProcess(): Promise<void> {
         this.snackbarService.show('Please Wait', snackbarType.INFO);
 
-        /* const response = fetch(URL, {
+        const formDataForRun = new FormData();
+
+        formDataForRun.append('pipelineName', '' /*"this.pipelineName*/);
+        formDataForRun.append('username', 'admin' /*"this.pipelineName*/);
+
+        const response = await fetch(PIPELINE_RUNPIPELINE, {
             method: 'patch',
-            body: {"pipelineName": "this.diagramNodeService.pipelineName",
-                "username": "this.diagramNodeService.username",
-                ...init,
-        } */
+            body: formDataForRun,
+        });
     }
 }

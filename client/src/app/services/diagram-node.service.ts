@@ -4,6 +4,7 @@ import {NodeDataModel} from '../models/node-data.model';
 import * as go from 'gojs';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
+import {PIPELINE_UPDATE_PROCESSES} from '../utilities/urls';
 
 @Injectable({
     providedIn: 'root',
@@ -97,11 +98,16 @@ export class DiagramNodeService {
     }
 
     public async fetchDiagram(): Promise<void> {
-        // fetch( URL , {
-        //     method: 'post',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify(this.nodeDataArray),
-        //     ...init,
-        // })
+        const formDataForDiagram = new FormData();
+        const diagramData = JSON.stringify(this.nodeDataArray.slice(1, this.nodeDataArray.length - 1));
+
+        formDataForDiagram.append('processes', diagramData);
+        formDataForDiagram.append('name', '' /* pipelineName */);
+        formDataForDiagram.append('username', 'admin');
+
+        await fetch(PIPELINE_UPDATE_PROCESSES, {
+            method: 'patch',
+            body: formDataForDiagram,
+        });
     }
 }
