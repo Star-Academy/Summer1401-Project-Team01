@@ -72,7 +72,7 @@ export class DataInventoryComponent {
         let lines = '';
         reader.onload = (): void => {
             lines = reader.result as string;
-        }
+        };
         reader.readAsText($event);
         return lines;
     }

@@ -1,0 +1,8 @@
+<app-config-select
+        inputTitle="Columns to Select:"
+        inputPlaceHolder="Columns to Select"
+        inputRequired="false"
+        inputMultiple="true"
+        [inputOptions]="getColumns()"
+        (inputValueChange)="getSelectedColumns($event)">
+</app-config-select>

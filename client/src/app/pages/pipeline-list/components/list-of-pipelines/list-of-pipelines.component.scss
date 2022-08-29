@@ -1,40 +1,40 @@
 .list-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1.2rem;
-
-  height: 50rem;
-
-  .actions {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     gap: 1.2rem;
 
-    inline-size: 100%;
+    height: 50rem;
 
-    h2 {
-      margin: 0;
-      margin-inline-end: auto;
+    .actions {
+        display: flex;
+        gap: 1.2rem;
 
-      font-size: var(--font-size-secondary-heading);
-    }
+        inline-size: 100%;
 
-    button {
-      background-color: var(--color-gray-90);
+        h2 {
+            margin: 0;
+            margin-inline-end: auto;
 
-      i {
-        color: var(--color-primary-normal);
-      }
-
-      &:hover {
-        .delete-icon {
-          color: var(--error-color);
+            font-size: var(--font-size-secondary-heading);
         }
 
-        i {
-          color: var(--color-accent-normal);
+        button {
+            background-color: var(--color-gray-90);
+
+            i {
+                color: var(--color-primary-normal);
+            }
+
+            &:hover {
+                .delete-icon {
+                    color: var(--error-color);
+                }
+
+                i {
+                    color: var(--color-accent-normal);
+                }
+            }
         }
-      }
     }
-  }
 }

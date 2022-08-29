@@ -1,6 +1,12 @@
 .home {
-    background-image: linear-gradient(to right bottom,
-            hsl(192deg 53% 77%), hsl(192deg 52% 81%), hsl(193deg 51% 85%), hsl(192deg 50% 90%), hsl(192deg 48% 94%));
+    background-image: linear-gradient(
+        to right bottom,
+        hsl(192deg 53% 77%),
+        hsl(192deg 52% 81%),
+        hsl(193deg 51% 85%),
+        hsl(192deg 50% 90%),
+        hsl(192deg 48% 94%)
+    );
 
     display: flex;
     flex-direction: column;

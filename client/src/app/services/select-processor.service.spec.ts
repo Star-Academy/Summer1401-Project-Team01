@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {DatasetService} from './dataset.service';
+import {SelectProcessorService} from './select-processor.service';
 
-describe('DatasetService', () => {
-    let service: DatasetService;
+describe('SelectProcessorService', () => {
+    let service: SelectProcessorService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(DatasetService);
+        service = TestBed.inject(SelectProcessorService);
     });
 
     it('should be created', () => {

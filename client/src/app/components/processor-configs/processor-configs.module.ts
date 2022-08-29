@@ -14,6 +14,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ConfigChecklistComponent} from './config-components/config-checklist/config-checklist.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
+import {FieldSelectorConfigComponent} from './processor-config-components/field-selector-config/field-selector-config.component';
+import {AggregateConfigComponent} from './processor-config-components/aggregate-config/aggregate-config.component';
+import {JoinConfigComponent} from './processor-config-components/join-config/join-config.component';
+import {FilterConfigComponent} from './processor-config-components/filter-config/filter-config.component';
+import {FieldRemoverConfigComponent} from './processor-config-components/field-remover-config/field-remover-config.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +29,11 @@ import {FormsModule} from '@angular/forms';
         ConfigNumberInputComponent,
         ConfigModeToggleComponent,
         ConfigChecklistComponent,
+        FieldSelectorConfigComponent,
+        AggregateConfigComponent,
+        JoinConfigComponent,
+        FilterConfigComponent,
+        FieldRemoverConfigComponent,
     ],
     entryComponents: [ConfigSelectComponent],
     exports: [ProcessorConfigsComponent],

@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PipelineListComponent} from './pipeline-list.component';
+import {AggregateConfigComponent} from './aggregate-config.component';
 
-describe('PipelineListComponent', () => {
-    let component: PipelineListComponent;
-    let fixture: ComponentFixture<PipelineListComponent>;
+describe('AggregateConfigComponent', () => {
+    let component: AggregateConfigComponent;
+    let fixture: ComponentFixture<AggregateConfigComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PipelineListComponent],
+            declarations: [AggregateConfigComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PipelineListComponent);
+        fixture = TestBed.createComponent(AggregateConfigComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

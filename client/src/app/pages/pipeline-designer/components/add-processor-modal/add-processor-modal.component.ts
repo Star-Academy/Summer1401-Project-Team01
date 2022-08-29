@@ -66,6 +66,13 @@ export class AddProcessorModalComponent {
                 '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="20" height="4" rx="1" transform="translate(12 14)"/><rect width="14" height="1" rx=".5" transform="translate(12 6)"/><rect width="17" height="1" rx=".5" transform="translate(12 10)"/><rect width="14" height="1" rx=".5" transform="translate(12 21)"/><rect width="17" height="1" rx=".5" transform="translate(12 25)"/><path d="M4.7 19.54a1 1 0 0 1 0-1.42L5.84 17H1a1 1 0 0 1 0-2h4.83L4.7 13.88a1 1 0 1 1 1.41-1.42l2.83 2.83a1 1 0 0 1 0 1.42l-2.83 2.82a1 1 0 0 1-1.41 0z"/></svg>'
             ),
         },
+        {
+            name: 'Field remover',
+            description: 'Deletes one or more fields from a dataset.',
+            icon: this.sanitizer.bypassSecurityTrustHtml(
+                '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">\n    <path fill="#000" d="M0 3.25A.25.25 0 0 1 .25 3h6.5a.25.25 0 0 1 0 .5H.25A.25.25 0 0 1 0 3.25ZM0 8a1 1 0 0 1 1-1h8a1 1 0 0 1 0 2H1a1 1 0 0 1-1-1Zm.25-3a.25.25 0 0 0 0 .5h8a.25.25 0 0 0 0-.5h-8ZM0 10.75a.25.25 0 0 1 .25-.25h6.5a.25.25 0 1 1 0 .5H.25a.25.25 0 0 1-.25-.25Zm.25 1.75a.25.25 0 1 0 0 .5h8a.25.25 0 1 0 0-.5h-8ZM12.4 6.75h3.2c.051 0 .092.042.092.094v3.562a.093.093 0 0 1-.092.094h-3.2a.093.093 0 0 1-.092-.094V6.844c0-.052.04-.094.092-.094Zm2.37-1.156v.218h1.128c.056 0 .102.047.102.105v.427a.093.093 0 0 1-.092.093h-3.816A.093.093 0 0 1 12 6.345v-.438c0-.052.041-.093.092-.093h1.139v-.22c0-.051.041-.093.092-.093h1.354c.051 0 .092.042.092.094Z"></path>\n</svg>'
+            ),
+        },
     ];
 
     public createProcessor(name: string | undefined): void {

@@ -15,7 +15,7 @@ export class UploadService {
         await fetch(UPLOAD_FILE, {
             method: 'post',
             body: formData,
-        })
+        });
 
         // this.http.post(UPLOAD_FILE, formData, {reportProgress: true, observe: 'events'}).subscribe(
         //     (event) => {

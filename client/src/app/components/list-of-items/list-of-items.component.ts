@@ -10,8 +10,8 @@ import {
 } from 'ag-grid-community';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {DatasetService} from "../../services/api/dataset.service";
-import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
+import {DatasetService} from '../../services/api/dataset.service';
+import {ChangeDetection} from '@angular/cli/lib/config/workspace-schema';
 
 @Component({
     selector: 'app-list-of-items',
@@ -74,31 +74,30 @@ export class ListOfItemsComponent implements OnInit {
 
     public async ngOnInit(): Promise<void> {
         let data = await this.datasetService.getDatasets();
-        let newRowData = []
+        let newRowData = [];
 
         for (let i = 0; i < data.length; i++) {
-            newRowData.push({fileName: data[i], dataType: 'csv'})
+            newRowData.push({fileName: data[i], dataType: 'csv'});
         }
         this.gridApi.setRowData(newRowData);
-        console.log(this.rowData$)
+        console.log(this.rowData$);
     }
 
     public onRemoveSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
-        this.datasetService.deleteDataset(selectedData[0].fileName)
+        this.datasetService.deleteDataset(selectedData[0].fileName);
         this.gridApi.applyTransaction({remove: selectedData});
     }
 
     public downloadSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
-        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName)
-        console.log(downloadUrl)
+        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName);
+        console.log(downloadUrl);
         //this.datasetService.downloadDataset(downloadUrl)
     }
 
     public clearData(): void {
         this.gridApi.setRowData([]);
-
     }
 
     public onGridReady(params: GridReadyEvent): void {
