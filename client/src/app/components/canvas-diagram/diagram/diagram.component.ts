@@ -164,9 +164,9 @@ export class DiagramComponent {
         DiagramNodeService.diagram.addDiagramListener('ObjectSingleClicked', (e) => {
             const partName = e.subject.part.data.name;
             if (partName === 'Start') {
-                this.diagramNodeService.openSelectDatasetModal();
+                this.diagramNodeService.openSelectDatasetModal('start');
             } else if (partName === 'Destination') {
-                this.diagramNodeService.openSelectDatasetModal();
+                this.diagramNodeService.openSelectDatasetModal('destination');
             }
         });
     }

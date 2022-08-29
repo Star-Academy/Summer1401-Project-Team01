@@ -16,6 +16,9 @@ export class DiagramNodeService {
         {key: 1, name: 'Destination', parent: 0, option: null},
     ];
 
+    private isSourceSelected: boolean = false;
+    private isDestinationSelected: boolean = false;
+
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
 
     public static diagram: go.Diagram | null = null;
@@ -90,9 +93,20 @@ export class DiagramNodeService {
         this.selectedNodeData = null;
     }
 
-    public openSelectDatasetModal() {
-        const dialog = this.dialog.open(SelectDatasetComponent);
-        dialog.afterClosed().subscribe((result) => console.log(`${result}`));
+    public openSelectDatasetModal(state: string) {
+        if (state === 'start' && !this.isSourceSelected) {
+            const dialog = this.dialog.open(SelectDatasetComponent);
+            dialog.afterClosed().subscribe((result) => {
+                console.log(`${result}`);
+                this.isSourceSelected = true;
+            });
+        } else if (state === 'destination' && !this.isDestinationSelected) {
+            const dialog = this.dialog.open(SelectDatasetComponent);
+            dialog.afterClosed().subscribe((result) => {
+                console.log(`${result}`);
+                this.isDestinationSelected = true;
+            });
+        }
     }
 
     public changeNodeOption(option: any): void {
