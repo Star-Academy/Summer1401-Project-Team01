@@ -138,6 +138,7 @@ export class DiagramNodeService {
     }
 
     public createNodeArray(): void {
+        this.nodeArray = [];
         for (let i = 0; i < this.nodeDataArray.length; i++) {
             const newNode = {
                 id: this.nodeDataArray[i].key + 1,
