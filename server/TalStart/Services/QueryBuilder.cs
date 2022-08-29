@@ -17,7 +17,7 @@ public class QueryBuilder : IQueryBuilder
     
     public string DropTableQuery(string tableName)
     {
-        return $"DROP TABLE [ IF EXISTS ] {tableName};\n";
+        return $"DROP TABLE IF EXISTS {tableName};\n";
     }
     
     public string GetColumnNamesQuery(string tableName)
