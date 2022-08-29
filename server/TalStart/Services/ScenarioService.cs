@@ -140,6 +140,15 @@ namespace TalStart.Services
                         case "aggregate":
                             pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
+                        case "join":
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "filter":
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "fieldRemover":
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
                     }
                 }
 
