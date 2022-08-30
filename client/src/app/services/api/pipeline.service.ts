@@ -10,6 +10,5 @@ export class PipelineService {
 
     public async getAllPipelineNames(): Promise<any> {
         return this.apiService.getRequest({url: `${PIPELINE_GET_ALL_PIPELINE_NAMES}/admin`}).then();
-
     }
 }

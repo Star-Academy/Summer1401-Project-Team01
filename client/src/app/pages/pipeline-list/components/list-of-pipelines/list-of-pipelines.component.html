@@ -8,16 +8,16 @@
     </div>
 
     <ag-grid-angular
-            style="height: 100%; width: 100%"
-            class="ag-theme-alpine"
-            [columnDefs]="columnDefs"
-            [defaultColDef]="defaultColDef"
-            [rowData]="rowData$"
-            [animateRows]="true"
-            (gridReady)="onGridReady($event)"
-            (cellClicked)="onCellClicked($event)"
-            [paginationAutoPageSize]="true"
-            [pagination]="true"
-            [rowMultiSelectWithClick]="false"
+        style="height: 100%; width: 100%"
+        class="ag-theme-alpine"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData$"
+        [animateRows]="true"
+        (gridReady)="onGridReady($event)"
+        (cellClicked)="onCellClicked($event)"
+        [paginationAutoPageSize]="true"
+        [pagination]="true"
+        [rowMultiSelectWithClick]="false"
     ></ag-grid-angular>
 </div>

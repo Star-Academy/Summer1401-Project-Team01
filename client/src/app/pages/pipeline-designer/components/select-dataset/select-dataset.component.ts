@@ -60,13 +60,10 @@ export class SelectDatasetComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public pipelineName: string | null = '';
-
     public constructor(
         private http: HttpClient,
         private datasetService: DatasetService,
-        private diagramNodeService: DiagramNodeService,
-        private route: ActivatedRoute
+        private diagramNodeService: DiagramNodeService
     ) {}
 
     public onGridReady(params: GridReadyEvent): void {
@@ -74,8 +71,6 @@ export class SelectDatasetComponent implements OnInit {
     }
 
     public async ngOnInit(): Promise<void> {
-        this.pipelineName = this.route.snapshot.paramMap.get('pipelineName');
-
         let data = await this.datasetService.getDatasets();
         let newRowData = [];
 
@@ -91,16 +86,21 @@ export class SelectDatasetComponent implements OnInit {
         const fileName = selectedData[0].fileName;
 
         const formDataForSrcDes = new FormData();
-        formDataForSrcDes.append('sourceName', fileName);
-        formDataForSrcDes.append('pipelineName', this.pipelineName as string);
-        formDataForSrcDes.append('username', 'admin');
 
         if (this.diagramNodeService.selectedNode?.type === 'Start') {
+            formDataForSrcDes.append('sourceName', fileName);
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
             await fetch(PIPELINE_ADD_SOURCE, {
                 method: 'post',
                 body: formDataForSrcDes,
             });
         } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+            formDataForSrcDes.append('destinationName', fileName);
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
             await fetch(PIPELINE_ADD_DESTINATION, {
                 method: 'post',
                 body: formDataForSrcDes,

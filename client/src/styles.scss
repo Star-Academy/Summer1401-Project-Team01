@@ -236,6 +236,10 @@ body {
     }
 
     .snackbar-info {
+        color: var(--warning-color);
+    }
+
+    .snackbar-success {
         color: var(--success-color);
     }
 

@@ -1,36 +1,36 @@
-import { Injectable } from '@angular/core';
-import {ApiService} from "./api.service";
-import {DATASET_GET_ALL_DATASETS, DATASET_REMOVE, DOWNLOAD_FILE} from "../../utilities/urls";
+import {Injectable} from '@angular/core';
+import {ApiService} from './api.service';
+import {DATASET_GET_ALL_DATASETS, DATASET_REMOVE, DOWNLOAD_FILE} from '../../utilities/urls';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class DatasetService {
+    constructor(private apiService: ApiService) {}
 
-  constructor(private apiService: ApiService) {}
+    public getDatasets(): any {
+        return this.apiService.getRequest({url: `${DATASET_GET_ALL_DATASETS}/admin`}).then();
+    }
 
-  public getDatasets(): any  {
-    return this.apiService.getRequest({url: `${DATASET_GET_ALL_DATASETS}/admin`}).then();
-  }
+    public deleteDataset(datasetName: string): any {
+        let formData = new FormData();
+        formData.append('datasetName', datasetName);
+        formData.append('username', 'admin');
+        fetch(DATASET_REMOVE, {body: formData, method: 'post'}).then();
 
-  public deleteDataset(datasetName: string): any {
-    let formData = new FormData();
-    formData.append("datasetName", datasetName)
-    formData.append("username", "admin")
-    fetch(DATASET_REMOVE, {body: formData, method: 'delete'}).then()
-  }
+        //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
+    }
 
-  public async getDownloadDataset(datasetName: string): Promise<string> {
-    let formData = new FormData();
-    formData.append("datasetName", datasetName)
-    formData.append("username", "admin")
-    const response = await fetch(DOWNLOAD_FILE, {body: formData, method: 'post'})
-    const data = await response.json()
-    console.log(data)
-    return response.url
-  }
+    public async getDownloadDataset(datasetName: string): Promise<any> {
+        let formData = new FormData();
+        formData.append('datasetName', datasetName);
+        formData.append('username', 'admin');
+        // return await fetch(DOWNLOAD_FILE, {body: formData, method: 'post'}).then()
 
-  public async downloadDataset(url: string): Promise<void> {
-    await fetch(url)
-  }
+        //this.apiService.postRequest({url: DATASET_REMOVE, body: {username: 'admin', datasetName: datasetName}}).then()
+    }
+
+    public async downloadDataset(url: string): Promise<void> {
+        await fetch(url);
+    }
 }
