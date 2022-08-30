@@ -130,4 +130,6 @@ export class ProcessorConfigsComponent implements OnChanges {
     //
     //     this.selectComponentsReferences.push(childComponentRef);
     // }
+
+    public saveConfigs() {}
 }

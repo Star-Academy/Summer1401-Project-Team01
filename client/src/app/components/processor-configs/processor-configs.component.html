@@ -12,6 +12,6 @@
     </div>
     <div class="configs__buttons">
         <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>
-        <button class="global-button save-button" [disabled]="!hasChanged">Save</button>
+        <button class="global-button save-button" [disabled]="!hasChanged" (click)="saveConfigs()">Save</button>
     </div>
 </main>

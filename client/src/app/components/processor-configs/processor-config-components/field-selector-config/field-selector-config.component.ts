@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
 
 @Component({
@@ -32,14 +32,12 @@ export class FieldSelectorConfigComponent {
 
     public exportConfigurations(): string {
         const configsObject: JSON = <JSON>(<any>{
-            columns: this.selectedColumns,
+            columns: [this.selectedColumns],
         });
         return JSON.stringify(configsObject);
     }
 
     public async getColumns(): Promise<string> {
-        //TODO
-        //get columns of current source from service from api
         return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 

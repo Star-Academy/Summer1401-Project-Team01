@@ -38,4 +38,11 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
 
         this.diagramNodeService.changeNodeOption(option);
     }
+
+    public selectExportConfigurations(selectedColumns: string): string {
+        const configsObject: JSON = <JSON>(<any>{
+            columns: [selectedColumns],
+        });
+        return JSON.stringify(configsObject);
+    }
 }
