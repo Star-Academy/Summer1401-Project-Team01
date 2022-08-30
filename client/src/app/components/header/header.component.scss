@@ -1,89 +1,46 @@
 header {
+    height: 100%;
+
     .navbar {
-        background-color: var(--color-primary-normal);
 
         display: flex;
+        flex-direction: column;
         align-items: center;
+        justify-content: space-between;
         gap: var(--flex-gap-large);
 
-        block-size: 7vh;
-        inline-size: 100%;
+        block-size: 100%;
+        inline-size: 4rem;
 
-        padding-inline: var(--padding-large);
+        padding: var(--padding-small);
 
         font-size: var(--font-size-med-paragraph);
 
-        span {
-            color: var(--color-gray-90);
-
-            padding: var(--padding-medium);
+        .icon {
+            font-size: 3rem;
         }
 
-        .logo-container {
-            inline-size: 15rem;
+        .small-container {
+            display: grid;
+            place-items: center;
 
-            font-size: var(--font-size-med-paragraph);
+            height: 5rem;
+            width: 5rem;
+            border-radius: var(--border-radius-small);
 
-            a {
-                color: inherit;
-
-                text-decoration: none;
-
-                img {
-                    width: 100%;
-                    object-fit: cover;
-
-                    align-items: inherit;
+            &:hover {
+                background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue));
+                & > * {
+                    filter: brightness(100);
                 }
-
-                &:visited,
-                &:active,
-                &:focus {
-                    color: inherit;
-                }
-
-
             }
-        }
 
-        .select-env-container {
-            inline-size: 35rem;
-
-            .option {
-                color: var(--color-gray-90);
-
-                display: flex;
-                align-items: center;
-                gap: var(--flex-gap-medium);
-
-                font-size: var(--font-size-med-paragraph);
-            }
-        }
-
-        .help-container {
-            margin-inline-start: auto;
-
-            button[mat-icon-button] {
-                .mat-icon {
-                    font-size: var(--font-size-tertiary-heading);
-                }
+            img {
+                display: inline-block;
+                width: 3rem;
+                height: 3rem;
             }
         }
     }
 }
 
-.mat-menu-content {
-    button {
-        display: flex;
-        align-items: center;
-        gap: var(--flex-gap-medium);
-
-        padding-block: var(--padding-small);
-
-        font-size: var(--font-size-med-paragraph);
-
-        i {
-            padding: var(--padding-small);
-        }
-    }
-}

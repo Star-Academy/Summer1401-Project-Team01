@@ -8,6 +8,8 @@
     &__header {
         background-color: var(--color-gray-98);
 
+        block-size: max-content;
+
         padding-block: var(--padding-small);
         padding-inline: var(--padding-large);
 
@@ -31,6 +33,7 @@
 
         inline-size: 100%;
 
+        padding-inline-start: 3rem;
         padding: var(--padding-medium);
     }
 
@@ -43,6 +46,7 @@
         justify-content: space-between;
 
         min-block-size: 8rem;
+        block-size: max-content;
         max-block-size: 8rem;
         inline-size: 100%;
 

@@ -1,0 +1,39 @@
+<app-config-select
+    inputTitle="Middle Dataset Name:"
+    inputPlaceHolder="Middle Dataset Name"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="getDatasets()"
+    (inputValueChange)="getSelectedDataset($event)"
+>
+</app-config-select>
+<app-config-select
+    *ngIf="hasSelectedDataset"
+    inputTitle="Left Value Column:"
+    inputPlaceHolder="Left Value Column"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="getColumns()"
+    (inputValueChange)="getSelectedLeftVal($event)"
+>
+</app-config-select>
+<app-config-select
+    *ngIf="hasSelectedDataset"
+    inputTitle="Right Value Column:"
+    inputPlaceHolder="Right Value Column"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="getColumnsOfSelectedDataset()"
+    (inputValueChange)="getSelectedRightVal($event)"
+>
+</app-config-select>
+<app-config-select
+    *ngIf="hasSelectedDataset"
+    inputTitle="Join Type:"
+    inputPlaceHolder="Join Type"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="joinTypes"
+    (inputValueChange)="getSelectedJoinType($event)"
+>
+</app-config-select>

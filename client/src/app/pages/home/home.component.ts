@@ -13,7 +13,7 @@ export class HomeComponent {
         await this.router.navigateByUrl('data-inventory');
     }
 
-    public async goPipelineDesigner() {
-        await this.router.navigateByUrl('pipeline-designer');
+    public async goPipelineList() {
+        await this.router.navigateByUrl('pipeline-list');
     }
 }
