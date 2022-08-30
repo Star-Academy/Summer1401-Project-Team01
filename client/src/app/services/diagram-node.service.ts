@@ -4,7 +4,12 @@ import {NodeDataModel, NodeModel} from '../models/node-data.model';
 import * as go from 'gojs';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
-import {PIPELINE_REMOVE_DESTINATION, PIPELINE_REMOVE_SOURCE, PIPELINE_UPDATE_PROCESSES} from '../utilities/urls';
+import {
+    PIPELINE_GET_PIPELINE,
+    PIPELINE_REMOVE_DESTINATION,
+    PIPELINE_REMOVE_SOURCE,
+    PIPELINE_UPDATE_PROCESSES,
+} from '../utilities/urls';
 import {Subject} from 'rxjs';
 
 @Injectable({
@@ -14,10 +19,7 @@ export class DiagramNodeService {
     public pipelinePage: string = '';
     public source: string | null = null;
 
-    public nodeDataArray: NodeDataModel[] = [
-        {key: 0, name: 'Start', option: null},
-        {key: 1, name: 'Destination', parent: 0, option: null},
-    ];
+    public nodeDataArray: NodeDataModel[] = [{key: 0, name: 'Start', option: null}];
 
     private isSourceSelected: boolean = false;
     private isDestinationSelected: boolean = false;
@@ -31,6 +33,44 @@ export class DiagramNodeService {
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
     public constructor(public dialog: MatDialog) {}
+
+    public async getCurrentPipeLine(): Promise<void> {
+        const response = await fetch(PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin', {
+            method: 'get',
+        });
+        const data = await response.json();
+
+        const pipelineData = await JSON.parse(data?.Json);
+
+        if (!pipelineData) return;
+
+        for (let i = 0; i < pipelineData.length; i++) {
+            const newNode = {
+                key: pipelineData[i].id,
+                name: pipelineData[i].name,
+                parent: pipelineData[i].id - 1,
+                option: JSON.parse(JSON.stringify(pipelineData[i].option)),
+            };
+
+            this.nodeDataArray.push(newNode);
+        }
+        const lastNode = {
+            key: pipelineData.length + 1,
+            name: 'Destination',
+            parent: pipelineData.length,
+        };
+
+        this.nodeDataArray.push(lastNode);
+
+        this.createDiagramAgain();
+    }
+
+    public createDiagramAgain(): void {
+        this.model = new go.TreeModel(this.nodeDataArray);
+
+        // @ts-ignore
+        DiagramNodeService.diagram?.model = this.model;
+    }
 
     public updateSelectedNode(_selectedNodeData: SelectedNodeDataModel): void {
         if (!_selectedNodeData) {

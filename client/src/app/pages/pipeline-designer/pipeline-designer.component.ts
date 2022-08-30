@@ -53,6 +53,10 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
 
         // @ts-ignore
         this.diagramNodeService.pipelinePage = this.pipelineName;
+
+        if (!!this.pipelineName && this.pipelineName !== '') {
+            this.diagramNodeService.getCurrentPipeLine().then();
+        }
     }
 
     public ngAfterContentChecked() {
