@@ -17,6 +17,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ConfigSelectComponent} from './config-components/config-select/config-select.component';
 import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
+import {FieldSelectorConfigComponent} from './processor-config-components/field-selector-config/field-selector-config.component';
 
 @Component({
     selector: 'app-processor-configs',
@@ -131,5 +132,11 @@ export class ProcessorConfigsComponent implements OnChanges {
     //     this.selectComponentsReferences.push(childComponentRef);
     // }
 
-    public saveConfigs() {}
+    @ViewChild(FieldSelectorConfigComponent) public fieldSelectorConfigComponent!: FieldSelectorConfigComponent;
+
+    public saveConfigs() {
+        if (this.processorType === 'Field selector') {
+            console.log(this.fieldSelectorConfigComponent.exportConfigurations());
+        }
+    }
 }

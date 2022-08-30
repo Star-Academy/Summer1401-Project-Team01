@@ -4,11 +4,11 @@
         <h3 class="configs__header--type">{{ processorType }}</h3>
     </header>
     <div class="configs__body">
-        <app-field-selector-config *ngIf="isFieldSelector" [processorId]="processorId"></app-field-selector-config>
-        <app-aggregate-config *ngIf="isAggregation" [processorId]="processorId"></app-aggregate-config>
-        <app-join-config *ngIf="isJoin" [processorId]="processorId"></app-join-config>
-        <app-filter-config *ngIf="isFilter" [processorId]="processorId"></app-filter-config>
-        <app-field-remover-config *ngIf="isFieldRemover" [processorId]="processorId"></app-field-remover-config>
+        <app-field-selector-config #fieldSelectorConfigComponent *ngIf="isFieldSelector" [processorId]="processorId"></app-field-selector-config>
+        <app-aggregate-config #aggregateConfigComponent *ngIf="isAggregation" [processorId]="processorId"></app-aggregate-config>
+        <app-join-config #joinConfigComponent *ngIf="isJoin" [processorId]="processorId"></app-join-config>
+        <app-filter-config #filterConfigComponent *ngIf="isFilter" [processorId]="processorId"></app-filter-config>
+        <app-field-remover-config #fieldRemoverConfigComponent *ngIf="isFieldRemover" [processorId]="processorId"></app-field-remover-config>
     </div>
     <div class="configs__buttons">
         <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>

@@ -32,7 +32,7 @@ export class FieldSelectorConfigComponent {
 
     public exportConfigurations(): string {
         const configsObject: JSON = <JSON>(<any>{
-            columns: [this.selectedColumns],
+            columns: this.selectedColumns,
         });
         return JSON.stringify(configsObject);
     }
