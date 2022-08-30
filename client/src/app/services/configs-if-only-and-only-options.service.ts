@@ -32,4 +32,10 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
 
         return await data.join(',');
     }
+
+    public selectorToOption(selectedColumn: string): void {
+        const option = {columns: [selectedColumn]};
+
+        this.diagramNodeService.changeNodeOption(option);
+    }
 }
