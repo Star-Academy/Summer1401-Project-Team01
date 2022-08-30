@@ -6,10 +6,11 @@ import {PipelineDesignerComponent} from './pages/pipeline-designer/pipeline-desi
 import {DataInventoryComponent} from './pages/data-inventory/data-inventory.component';
 import {PipelineListComponent} from './pages/pipeline-list/pipeline-list.component';
 
+
 const routes: Routes = [
-    {path: '', pathMatch: 'full', component: HomeComponent},
+    {path: '', pathMatch: 'full', component: HomeComponent, data: {animation: 'isLeft'}},
     {path: 'data-inventory', component: DataInventoryComponent},
-    {path: 'pipeline-designer/:pipelineName', component: PipelineDesignerComponent},
+    {path: 'pipeline-designer/:pipelineName', component: PipelineDesignerComponent, data: {animation: 'isRight'}},
     {path: 'pipeline-list', component: PipelineListComponent},
     {path: '**', redirectTo: ''},
 ];

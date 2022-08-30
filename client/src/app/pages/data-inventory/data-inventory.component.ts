@@ -36,7 +36,7 @@ export class DataInventoryComponent {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (!this.dialogRefMouseClose) {
                 await this.fileSubmitHandler();
-                await this.grid?.updateGrid();
+                //await this.grid?.updateGrid();
             }
 
             this.dialogRefMouseClose = false;

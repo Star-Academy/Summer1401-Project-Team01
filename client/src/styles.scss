@@ -12,6 +12,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core;
 
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -38,6 +39,7 @@ $boilera-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($boilera-theme);
 
+
 /*
 Design System
 
@@ -60,18 +62,20 @@ White spaces (px)
     --color-gray-20: hsl(0deg 0% 20%);
     --color-gray-10: hsl(0deg 0% 10%);
 
-    --color-primary-darker: hsl(201deg 100% 3%);
-    --color-primary-dark: hsl(201deg 96% 10%);
-    --color-primary-normal: hsl(201deg 93% 12%);
-    --color-primary-light: hsl(201deg 34% 32%);
-    --color-primary-lighter: hsl(201deg 16% 57%);
+    --color-primary-darker: hsl(0deg 0% 5%);
+    --color-primary-dark: hsl(0deg 0% 9%);
+    --color-primary-normal: hsl(0deg 0% 13%);
+    --color-primary-light: hsl(0deg 0% 17%);
+    --color-primary-lighter: hsl(0deg 0% 21%);
 
-    --color-accent-darker: hsl(192deg 70% 13%);
-    --color-accent-dark: hsl(192deg 70% 35%);
-    --color-accent-normal: hsl(192deg 70% 43%);
-    --color-accent-light: hsl(192deg 53% 55%);
-    --color-accent-lighter: hsl(192deg 53% 77%);
-    --color-accent-lightest: hsl(192deg 50% 94%);
+    --color-accent-darker: hsl(0deg 0% 84%);
+    --color-accent-dark: hsl(0deg 0% 88%);
+    --color-accent-normal: hsl(0deg 0% 92%);
+    --color-accent-light: hsl(0deg 0% 96%);
+    --color-accent-lighter: hsl(0deg 0% 100%);
+
+    --color-tertiary-blue: hsl(196deg, 93%, 47%);
+    --color-tertiary-green: hsl(153deg, 91%, 56%);
 
     --color-csv-format: hsl(205deg 100% 45%);
     --color-xls-format: hsl(110deg 100% 35%);
@@ -116,18 +120,23 @@ White spaces (px)
 }
 
 * {
-    font-family: Vazirmatn, sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 html {
     scroll-behavior: smooth;
 
-    font-family: Vazirmatn, sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 62.5%;
 }
 
+::selection {
+    background-color: var(--color-primary-normal);
+    color: var(--color-accent-normal);
+}
+
 body {
-    background-color: var(--color-gray-98);
+    background-color: var(--color-accent-normal);
     color: var(--color-gray-20);
 
     min-block-size: 100vh;
@@ -165,8 +174,6 @@ body {
 
         display: inline-flex;
         align-items: center;
-
-        padding: 1.2rem 2.4rem;
 
         border: none;
         border-radius: var(--border-radius-small);
@@ -214,10 +221,52 @@ body {
 
     .global-button {
         background-color: var(--color-primary-normal);
-        color: var(--color-gray-90);
+        color: var(--color-accent-normal);
 
         &:hover {
-            background-color: var(--color-primary-dark);
+            background-color: var(--color-primary-light);
+        }
+    }
+
+    a.primary-button {
+        font-weight: 400;
+        font-size: 1.6rem;
+        text-decoration: none;
+
+        padding: 1.2rem 3.6rem;
+
+        background-color: var(--color-primary-normal);
+        color: var(--color-accent-normal);
+        transition: transform 200ms ease-in;
+
+        &:hover {
+            background-color: var(--color-primary-light);
+            transform: translateY(-0.3rem);
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a.icon-link:active, a.icon-link:visited {
+        color: var(--color-primary-normal)
+    }
+
+    a.secondary-button {
+        font-weight: 700;
+        font-size: 1.6rem;
+        text-decoration: none;
+
+        padding: 1.2rem 3.6rem;
+
+        border: 2px solid var(--color-primary-normal);
+        background-color: var(--color-accent-normal);
+        color: var(--color-primary-normal-normal);
+        transition: transform 200ms ease-in;
+
+        &:hover {
+            transform: translateY(-0.3rem);
         }
     }
 
@@ -270,4 +319,8 @@ body {
 html,
 body {
     height: 100%;
+}
+
+main {
+    position: relative;
 }
