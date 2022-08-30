@@ -27,6 +27,13 @@ export class FieldRemoverConfigComponent {
         if (configsObject.hasOwnProperty('columns')) this.selectedColumns = configsObject.columns;
     }
 
+    public exportConfigurations(): string {
+        const configsObject: JSON = <JSON>(<any>{
+            columns: this.selectedColumns,
+        });
+        return JSON.stringify(configsObject);
+    }
+
     public getColumns(): string {
         //TODO
         //get columns of current source from service from api

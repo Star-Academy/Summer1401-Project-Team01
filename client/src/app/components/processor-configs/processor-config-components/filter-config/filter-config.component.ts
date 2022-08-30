@@ -32,6 +32,15 @@ export class FilterConfigComponent {
         if (configsObject.hasOwnProperty('value')) this.selectedValue = configsObject.value;
     }
 
+    public exportConfigurations(): string {
+        const configsObject: JSON = <JSON>(<any>{
+            columnName: this.selectedColumn,
+            operator: this.selectedOperator,
+            value: this.selectedValue,
+        });
+        return JSON.stringify(configsObject);
+    }
+
     public getColumns(): string {
         //TODO
         //get columns of current source from service from api

@@ -33,15 +33,33 @@ export class JoinConfigComponent {
         if (configsObject.hasOwnProperty('leftVal')) this.selectedLeft = configsObject.leftVal;
         if (configsObject.hasOwnProperty('rightVal')) this.selectedRight = configsObject.rightVal;
         if (configsObject.hasOwnProperty('type'))
-            this.selectedJoinType = this.JoinTypeNumberToValue(configsObject.type);
+            this.selectedJoinType = this.joinTypeNumberToValue(configsObject.type);
     }
 
-    public JoinTypeNumberToValue(number: number) {
+    public joinTypeNumberToValue(number: number): string {
         if (number == 0) return 'Inner';
         else if (number == 1) return 'Left';
         else if (number == 2) return 'Right';
         else if (number == 3) return 'Full';
         return '';
+    }
+
+    public joinTypeValueToNumber(value: string): number {
+        if (value == 'Inner') return 0;
+        else if (value == 'Left') return 1;
+        else if (value == 'Right') return 2;
+        else if (value == 'Full') return 3;
+        return 0;
+    }
+
+    public exportConfigurations(): string {
+        const configsObject: JSON = <JSON>(<any>{
+            middleDatasetName: this.selectedDataset,
+            leftVal: this.selectedLeft,
+            rightVal: this.selectedRight,
+            type: this.joinTypeValueToNumber(this.selectedJoinType),
+        });
+        return JSON.stringify(configsObject);
     }
 
     public getDatasets(): string {

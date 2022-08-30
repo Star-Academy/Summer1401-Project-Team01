@@ -35,7 +35,7 @@ export class AggregateConfigComponent {
             this.selectedGroupColumn = configsObject.ColumnToBeGroupedBy;
     }
 
-    public aggregationTypeNumberToValue(number: number) {
+    public aggregationTypeNumberToValue(number: number): string {
         if (number == 0) return 'Sum';
         else if (number == 1) return 'Min';
         else if (number == 2) return 'Max';
@@ -43,10 +43,23 @@ export class AggregateConfigComponent {
         else if (number == 4) return 'Count';
         return '';
     }
+    public aggregationTypeValueToNumber(value: string): number {
+        if (value == 'Sum') return 0;
+        else if (value == 'Min') return 1;
+        else if (value == 'Max') return 2;
+        else if (value == 'Average') return 3;
+        else if (value == 'Count') return 4;
+        return 0;
+    }
 
-    // public exportConfigurations(): string {
-    //     const configsObject: JSON = <JSON>(<any>{});
-    // }
+    public exportConfigurations(): string {
+        const configsObject: JSON = <JSON>(<any>{
+            ColumnToBeGroupedBy: this.selectedGroupColumn,
+            OperationColumn: this.selectedOperationColumn,
+            AggregationType: this.aggregationTypeValueToNumber(this.selectedAggregationType),
+        });
+        return JSON.stringify(configsObject);
+    }
 
     public getColumns(): string {
         //TODO
