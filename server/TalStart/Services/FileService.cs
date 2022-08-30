@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic.FileIO;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
+using TalStart.Properties;
 
 namespace TalStart.Services;
 
@@ -18,13 +19,12 @@ public class FileService : IFileService
     public async Task UploadFile(IFormFile file, Dictionary<string, string> columns, string username,
         string datasetName)
     {
-        string dir = $"{AppContext.BaseDirectory}../../../resources/{username}"; // If directory does not exist, create it.
+        var dir = Path.Combine(Configurations.PathToResources, $"{username}");
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
         }
         var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
-
         using (var stream = new FileStream(path, FileMode.Create))
         {
             file.CopyTo(stream);
@@ -35,9 +35,9 @@ public class FileService : IFileService
     public string DownloadFile(string datasetName, string username)
     {
         var tableName = $"{datasetName}_{username}";
-        
-        var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
 
+        var path = Path.Combine(Configurations.PathToResources, $"{username}/{datasetName}.csv");
+        
         _parser.ParsePostgresTableToCsv(tableName, path);
         using var stream = new FileStream(path, FileMode.Open);
         var res = new FileStreamResult(stream, "text/csv");
@@ -46,16 +46,13 @@ public class FileService : IFileService
 
     public void DeleteFile(string datasetName, string username)
     {
-        var path = Path.Combine(Directory.GetCurrentDirectory(),
-            $"resources\\{username}", $"{datasetName}.csv");
+        var path = Path.Combine(Configurations.PathToResources, $"{username}", $"{datasetName}.csv");
         FileSystem.DeleteFile(path);
     }
-    
-    public void RenameCsvFile(string finalDirectoryName, string oldName, string newName)
+
+    public void RenameFile(string finalDirectoryName, string oldName, string newName, string fileFormat)
     {
-        var path = $"{AppContext.BaseDirectory}../../../resources/{finalDirectoryName}/";
-        FileSystem.RenameFile(
-            Path.Combine(path, $"{oldName}.csv")
-            , $"{newName}.csv");
+        var pathToOldFile = Path.Combine(Configurations.PathToResources, $"{finalDirectoryName}", $"{oldName}" + $"{fileFormat}");
+        FileSystem.RenameFile(pathToOldFile, $"{newName}" + $"{fileFormat}");
     }
 }
