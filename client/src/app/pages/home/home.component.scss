@@ -1,13 +1,12 @@
 .wrapper {
     width: 100%;
-    height: 100%;
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2.4rem;
-    align-items: center;
 
     padding-inline: 15rem;
+    padding-block: 20rem;
 
     background-image: radial-gradient(rgba(33, 33, 33, 0.5) 1.5px, transparent 1.5px);
     background-size: 60px 60px;
