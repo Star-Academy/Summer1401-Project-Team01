@@ -142,7 +142,7 @@ export class DiagramComponent {
                 layerSpacing: 150,
                 // properties for the "last parents":
                 // alternateAngle: 90,
-                alternateLayerSpacing: 35,
+                alternateLayerSpacing: 150,
                 alternateAlignment: go.TreeLayout.AlignmentBus,
                 alternateNodeSpacing: 20,
             }),

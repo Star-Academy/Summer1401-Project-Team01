@@ -66,7 +66,6 @@ export class DiagramNodeService {
         this.nodeDataArray.splice(this.selectedNodeData.key + 1, 0, newNodeData);
 
         this.model = new go.TreeModel(this.nodeDataArray);
-        console.log(this.model);
 
         // @ts-ignore
         DiagramNodeService.diagram?.model = this.model;
