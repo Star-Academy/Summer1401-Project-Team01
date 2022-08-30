@@ -4,7 +4,7 @@ import {NodeDataModel, NodeModel} from '../models/node-data.model';
 import * as go from 'gojs';
 import {MatDialog} from '@angular/material/dialog';
 import {SelectDatasetComponent} from '../pages/pipeline-designer/components/select-dataset/select-dataset.component';
-import {PIPELINE_UPDATE_PROCESSES} from '../utilities/urls';
+import {PIPELINE_REMOVE_DESTINATION, PIPELINE_REMOVE_SOURCE, PIPELINE_UPDATE_PROCESSES} from '../utilities/urls';
 import {Subject} from 'rxjs';
 
 @Injectable({
@@ -98,37 +98,47 @@ export class DiagramNodeService {
         this.fetchDiagram().then();
     }
 
-    public orderForAddOrRemoveSrcDes: string = '';
-
     public openSelectDatasetModal(state: string, order: string) {
         if (state === 'start' && !this.isSourceSelected && order === 'add') {
-            this.orderForAddOrRemoveSrcDes = 'add';
             const dialog = this.dialog.open(SelectDatasetComponent);
+
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
                 this.isSourceSelected = true;
             });
         } else if (state === 'destination' && !this.isDestinationSelected && order === 'add') {
-            this.orderForAddOrRemoveSrcDes = 'add';
             const dialog = this.dialog.open(SelectDatasetComponent);
+
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
                 this.isDestinationSelected = true;
             });
-        } else if (state === 'start' && !this.isDestinationSelected && order === 'remove') {
-            this.orderForAddOrRemoveSrcDes = 'remove';
-            const dialog = this.dialog.open(SelectDatasetComponent);
-            dialog.afterClosed().subscribe((result) => {
-                console.log(`${result}`);
-                this.isDestinationSelected = false;
-            });
-        } else if (state === 'destination' && !this.isDestinationSelected && order === 'remove') {
-            this.orderForAddOrRemoveSrcDes = 'remove';
-            const dialog = this.dialog.open(SelectDatasetComponent);
-            dialog.afterClosed().subscribe((result) => {
-                console.log(`${result}`);
-                this.isDestinationSelected = false;
-            });
+        } else if (state === 'start' && this.isSourceSelected && order === 'remove') {
+            const formDataForSrcDes = new FormData();
+
+            this.source = null;
+
+            formDataForSrcDes.append('pipelineName', this.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
+            fetch(PIPELINE_REMOVE_SOURCE, {
+                method: 'delete',
+                body: formDataForSrcDes,
+            }).then();
+
+            this.isSourceSelected = false;
+        } else if (state === 'destination' && this.isDestinationSelected && order === 'remove') {
+            const formDataForSrcDes = new FormData();
+
+            formDataForSrcDes.append('pipelineName', this.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
+            fetch(PIPELINE_REMOVE_DESTINATION, {
+                method: 'delete',
+                body: formDataForSrcDes,
+            }).then();
+
+            this.isDestinationSelected = false;
         }
     }
 
