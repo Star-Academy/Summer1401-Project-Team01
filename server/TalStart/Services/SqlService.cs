@@ -26,12 +26,12 @@ public class SqlService : ISqlService
         cmd.ExecuteNonQuery();
     }
 
-    public object? ExecuteScalarPostgres(string query)
+    public async Task<Object?> ExecuteScalarPostgres(string query)
     {
-        using var conn = new NpgsqlConnection(CString.connectionString);
+        await using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
-        using var cmd = new NpgsqlCommand(query, conn);
-        return cmd.ExecuteScalar();
+        await using var cmd = new NpgsqlCommand(query, conn);
+        return await cmd.ExecuteScalarAsync();
     }
 
     public List<string> ExecuteReaderPostgres(string query)
