@@ -16,12 +16,12 @@ public class Select : IProcess
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public string? Options { get; set; }
+    public Object? Options { get; set; }
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var selectOptions = JsonSerializer.Deserialize<SelectOptions>(Options);
+            var selectOptions = JsonSerializer.Deserialize<SelectOptions>(Options.ToString());
 
             var query = $"SELECT ";
             foreach (var column in selectOptions.columns)

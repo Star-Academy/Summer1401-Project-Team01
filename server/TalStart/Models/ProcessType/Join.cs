@@ -16,13 +16,13 @@ public class Join : IProcess
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public string? Options { get; set; }
+    public Object? Options { get; set; }
 
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var joinOptions = JsonSerializer.Deserialize<JoinOptions>(Options);
+            var joinOptions = JsonSerializer.Deserialize<JoinOptions>(Options.ToString());
 
             var query = $"SELECT *\n";
             query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\" \n";
