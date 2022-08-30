@@ -33,11 +33,10 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
-
             finalTable = finalTable.Substring(0, finalTable.Length - 1);
             sourceTable = finalTable;
             finalTable = $"{pipe.DestinationDataset.Name}_{pipe.User.Username}";
-            var query = $"DROP TABLE \"{pipe.DestinationDataset.Name}_{pipe.User.Username}\" ";
+            var query = $"DROP TABLE IF EXISTS \"{pipe.DestinationDataset.Name}_{pipe.User.Username}\" ";
             _sqlService.ExecuteNonQueryPostgres(query);
             query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
             _sqlService.ExecuteNonQueryPostgres(query);
@@ -67,7 +66,7 @@ namespace TalStart.Services
 
             finalTable = finalTable[..^1];
 
-            foreach (var query in tempTables.Select(temp => $"DROP TABLE \"{temp}\" "))
+            foreach (var query in tempTables.Select(temp => $"DROP TABLE IF EXISTS \"{temp}\" "))
             {
                 _sqlService.ExecuteNonQueryPostgres(query);
             }
@@ -122,6 +121,7 @@ namespace TalStart.Services
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
                 if (pipe == null || pipe.SourceDataset == null || pipe.DestinationDataset == null)
                 {
+                    Console.WriteLine("saa");
                     return null;
                 }
 
