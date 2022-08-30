@@ -3,7 +3,7 @@
     inputPlaceHolder="Columns to Select"
     inputRequired="false"
     inputMultiple="true"
-    [inputOptions]="getColumns()"
+    [inputOptions]="columns"
     (inputValueChange)="getSelectedColumns($event)"
     [inputValue]="selectedColumns"
 >

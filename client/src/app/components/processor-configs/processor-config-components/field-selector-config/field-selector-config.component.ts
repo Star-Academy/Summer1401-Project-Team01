@@ -10,10 +10,14 @@ export class FieldSelectorConfigComponent {
     @Input() processorId: number = 0;
     public selectedColumns: string = '';
 
-    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+    public columns: string = '';
+
+    public constructor(public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
         //TODO
         const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
         this.initializeConfigurations(configsFromBack);
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -33,11 +37,10 @@ export class FieldSelectorConfigComponent {
         return JSON.stringify(configsObject);
     }
 
-    public getColumns(): string {
+    public async getColumns(): Promise<string> {
         //TODO
         //get columns of current source from service from api
-        //this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns().then();
-        return 'name,age,nationality,address,phone';
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedColumns(e: string) {

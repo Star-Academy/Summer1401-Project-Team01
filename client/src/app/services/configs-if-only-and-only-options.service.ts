@@ -10,23 +10,26 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
         this.getDatasetColumns().then();
     }
 
-    public async getDatasetColumns(): Promise<void> {
+    public async getDatasetColumns(): Promise<string> {
         const formDataForGettingColumns = new FormData();
 
         if (!this.diagramNodeService.source) {
-            console.log('No source');
-            return;
+            return 'name,age,nationality,address,phone';
         }
 
         formDataForGettingColumns.append('datasetName', this.diagramNodeService.source);
         formDataForGettingColumns.append('username', 'admin');
 
-        const response = await fetch(DATASET_GET_ALL_COLUMNS, {
-            body: formDataForGettingColumns,
-            method: 'get',
-        });
+        const response = await fetch(
+            DATASET_GET_ALL_COLUMNS + '?datasetName=' + this.diagramNodeService.source + '&username=admin',
+            {
+                method: 'get',
+            }
+        );
 
-        const data = await response;
+        const data = await response.json();
         console.log(data);
+
+        return await data.join(',');
     }
 }
