@@ -16,6 +16,7 @@ import {Subject} from 'rxjs';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ConfigSelectComponent} from './config-components/config-select/config-select.component';
 import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
+import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
 
 @Component({
     selector: 'app-processor-configs',
@@ -46,7 +47,8 @@ export class ProcessorConfigsComponent implements OnChanges {
     public constructor(
         private diagramNodeService: DiagramNodeService,
         private sanitizer: DomSanitizer,
-        private CFR: ComponentFactoryResolver
+        private CFR: ComponentFactoryResolver,
+        private sidebarCollapseService: SidebarCollapseService
     ) {
         this.selectedNodeChange.subscribe((value) => {
             this.selectedNode = value;
@@ -64,6 +66,17 @@ export class ProcessorConfigsComponent implements OnChanges {
         } else {
             this.processorName = this.selectedProcessor.replace(',', ' ');
             this.processorType = this.selectedProcessor.split(',')[0];
+        }
+        if (this.sidebarCollapseService.sidebar) {
+            if (
+                this.processorType === 'Start' ||
+                this.processorType === 'Destination' ||
+                this.selectedProcessor === ''
+            ) {
+                this.sidebarCollapseService.forceClose();
+            } else {
+                this.sidebarCollapseService.forceOpen();
+            }
         }
         if (this.processorType === 'Field selector') {
             this.isFieldSelector = true;

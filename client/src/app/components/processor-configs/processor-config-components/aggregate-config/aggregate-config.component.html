@@ -1,24 +1,27 @@
 <app-config-select
-        inputTitle="Column to Be Grouped by:"
-        inputPlaceHolder="Column to Be Grouped by"
-        inputRequired="true"
-        inputMultiple="false"
-        [inputOptions]="getColumns()"
-        (inputValueChange)="getSelectedGroupColumn($event)">
+    inputTitle="Column to Be Grouped by:"
+    inputPlaceHolder="Column to Be Grouped by"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="getColumns()"
+    (inputValueChange)="getSelectedGroupColumn($event)"
+>
 </app-config-select>
 <app-config-select
-        inputTitle="Operation Column:"
-        inputPlaceHolder="Operation Column"
-        inputRequired="true"
-        inputMultiple="false"
-        [inputOptions]="getColumns()"
-        (inputValueChange)="getSelectedOperationColumn($event)">
+    inputTitle="Operation Column:"
+    inputPlaceHolder="Operation Column"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="getColumns()"
+    (inputValueChange)="getSelectedOperationColumn($event)"
+>
 </app-config-select>
 <app-config-select
-        inputTitle="Aggregation Type:"
-        inputPlaceHolder="Aggregation Type"
-        inputRequired="true"
-        inputMultiple="false"
-        [inputOptions]="aggregationTypes"
-        (inputValueChange)="getSelectedAggregationType($event)">
+    inputTitle="Aggregation Type:"
+    inputPlaceHolder="Aggregation Type"
+    inputRequired="true"
+    inputMultiple="false"
+    [inputOptions]="aggregationTypes"
+    (inputValueChange)="getSelectedAggregationType($event)"
+>
 </app-config-select>
