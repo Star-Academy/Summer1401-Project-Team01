@@ -108,6 +108,12 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isJoin = false;
             this.isFilter = false;
             this.isFieldRemover = true;
+        } else if (this.processorType === '') {
+            this.isFieldSelector = false;
+            this.isAggregation = false;
+            this.isJoin = false;
+            this.isFilter = false;
+            this.isFieldRemover = false;
         }
         if (this.diagramNodeService.selectedNode) {
             this.processorId = this.diagramNodeService.selectedNode.id;

@@ -12,7 +12,6 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core;
 
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -38,7 +37,6 @@ $boilera-theme: mat.define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($boilera-theme);
-
 
 /*
 Design System
@@ -74,8 +72,8 @@ White spaces (px)
     --color-accent-light: hsl(0deg 0% 96%);
     --color-accent-lighter: hsl(0deg 0% 100%);
 
-    --color-tertiary-blue: hsl(196deg, 93%, 47%);
-    --color-tertiary-green: hsl(153deg, 91%, 56%);
+    --color-tertiary-blue: hsl(196deg 93% 47%);
+    --color-tertiary-green: hsl(153deg 91% 56%);
 
     --color-csv-format: hsl(205deg 100% 45%);
     --color-xls-format: hsl(110deg 100% 35%);
@@ -120,13 +118,13 @@ White spaces (px)
 }
 
 * {
-    font-family: 'Raleway', sans-serif;
+    font-family: Raleway, sans-serif;
 }
 
 html {
     scroll-behavior: smooth;
 
-    font-family: 'Raleway', sans-serif;
+    font-family: Raleway, sans-serif;
     font-size: 62.5%;
 }
 
@@ -184,6 +182,8 @@ body {
         display: inline-flex;
         align-items: center;
 
+        padding: var(--padding-small);
+
         border: none;
         border-radius: var(--border-radius-small);
 
@@ -238,18 +238,21 @@ body {
     }
 
     a.primary-button {
-        font-weight: 400;
-        font-size: 1.6rem;
-        text-decoration: none;
+        background-color: var(--color-primary-normal);
+        color: var(--color-accent-normal);
 
         padding: 1.2rem 3.6rem;
 
-        background-color: var(--color-primary-normal);
-        color: var(--color-accent-normal);
+        font-size: 1.6rem;
+        font-weight: 400;
+
+        text-decoration: none;
+
         transition: transform 200ms ease-in;
 
         &:hover {
             background-color: var(--color-primary-light);
+
             transform: translateY(-0.3rem);
         }
     }
@@ -258,20 +261,24 @@ body {
         text-decoration: none;
     }
 
-    a.icon-link:active, a.icon-link:visited {
-        color: var(--color-primary-normal)
+    a.icon-link:active,
+    a.icon-link:visited {
+        color: var(--color-primary-normal);
     }
 
     a.secondary-button {
-        font-weight: 700;
-        font-size: 1.6rem;
-        text-decoration: none;
+        background-color: var(--color-accent-normal);
+        color: var(--color-primary-normal-normal);
 
         padding: 1.2rem 3.6rem;
 
         border: 2px solid var(--color-primary-normal);
-        background-color: var(--color-accent-normal);
-        color: var(--color-primary-normal-normal);
+
+        font-size: 1.6rem;
+        font-weight: 700;
+
+        text-decoration: none;
+
         transition: transform 200ms ease-in;
 
         &:hover {
