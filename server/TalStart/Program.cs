@@ -1,53 +1,76 @@
-using TalStart.IServices;
-using TalStart.IServices.IParserService;
-using TalStart.Models.ProcessType;
+using System.Data;
+using TalStart.Models;
 using TalStart.Services;
 using TalStart.Services.ParserService;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace TalStart;
 
-var allowCors = "allowCores";
-
-// Add services to the container.
-builder.Services.AddTransient<IPipelineService, PipelineService>();
-builder.Services.AddTransient<IDatasetService, DatasetService>();
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<ISqlService, SqlService>();
-builder.Services.AddTransient<IQueryBuilder, QueryBuilder>();
-builder.Services.AddTransient<IScenarioService, ScenarioService>(x =>
-    new ScenarioService(x.GetRequiredService<IDatasetService>()));
-builder.Services.AddTransient<IParser>(x => new Parser(x.GetRequiredService<IQueryBuilder>()
-    , x.GetRequiredService<ISqlService>()));
-builder.Services.AddTransient<IFileService>(x => new FileService(x.GetRequiredService<IParser>()));
-builder.Services.AddTransient<IDatasetService>(x => new DatasetService(x.GetRequiredService<IParser>(),
-    x.GetRequiredService<IQueryBuilder>(), x.GetRequiredService<IFileService>()));
-//builder.Services.AddScoped<FooProcess>(x => new FooProcess(x.GetRequiredService<SqlService>()));
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
+public class Program
 {
-    options.AddPolicy(name: allowCors,
-        policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
-});
 
-var app = builder.Build();
+    public static void Main(string[] args)
+    {
+        var userService = new UserService();
+        var queryBuilder = new QueryBuilder();
+        var parser = new Parser(queryBuilder, SqlService.GetInstance());
+        var fileService = new FileService(parser);
+        var datasetService = new DatasetService(parser, queryBuilder, fileService);
+        var pipelineService = new PipelineService();
+        var scenarioService = new ScenarioService(datasetService);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
+        // userService.CreateUser("Arya", "Jalali", "Admin", "email", "1234");
+
+        //pipelineService.AddPipeline("first", "Admin");
+        //pipelineService.AddDestination("Zapas", "first", "Admin");
+        //pipelineService.AddSource("Book", "first", "Admin");
+        //var json = "[{\"id\": 1, \"Name\": \"select\", \"Options\": {\"columns\" : [\"hi\"]}}]";
+        // var json = "[{\"Id\": 1,\"Name\": \"foo\",\"Options\": null}]";
+
+        //pipelineService.UpdateJson(json, "first", "Admin");
+
+        test2(scenarioService);
+        // pipelineService.RenamePipeline("first", "Admin", "second");
+        // pipelineService.RemoveDestination("second", "Admin");
+        // // Console.WriteLine(pipelineService.GetPipeline("first","Admin").DestinationDataset.Id);
+        // pipelineService.RemoveSource("first", "Admin");
+        // Console.WriteLine(pipelineService.GetPipeline("first","Admin").SourceDataset.Id);
+        // pipelineService.RemovePipeline("first", "Admin");
+        // pipelineService.UpdateJson("", "first", "Admin");
+        // scenarioService.RunPipeline("first", "Admin");
+
+        // var arr = datasetService.GetDatasetColumns("Book", "Admin");
+        // var arr = datasetService.GetAllDatasetNames("Admin");
+        // Console.WriteLine(String.Join("\n", arr));
+        // test(datasetService);
+
+    }
+
+    public static async Task test(DatasetService datasetService)
+    {
+        var table = await datasetService.PreviewDataset("Admin", "Book", 10);
+
+        foreach (DataRow row in table.Rows)
+        {
+            foreach (var item in row.ItemArray)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+
+    public async static Task test2(ScenarioService scenarioService)
+    {
+        var table = await scenarioService.RunPipeline("test1", "admin");
+
+        foreach (DataRow row in table.Rows)
+        {
+            foreach (var item in row.ItemArray)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        return;
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseCors(allowCors);
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

@@ -17,13 +17,13 @@ public class Filter : IProcess
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public string? Options { get; set; }
+    public object? Options { get; set; }
 
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var filterOptions = JsonSerializer.Deserialize<FilterOptions>(Options);
+            var filterOptions = JsonSerializer.Deserialize<FilterOptions>(Options.ToString());
 
             var query = $"SELECT *\n";
             query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\" \n";
