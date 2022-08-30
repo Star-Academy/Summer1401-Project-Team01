@@ -19,6 +19,8 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
     @ViewChild('canvas', {static: false}) public canvas!: ElementRef | undefined;
     @ViewChild('sample', {static: false}) public sample!: ElementRef | undefined;
     @ViewChild('side', {static: false}) public side!: ElementRef | undefined;
+    @ViewChild('leftArrow', {static: false}) public leftArrow!: ElementRef | undefined;
+    @ViewChild('rightArrow', {static: false}) public rightArrow!: ElementRef | undefined;
     @ViewChild('dragV', {static: false}) public dragV!: ElementRef | undefined;
     @ViewChild('dragH', {static: false}) public dragH!: ElementRef | undefined;
 
@@ -57,7 +59,7 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
         this.selectedProcessor = this.diagramNodeService.selectedNode
             ? this.diagramNodeService.selectedNode.type + ',' + this.diagramNodeService.selectedNode.id.toString()
             : '';
-        this.sidebarCollapseService.setSidebar(this.side!);
+        this.sidebarCollapseService.setSidebar(this.side!, this.leftArrow!, this.rightArrow!);
     }
 
     // public dragVHandler(e: MouseEvent): void {

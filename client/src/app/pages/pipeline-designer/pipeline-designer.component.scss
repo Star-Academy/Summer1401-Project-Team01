@@ -37,6 +37,13 @@
 
         transition: width 1s;
 
+        .show{
+            display: block;
+        }
+        .hide{
+            display: none;
+        }
+
         &.closed {
             min-inline-size: 3rem;
             inline-size: 3rem;
