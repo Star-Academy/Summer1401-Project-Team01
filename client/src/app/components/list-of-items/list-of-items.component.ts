@@ -12,6 +12,9 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {DatasetService} from '../../services/api/dataset.service';
 import {ChangeDetection} from '@angular/cli/lib/config/workspace-schema';
+import {ColumnTypesComponent} from "../../pages/data-inventory/components/column-types/column-types.component";
+import {ShowSampleComponent} from "../../pages/data-inventory/components/show-sample/show-sample.component";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-list-of-items',
@@ -70,7 +73,7 @@ export class ListOfItemsComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient, private datasetService: DatasetService) {}
+    public constructor(private http: HttpClient, private datasetService: DatasetService, public dialog: MatDialog) {}
 
     public async ngOnInit(): Promise<void> {
         let data = await this.datasetService.getDatasets();
@@ -96,7 +99,14 @@ export class ListOfItemsComponent implements OnInit {
         //this.datasetService.downloadDataset(downloadUrl)
     }
 
-    public async viewDataset(): Promise<void> {}
+    public async viewDataset(): Promise<void> {
+        const selectedData = this.gridApi.getSelectedRows();
+        const sampleData = await this.datasetService.getRecords(selectedData[0].fileName, 50);
+
+        const dialogRef = this.dialog.open(ShowSampleComponent, {
+            data: {sampleData: sampleData},
+        });
+    }
 
     public clearData(): void {
         this.gridApi.setRowData([]);

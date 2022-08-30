@@ -89,17 +89,25 @@ namespace TalStart.Services
                 var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
                 foreach (var r in res.OrderBy(r => r.Id))
                 {
-                    if (r.Id > lastProcessId)
-                        break;
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = r.Options});
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options});
-
-
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "aggregate":
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "join":
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "filter":
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "fieldRemover":
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }
@@ -121,7 +129,6 @@ namespace TalStart.Services
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
                 if (pipe == null || pipe.SourceDataset == null || pipe.DestinationDataset == null)
                 {
-                    Console.WriteLine("saa");
                     return null;
                 }
 

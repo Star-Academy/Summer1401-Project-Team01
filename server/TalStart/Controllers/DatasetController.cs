@@ -110,7 +110,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetColumns(string datasetName, string username)
+    public async Task<IActionResult> GetDatasetColumns([FromQuery] string datasetName,[FromQuery] string username)
     {
         try
         {

@@ -49,7 +49,7 @@ namespace TalStart.Services
                 var dataset = _db.Datasets.Single(dataset =>
                     dataset.User.Username == username && dataset.Name == datasetName);
                 _db.Datasets.Remove(dataset);
-                var query = _queryBuilder.DropTableQuery($"\"{datasetName}.{username}\"");
+                var query = _queryBuilder.DropTableQuery($"\"{datasetName}_{username}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _fileService.DeleteFile(datasetName, username);
                 _db.SaveChanges();

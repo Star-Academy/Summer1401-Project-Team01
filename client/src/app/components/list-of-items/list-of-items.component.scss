@@ -11,34 +11,40 @@
     .actions {
         position: absolute;
 
-        inset-inline-end: -3rem;
+        inset-inline-end: -5rem;
         inset-block-end: 0;
 
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
 
-        h2 {
-            margin: 0;
-            margin-inline-end: auto;
-
-            font-size: var(--font-size-secondary-heading);
-        }
-
         button {
-            background-color: var(--color-gray-90);
+            font-size: 1.8rem;
+
+            border-radius: var(--border-radius-small);
+            display: grid;
+            place-items: center;
+
+            width: 4rem;
+            height: 4rem;
+            padding: 0rem;
 
             i {
                 color: var(--color-primary-normal);
             }
 
-            &:hover {
-                .delete-icon {
-                    color: var(--error-color);
-                }
+            &.delete:hover {
+                background-color: var(--error-color-dark);
 
-                i {
+                i{
                     color: var(--color-accent-normal);
+                }
+            }
+
+            &:hover:not(.delete) {
+                background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue));
+                & > * {
+                    filter: brightness(100);
                 }
             }
         }
