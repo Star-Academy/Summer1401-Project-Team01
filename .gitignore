@@ -539,3 +539,4 @@ FodyWeavers.xsd
 /server/TalStart/Properties/CString.cs
 /client/src/app/services/api/upload.service.ts.bak
 /server/TalStart/resources/admin
+/client/src/app/services/diagram-node.service.ts.bak

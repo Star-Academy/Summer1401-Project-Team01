@@ -149,7 +149,7 @@ export class DiagramNodeService {
         formDataForDiagram.append('username', 'admin');
 
         await fetch(PIPELINE_UPDATE_PROCESSES, {
-            method: 'patch',
+            method: 'post',
             body: formDataForDiagram,
         });
     }
