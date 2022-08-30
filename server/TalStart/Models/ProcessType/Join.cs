@@ -16,7 +16,9 @@ public class Join : IProcess
 
     public string Name { get; set; }
     public int Id { get; set; }
-    public Object? Options { get; set; }
+
+    public object? Options { get; set; }
+
 
     public bool Run(string sourceTable, string finalTable)
     {
