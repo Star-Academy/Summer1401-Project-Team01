@@ -133,6 +133,11 @@ html {
 ::selection {
     background-color: var(--color-primary-normal);
     color: var(--color-accent-normal);
+
+    a {
+        background-color: var(--color-tertiary-green);
+        color: var(--color-accent-normal);
+    }
 }
 
 body {
@@ -146,6 +151,10 @@ body {
     font-family: Vazirmatn, Roboto, "Helvetica Neue", sans-serif;
 
     line-height: 1;
+
+    background-image: radial-gradient(rgba(33, 33, 33, 0.5) 1.5px, transparent 1.5px);
+    background-size: 60px 60px;
+    // background-color: rgba(0, 0, 0, 0);
 
     h1,
     h2,

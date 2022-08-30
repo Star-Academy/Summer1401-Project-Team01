@@ -1,22 +1,23 @@
 <div class="wrapper">
-    <div class="upload">
-        <h2>Upload a Dataset</h2>
-        <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
-        <div class="name">
-            <mat-form-field appearance="fill">
-                <mat-label>File Name</mat-label>
-                <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()" />
-            </mat-form-field>
-            <button
-                class="global-button add-processor-button"
-                (click)="openSelectTypeModal()"
-                [disabled]="disableContinue"
-            >
-                Continue
-            </button>
+    <h1>Data Inventory</h1>
+    <p>Upload a Piece of Data to Get Started, or Continue to Select a Pipeline and Start Doing Real Work</p>
+    <div class="content">
+        <div class="upload">
+            <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
+            <div class="name">
+                <mat-form-field appearance="fill">
+                    <mat-label>File Name</mat-label>
+                    <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()"/>
+                </mat-form-field>
+                <button
+                        class="global-button add-processor-button"
+                        (click)="openSelectTypeModal()"
+                        [disabled]="disableContinue"
+                >
+                    Continue
+                </button>
+            </div>
         </div>
-    </div>
-    <div>
-        <app-list-of-items #grid></app-list-of-items>
+        <div class="grid"><app-list-of-items #grid></app-list-of-items></div>
     </div>
 </div>
