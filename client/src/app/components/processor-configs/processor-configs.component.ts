@@ -31,7 +31,7 @@ export class ProcessorConfigsComponent implements OnChanges {
     @Input() public selectedProcessor: string = '';
     public processorName: string = '';
     public processorType: string = '';
-    public hasChanged: boolean = false;
+    public hasChanged: boolean = true;
 
     public selectedNode: SelectedNodeModel | null = null;
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();

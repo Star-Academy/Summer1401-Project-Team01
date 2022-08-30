@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
 
 @Component({
     selector: 'app-join-config',
@@ -14,8 +15,33 @@ export class JoinConfigComponent {
     public selectedJoinType: string = '';
     public joinTypes: string;
 
-    public constructor() {
+    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
         this.joinTypes = 'Inner,Left,Right,Full';
+        //TODO
+        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
+        this.initializeConfigurations(configsFromBack);
+    }
+
+    public initializeConfigurations(configs: string) {
+        let configsObject: any = {};
+        try {
+            configsObject = JSON.parse(configs);
+        } catch (e) {
+            console.log(e);
+        }
+        if (configsObject.hasOwnProperty('middleDatasetName')) this.selectedDataset = configsObject.middleDatasetName;
+        if (configsObject.hasOwnProperty('leftVal')) this.selectedLeft = configsObject.leftVal;
+        if (configsObject.hasOwnProperty('rightVal')) this.selectedRight = configsObject.rightVal;
+        if (configsObject.hasOwnProperty('type'))
+            this.selectedJoinType = this.JoinTypeNumberToValue(configsObject.type);
+    }
+
+    public JoinTypeNumberToValue(number: number) {
+        if (number == 0) return 'Inner';
+        else if (number == 1) return 'Left';
+        else if (number == 2) return 'Right';
+        else if (number == 3) return 'Full';
+        return '';
     }
 
     public getDatasets(): string {

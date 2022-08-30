@@ -5,6 +5,7 @@
     inputMultiple="false"
     [inputOptions]="getDatasets()"
     (inputValueChange)="getSelectedDataset($event)"
+    [inputValue]="selectedDataset"
 >
 </app-config-select>
 <app-config-select
@@ -15,6 +16,7 @@
     inputMultiple="false"
     [inputOptions]="getColumns()"
     (inputValueChange)="getSelectedLeftVal($event)"
+    [inputValue]="selectedLeft"
 >
 </app-config-select>
 <app-config-select
@@ -25,6 +27,7 @@
     inputMultiple="false"
     [inputOptions]="getColumnsOfSelectedDataset()"
     (inputValueChange)="getSelectedRightVal($event)"
+    [inputValue]="selectedRight"
 >
 </app-config-select>
 <app-config-select
@@ -35,5 +38,6 @@
     inputMultiple="false"
     [inputOptions]="joinTypes"
     (inputValueChange)="getSelectedJoinType($event)"
+    [inputValue]="selectedJoinType"
 >
 </app-config-select>

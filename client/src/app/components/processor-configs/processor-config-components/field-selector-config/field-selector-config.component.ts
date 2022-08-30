@@ -10,7 +10,21 @@ export class FieldSelectorConfigComponent {
     @Input() processorId: number = 0;
     public selectedColumns: string = '';
 
-    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {}
+    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+        //TODO
+        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
+        this.initializeConfigurations(configsFromBack);
+    }
+
+    public initializeConfigurations(configs: string) {
+        let configsObject: any = {};
+        try {
+            configsObject = JSON.parse(configs);
+        } catch (e) {
+            console.log(e);
+        }
+        if (configsObject.hasOwnProperty('columns')) this.selectedColumns = configsObject.columns;
+    }
 
     public getColumns(): string {
         //TODO
