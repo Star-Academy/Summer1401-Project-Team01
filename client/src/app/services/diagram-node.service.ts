@@ -142,13 +142,11 @@ export class DiagramNodeService {
         for (let i = 0; i < this.nodeDataArray.length; i++) {
             const newNode = {
                 id: this.nodeDataArray[i].key,
-                name: this.nodeDataArray[i].name,
+                name: 'foo',
                 option: this.nodeDataArray[i].option,
             };
 
             this.nodeArray.push(newNode);
-            console.log(newNode);
         }
-        console.log(this.nodeArray);
     }
 }

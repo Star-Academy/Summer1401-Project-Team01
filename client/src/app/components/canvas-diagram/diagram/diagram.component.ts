@@ -17,13 +17,117 @@ export class DiagramComponent {
 
     @Output() public nodeClicked = new EventEmitter();
 
-    //@Input() public diagram: go.Diagram | null = null;
-
     public selectedNode!: any;
 
     constructor(private diagramNodeService: DiagramNodeService) {}
 
     public ngAfterViewInit(): void {
+        const nodeHoverAdornmentForSource = $(
+            go.Adornment,
+            'Spot',
+            {
+                //background: "transparent",
+                // hide the Adornment when the mouse leaves it
+                mouseLeave: (e, obj) => {
+                    let ad = obj.part;
+                    // @ts-ignore
+                    ad.adornedPart.removeAdornment('mouseHover');
+                },
+            },
+            $(go.Placeholder, {
+                //background: "transparent",  // to allow this Placeholder to be "seen" by mouse events
+                isActionable: true, // needed because this is in a temporary Layer
+                click: (e: any, obj: any) => {
+                    const node = obj.part.adornedPart;
+                    node.diagram.select(node);
+                },
+            }),
+            $(
+                'Button',
+                {
+                    alignment: go.Spot.Left,
+                    alignmentFocus: go.Spot.Right,
+                    background: 'hsl(0deg 0% 5%)',
+                },
+                {
+                    click: (e, obj) => {
+                        // @ts-ignore
+                        const node = obj.part.adornedPart.qb;
+                        console.log('node: ', node);
+                    },
+                },
+                $(go.TextBlock, 'Add Source', {
+                    margin: 5,
+                })
+            ),
+            $(
+                'Button',
+                {alignment: go.Spot.Right, alignmentFocus: go.Spot.Left},
+                {
+                    click: (e, obj) => {
+                        console.log(e);
+                        console.log(obj);
+                    },
+                },
+                $(go.TextBlock, 'Remove Source', {
+                    margin: 5,
+                })
+            )
+        );
+
+        const nodeHoverAdornmentForDestination = $(
+            go.Adornment,
+            'Spot',
+            {
+                //background: "transparent",
+                // hide the Adornment when the mouse leaves it
+                mouseLeave: (e, obj) => {
+                    let ad = obj.part;
+                    // @ts-ignore
+                    ad.adornedPart.removeAdornment('mouseHover');
+                },
+            },
+            $(go.Placeholder, {
+                //background: "transparent",  // to allow this Placeholder to be "seen" by mouse events
+                isActionable: true, // needed because this is in a temporary Layer
+                click: (e: any, obj: any) => {
+                    const node = obj.part.adornedPart;
+                    node.diagram.select(node);
+                },
+            }),
+            $(
+                'Button',
+                {
+                    alignment: go.Spot.Left,
+                    alignmentFocus: go.Spot.Right,
+                    background: 'hsl(0deg 0% 5%)',
+                },
+                {
+                    click: (e, obj) => {
+                        // @ts-ignore
+                        const node = obj.part.adornedPart.qb;
+                        console.log('node: ', node);
+                    },
+                },
+                $(go.TextBlock, 'Add Destination', {
+                    margin: 5,
+                })
+            ),
+            $(
+                'Button',
+                {alignment: go.Spot.Right, alignmentFocus: go.Spot.Left},
+                {
+                    click: (e, obj) => {
+                        console.log(e);
+                        console.log(obj);
+                    },
+                },
+                $(go.TextBlock, 'Remove Destination', {
+                    margin: 5,
+                })
+            )
+        );
+
         DiagramNodeService.diagram = $(go.Diagram, 'diagram-div', {
             layout: $(go.TreeLayout, {
                 isOngoing: true,
@@ -55,6 +159,25 @@ export class DiagramComponent {
                 return sel ? 'Foreground' : '';
             }).ofObject(),
             // define the node's outer shape
+            {
+                mouseHover: (e: any, obj: any) => {
+                    const node = obj.part;
+                    if (node.qb.name === 'Start') {
+                        console.log(node.qb);
+                        nodeHoverAdornmentForSource.adornedObject = node;
+                        node.addAdornment('mouseHover', nodeHoverAdornmentForSource);
+                    } else if (node.qb.name === 'Destination') {
+                        console.log(node.qb);
+                        nodeHoverAdornmentForDestination.adornedObject = node;
+                        node.addAdornment('mouseHover', nodeHoverAdornmentForDestination);
+                    }
+                },
+                //mouseLeave: (e: any, obj: any) => {
+                //const node = obj.part;
+                // nodeHoverAdornmentForSource.adornedObject = node;
+                // node?.removeAdornment('mouseLeave');
+                //},
+            },
             $(
                 go.Shape,
                 'RoundedRectangle',
@@ -65,28 +188,36 @@ export class DiagramComponent {
                 },
                 new go.Binding('fill', '', function (node) {
                     // modify the fill based on the tree depth level
-                    const levelColors = [
-                        '#AC193D',
-                        '#2672EC',
-                        '#8C0095',
-                        '#5133AB',
-                        '#008299',
-                        '#D24726',
-                        '#008A00',
-                        '#094AB2',
-                    ];
-                    let color = node.findObject('SHAPE').fill;
-                    const dia: go.Diagram = node.diagram;
-                    if (dia && dia.layout.network) {
-                        // @ts-ignore
-                        dia.layout.network.vertexes.each(function (v: go.TreeVertex) {
-                            if (v.node && v.node.key === node.data.key) {
-                                const level: number = v.level % levelColors.length;
-                                color = levelColors[level];
-                            }
-                        });
+                    // const levelColors = [
+                    //     'hsl(0deg 0% 5%)',
+                    //     'hsl(0deg 0% 5%)',
+                    //     'hsl(0deg 0% 5%)',
+                    //     '#5133AB',
+                    //     '#008299',
+                    //     '#D24726',
+                    //     '#008A00',
+                    //     '#094AB2',
+                    // ];
+
+                    if (node.part.cc === 'Start') {
+                        return 'hsl(196deg, 93%, 47%)';
+                    } else if (node.part.cc === 'Destination') {
+                        return 'hsl(153deg, 91%, 56%)';
+                    } else {
+                        return 'hsl(0deg 0% 5%)';
                     }
-                    return color;
+                    // let color = node.findObject('SHAPE').fill;
+                    // const dia: go.Diagram = node.diagram;
+                    // if (dia && dia.layout.network) {
+                    //     // @ts-ignore
+                    //     dia.layout.network.vertexes.each(function (v: go.TreeVertex) {
+                    //         if (v.node && v.node.key === node.data.key) {
+                    //             const level: number = v.level % levelColors.length;
+                    //             color = levelColors[level];
+                    //         }
+                    //     });
+                    // }
+                    // return color;
                 }).ofObject()
             ),
             $(
@@ -104,7 +235,7 @@ export class DiagramComponent {
                     $(go.RowColumnDefinition, {column: 2, width: 4}),
                     $(
                         go.TextBlock,
-                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white'}, // the name
+                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white', margin: 8}, // the name
                         {
                             row: 0,
                             column: 0,
@@ -115,29 +246,36 @@ export class DiagramComponent {
                             minSize: new go.Size(10, 16),
                         },
                         new go.Binding('text', 'name').makeTwoWay()
+                        // {
+                        //     mouseHover: (e: any, obj: any) => {
+                        //         const node = obj.part;
+                        //         nodeHoverAdornment.adornedObject = node;
+                        //         node.addAdornment('mouseHover', nodeHoverAdornment);
+                        //     },
+                        // }
                     ),
                     $(
                         go.TextBlock,
-                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white'},
+                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white', margin: 8},
                         {row: 2, column: 0},
                         new go.Binding('text', 'key', function (v) {
                             return 'ID: ' + v;
                         })
-                    ),
-                    $(
-                        go.TextBlock,
-                        {font: '9pt  Segoe UI,sans-serif', stroke: 'white'}, // the comments
-                        {
-                            row: 3,
-                            column: 0,
-                            columnSpan: 5,
-                            font: 'italic 9pt sans-serif',
-                            wrap: go.TextBlock.WrapFit,
-                            editable: true, // by default newlines are allowed
-                            minSize: new go.Size(10, 14),
-                        },
-                        new go.Binding('text', 'comments').makeTwoWay()
                     )
+                    // $(
+                    //     go.TextBlock,
+                    //     {font: '9pt  Segoe UI,sans-serif', stroke: 'white'}, // the comments
+                    //     {
+                    //         row: 3,
+                    //         column: 0,
+                    //         columnSpan: 5,
+                    //         font: 'italic 9pt sans-serif',
+                    //         wrap: go.TextBlock.WrapFit,
+                    //         editable: true, // by default newlines are allowed
+                    //         minSize: new go.Size(10, 14),
+                    //     },
+                    //     new go.Binding('text', 'comments').makeTwoWay()
+                    // )
                 ) // end Table Panel
             ) // end Horizontal Panel
         ); // end Node
