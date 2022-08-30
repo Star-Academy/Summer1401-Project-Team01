@@ -18,7 +18,7 @@ public class FileController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DownloadFile(string datasetName, string username)
+    public async Task<IActionResult> DownloadFile([FromQuery] string datasetName,[FromQuery] string username)
     {
         try
         {
