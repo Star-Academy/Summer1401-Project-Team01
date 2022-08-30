@@ -96,6 +96,8 @@ export class SelectDatasetComponent implements OnInit {
             this.diagramNodeService.selectedNode?.type === 'Start' &&
             this.diagramNodeService.orderForAddOrRemoveSrcDes === 'add'
         ) {
+            this.diagramNodeService.source = fileName;
+
             formDataForSrcDes.append('sourceName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
@@ -120,6 +122,8 @@ export class SelectDatasetComponent implements OnInit {
             this.diagramNodeService.selectedNode?.type === 'Start' &&
             this.diagramNodeService.orderForAddOrRemoveSrcDes === 'remove'
         ) {
+            this.diagramNodeService.source = null;
+
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
 
