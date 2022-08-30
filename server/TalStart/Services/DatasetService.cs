@@ -80,8 +80,8 @@ namespace TalStart.Services
                     $"\"{newDatasetName}_{username}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _db.SaveChanges();
-                _fileService.RenameCsvFile(username, $"{currentDatasetName}",
-                    $"{newDatasetName}");
+                _fileService.RenameFile(username, $"{currentDatasetName}",
+                    $"{newDatasetName}", ".csv");
                 return true;
             }
             catch (Exception)
