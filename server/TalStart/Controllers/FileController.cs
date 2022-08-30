@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
+using System.Text.Json;
 
 namespace TalStart.Controllers;
 
@@ -21,7 +22,7 @@ public class FileController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult DownloadFile([FromQuery] string datasetName,[FromQuery] string username)
+    public string DownloadFile([FromQuery] string datasetName,[FromQuery] string username)
     {
         try
         {
@@ -32,11 +33,12 @@ public class FileController : ControllerBase
             _parser.ParsePostgresTableToCsv(tableName, path);
             var stream = new FileStream(path, FileMode.Open);
             var res = new FileStreamResult(stream, "text/csv");
-            return File(res.FileStream, "text/csv", $"{datasetName}");
+            return JsonSerializer.Serialize($"File:/{path}");
         }
         catch (Exception)
         {
-            return new BadRequestResult();
+            throw;
+            // return new BadRequestResult();
         }
     }
 }

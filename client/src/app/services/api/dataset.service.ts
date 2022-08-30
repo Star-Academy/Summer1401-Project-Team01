@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {DATASET_GET_ALL_DATASETS, DATASET_REMOVE, DATASET_SAMPLE, DOWNLOAD_FILE} from '../../utilities/urls';
 import {UrlSerializer} from "@angular/router";
-import {HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root',
@@ -21,16 +21,20 @@ export class DatasetService {
         fetch(DATASET_REMOVE, {body: formData, method: 'delete'}).then();
     }
 
-    public async getDownloadDataset(datasetName: string): Promise<string> {
+    public async getDownloadDataset(datasetName: string): Promise<void> {
         let params = new HttpParams();
         params = params.set('username', 'admin');
         params = params.set('datasetName', datasetName);
 
-        let URL = DOWNLOAD_FILE + '?' + params.toString();
+        let downloadUrl = DOWNLOAD_FILE + '?' + params.toString();
 
-        const response = await fetch(URL , {method: 'post'});
-        console.log(response);
-        return response.json();
+        const response = await fetch(downloadUrl , {method: 'post'});
+        let path = await response.json();
+        let startingPoint = await path.indexOf('\\server');
+        console.log(path, startingPoint);
+        let pathSlice = path.slice(startingPoint, path.length)
+        console.log(pathSlice);
+        await window.open(`http://127.0.0.1:8887${pathSlice}`);
     }
 
     public async downloadDataset(url: string): Promise<void> {
