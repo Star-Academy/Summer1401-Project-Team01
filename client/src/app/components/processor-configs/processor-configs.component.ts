@@ -136,7 +136,7 @@ export class ProcessorConfigsComponent implements OnChanges {
 
     public saveConfigs() {
         if (this.processorType === 'Field selector') {
-            console.log(this.fieldSelectorConfigComponent.exportConfigurations());
+            this.fieldSelectorConfigComponent.exportConfigurations();
         }
     }
 }

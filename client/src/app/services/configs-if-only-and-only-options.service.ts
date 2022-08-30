@@ -33,8 +33,8 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
         return await data.join(',');
     }
 
-    public selectorToOption(selectedColumn: string): void {
-        const option = {columns: [selectedColumn]};
+    public selectorToOption(selectedColumn: string[]): void {
+        const option = {columns: selectedColumn};
 
         this.diagramNodeService.changeNodeOption(option);
     }
@@ -43,6 +43,9 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
         const configsObject: JSON = <JSON>(<any>{
             columns: [selectedColumns],
         });
+
+        console.log(selectedColumns);
+
         return JSON.stringify(configsObject);
     }
 }

@@ -145,6 +145,7 @@ export class DiagramNodeService {
         const formDataForDiagram = new FormData();
         const diagramData = nodeArray.slice(1, nodeArray.length - 1);
 
+        console.log(JSON.stringify(diagramData));
         formDataForDiagram.append('processes', JSON.stringify(diagramData));
         formDataForDiagram.append('name', this.pipelinePage);
         formDataForDiagram.append('username', 'admin');
@@ -165,12 +166,13 @@ export class DiagramNodeService {
 
             const newNode = {
                 id: this.nodeDataArray[i].key,
-                name: this.nodeDataArray[i].name,
+                name: name,
                 option: this.nodeDataArray[i].option,
             };
 
             nodeArray.push(newNode);
         }
+        console.log(nodeArray);
         return nodeArray;
     }
 }

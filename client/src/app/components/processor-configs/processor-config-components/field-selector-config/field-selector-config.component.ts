@@ -30,11 +30,8 @@ export class FieldSelectorConfigComponent {
         if (configsObject.hasOwnProperty('columns')) this.selectedColumns = configsObject.columns;
     }
 
-    public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
-            columns: this.selectedColumns,
-        });
-        return JSON.stringify(configsObject);
+    public exportConfigurations(): void {
+        this.configsIfOnlyAndOnlyOptionsService.selectorToOption([this.selectedColumns]);
     }
 
     public async getColumns(): Promise<string> {
