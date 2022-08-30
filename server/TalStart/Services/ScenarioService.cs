@@ -121,6 +121,7 @@ namespace TalStart.Services
                     .Include(a => a.User).FirstOrDefault(p => p.Name == pipelineName && p.User.Username == username);
                 if (pipe == null || pipe.SourceDataset == null || pipe.DestinationDataset == null)
                 {
+                    Console.WriteLine("saa");
                     return null;
                 }
 
