@@ -12,14 +12,15 @@ public class QueryBuilder : IQueryBuilder
 
     public string ImportCsvQuery(string tableName, string filePath)
     {
-        return $"TRUNCATE TABLE \"{tableName}\";\n COPY \"{tableName}\" FROM '{filePath}'  DELIMITER ',' CSV HEADER;";
+        return
+            $"TRUNCATE TABLE \"{tableName}\";\n COPY \"{tableName}\" FROM '{filePath}'  DELIMITER ',' CSV HEADER encoding 'windows-1251';";
     }
-    
+
     public string DropTableQuery(string tableName)
     {
         return $"DROP TABLE IF EXISTS {tableName};\n";
     }
-    
+
     public string GetColumnNamesQuery(string tableName)
     {
         return
@@ -34,6 +35,7 @@ public class QueryBuilder : IQueryBuilder
         {
             query.Append($"{key} {value},");
         }
+
         query.Remove(query.Length - 1, 1);
         query.Append(");\n");
         return query.ToString();

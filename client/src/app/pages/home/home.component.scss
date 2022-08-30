@@ -2,19 +2,23 @@
     width: 100%;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 3fr 4fr;
+    align-items: center;
     gap: 2.4rem;
 
+
     padding-inline: 15rem;
-    padding-block: 20rem;
+    padding-block: 15rem;
 
 
 
     .hero-image {
         padding: 5rem;
+
         img {
             width: 100%;
             object-fit: cover;
+            aspect-ratio: auto;
         }
     }
 
@@ -51,6 +55,11 @@
             .buttons {
                 display: flex;
                 gap: 2.4rem;
+
+                a {
+                    display: inline-block;
+                    line-height: 1;
+                }
             }
 
             .text {
@@ -65,12 +74,9 @@
                     font-weight: 900;
                     font-size: 6.4rem;
                     line-height: 1;
-
-                    width: 80rem;
                 }
 
                 p {
-                    width: 80rem;
                     font-weight: 700;
                 }
             }

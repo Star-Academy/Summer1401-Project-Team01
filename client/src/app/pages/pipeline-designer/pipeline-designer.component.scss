@@ -30,12 +30,19 @@
         overflow-y: hidden;
         z-index: 4;
 
-        block-size: 88vh;
+        block-size: 95vh;
         min-inline-size: 3rem;
         inline-size: 35rem;
         max-inline-size: 50rem;
 
         transition: width 1s;
+
+        .show{
+            display: block;
+        }
+        .hide{
+            display: none;
+        }
 
         &.closed {
             min-inline-size: 3rem;
@@ -59,7 +66,7 @@
         background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScgLz4KICA8cmVjdCB4PScwJyB5PScwJyB3aWR0aD0nMScgaGVpZ2h0PScxJyBmaWxsPSdibGFjaycgLz4KPC9zdmc+");
         background-repeat: repeat;
 
-        block-size: 88vh;
+        block-size: 95vh;
     }
 
     &__sample {

@@ -8,9 +8,9 @@ import {PipelineListComponent} from './pages/pipeline-list/pipeline-list.compone
 
 
 const routes: Routes = [
-    {path: '', pathMatch: 'full', component: HomeComponent, data: {animation: 'isLeft'}},
+    {path: '', pathMatch: 'full', component: HomeComponent},
     {path: 'data-inventory', component: DataInventoryComponent},
-    {path: 'pipeline-designer/:pipelineName', component: PipelineDesignerComponent, data: {animation: 'isRight'}},
+    {path: 'pipeline-designer/:pipelineName', component: PipelineDesignerComponent},
     {path: 'pipeline-list', component: PipelineListComponent},
     {path: '**', redirectTo: ''},
 ];

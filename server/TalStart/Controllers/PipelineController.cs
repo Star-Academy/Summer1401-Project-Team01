@@ -39,7 +39,7 @@ public class PipelineController : ControllerBase
         return new BadRequestResult();
     }
 
-    [HttpPost]
+    [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,7 +83,7 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetPipeLine(string pipelineName,string username)
+    public IActionResult GetPipeLine([FromQuery] string pipelineName,[FromQuery] string username)
     {
         try
         {

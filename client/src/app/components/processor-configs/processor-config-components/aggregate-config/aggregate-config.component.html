@@ -5,6 +5,7 @@
     inputMultiple="false"
     [inputOptions]="getColumns()"
     (inputValueChange)="getSelectedGroupColumn($event)"
+    [inputValue]="selectedGroupColumn"
 >
 </app-config-select>
 <app-config-select
@@ -14,6 +15,7 @@
     inputMultiple="false"
     [inputOptions]="getColumns()"
     (inputValueChange)="getSelectedOperationColumn($event)"
+    [inputValue]="selectedOperationColumn"
 >
 </app-config-select>
 <app-config-select
@@ -23,5 +25,6 @@
     inputMultiple="false"
     [inputOptions]="aggregationTypes"
     (inputValueChange)="getSelectedAggregationType($event)"
+    [inputValue]="selectedAggregationType"
 >
 </app-config-select>

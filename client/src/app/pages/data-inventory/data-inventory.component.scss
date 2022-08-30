@@ -1,12 +1,12 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 6.4rem;
 
     inline-size: 100rem;
 
     margin-inline: auto;
-    padding-block: 2.4rem;
+    padding-block: 6.4rem;
 
     h1 {
         font-family: Raleway, sans-serif;
@@ -31,7 +31,7 @@
         .upload {
             display: flex;
             flex-direction: column;
-            gap: 2.4rem;
+            gap: 1.2rem;
 
             app-drag-n-drop {
                 flex: 1;
@@ -39,8 +39,11 @@
 
             .name {
                 display: flex;
-                align-items: flex-start;
+                flex-direction: column;
+                align-items: stretch;
                 gap: 1.2rem;
+
+                background-color: var(--color-accent-normal);
             }
         }
 

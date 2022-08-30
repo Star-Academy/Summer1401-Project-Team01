@@ -12,13 +12,12 @@ import {Subject} from 'rxjs';
 })
 export class DiagramNodeService {
     public pipelinePage: string = '';
+    public source: string | null = null;
 
     public nodeDataArray: NodeDataModel[] = [
         {key: 0, name: 'Start', option: null},
         {key: 1, name: 'Destination', parent: 0, option: null},
     ];
-
-    public nodeArray: NodeModel[] = [];
 
     private isSourceSelected: boolean = false;
     private isDestinationSelected: boolean = false;
@@ -136,14 +135,17 @@ export class DiagramNodeService {
     public changeNodeOption(option: any): void {
         if (!this.selectedNodeData) return;
         this.nodeDataArray[this.selectedNodeData.key].option = option;
+
+        this.fetchDiagram().then();
     }
 
     public async fetchDiagram(): Promise<void> {
-        this.createNodeArray();
+        const nodeArray = this.createNodeArray();
 
         const formDataForDiagram = new FormData();
-        const diagramData = this.nodeArray.slice(1, this.nodeArray.length - 1);
+        const diagramData = nodeArray.slice(1, nodeArray.length - 1);
 
+        console.log(JSON.stringify(diagramData));
         formDataForDiagram.append('processes', JSON.stringify(diagramData));
         formDataForDiagram.append('name', this.pipelinePage);
         formDataForDiagram.append('username', 'admin');
@@ -154,16 +156,23 @@ export class DiagramNodeService {
         });
     }
 
-    public createNodeArray(): void {
-        this.nodeArray = [];
+    public createNodeArray(): NodeModel[] {
+        const nodeArray = [];
         for (let i = 0; i < this.nodeDataArray.length; i++) {
+            let name = 'foo';
+            if (this.nodeDataArray[i].name === 'Field selector') {
+                name = 'select';
+            }
+
             const newNode = {
                 id: this.nodeDataArray[i].key,
-                name: 'foo',
+                name: name,
                 option: this.nodeDataArray[i].option,
             };
 
-            this.nodeArray.push(newNode);
+            nodeArray.push(newNode);
         }
+        console.log(nodeArray);
+        return nodeArray;
     }
 }

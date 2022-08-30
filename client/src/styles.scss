@@ -3,6 +3,7 @@
 @use "~@angular/material" as mat;
 
 @import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-material.css";
 @import "ag-grid-community/styles/ag-theme-alpine.css";
 
 // Plus imports for other components in your app.
@@ -152,7 +153,6 @@ body {
 
     background-image: radial-gradient(rgba(33, 33, 33, 0.5) 1.5px, transparent 1.5px);
     background-size: 60px 60px;
-    // background-color: rgba(0, 0, 0, 0);
 
     h1,
     h2,
@@ -182,18 +182,15 @@ body {
         display: inline-flex;
         align-items: center;
 
-        padding: var(--padding-small);
-
         border: none;
-        border-radius: var(--border-radius-small);
 
         outline: none;
 
         cursor: pointer;
 
         &:disabled {
-            opacity: 0.6;
-
+            opacity: 0.8;
+            transform: translateY(0) !important;
             cursor: not-allowed;
         }
     }
@@ -232,8 +229,17 @@ body {
         background-color: var(--color-primary-normal);
         color: var(--color-accent-normal);
 
+        display: grid;
+        place-items: center;
+
+        font-size: 1.6rem;
+
+        padding: 1.2rem 3.6rem;
+        transition: transform 200ms ease-in;
+
         &:hover {
             background-color: var(--color-primary-light);
+            transform: translateY(-0.3rem);
         }
     }
 
@@ -339,4 +345,19 @@ body {
 
 main {
     position: relative;
+}
+
+.ag-theme-material{
+    --ag-material-primary-color: var(--color-primary-normal);
+    --ag-material-accent-color: var(--color-tertiary-blue);
+    --ag-background-color: var(--color-accent-normal);
+    --ag-header-background-color: var(--color-accent-normal);
+    --ag-subheader-background-color: var(--color-accent-normal);
+    --ag-borders: 2px solid;
+    --ag-border-color: var(--color-primary-normal);
+    --ag-borders-critical: none;
+    --ag-borders-row: solid 1px;
+    --ag-font-family: "Raleway", sans-serif;
+    --ag-font-size: 1.6rem;
+    --ag-row-hover-color: var(--color-accent-light);
 }

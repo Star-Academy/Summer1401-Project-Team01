@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
 
 @Component({
     selector: 'app-join-config',
@@ -14,8 +15,51 @@ export class JoinConfigComponent {
     public selectedJoinType: string = '';
     public joinTypes: string;
 
-    public constructor() {
+    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
         this.joinTypes = 'Inner,Left,Right,Full';
+        //TODO
+        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
+        this.initializeConfigurations(configsFromBack);
+    }
+
+    public initializeConfigurations(configs: string) {
+        let configsObject: any = {};
+        try {
+            configsObject = JSON.parse(configs);
+        } catch (e) {
+            console.log(e);
+        }
+        if (configsObject.hasOwnProperty('middleDatasetName')) this.selectedDataset = configsObject.middleDatasetName;
+        if (configsObject.hasOwnProperty('leftVal')) this.selectedLeft = configsObject.leftVal;
+        if (configsObject.hasOwnProperty('rightVal')) this.selectedRight = configsObject.rightVal;
+        if (configsObject.hasOwnProperty('type'))
+            this.selectedJoinType = this.joinTypeNumberToValue(configsObject.type);
+    }
+
+    public joinTypeNumberToValue(number: number): string {
+        if (number == 0) return 'Inner';
+        else if (number == 1) return 'Left';
+        else if (number == 2) return 'Right';
+        else if (number == 3) return 'Full';
+        return '';
+    }
+
+    public joinTypeValueToNumber(value: string): number {
+        if (value == 'Inner') return 0;
+        else if (value == 'Left') return 1;
+        else if (value == 'Right') return 2;
+        else if (value == 'Full') return 3;
+        return 0;
+    }
+
+    public exportConfigurations(): string {
+        const configsObject: JSON = <JSON>(<any>{
+            middleDatasetName: this.selectedDataset,
+            leftVal: this.selectedLeft,
+            rightVal: this.selectedRight,
+            type: this.joinTypeValueToNumber(this.selectedJoinType),
+        });
+        return JSON.stringify(configsObject);
     }
 
     public getDatasets(): string {

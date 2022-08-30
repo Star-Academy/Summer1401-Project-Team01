@@ -17,6 +17,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ConfigSelectComponent} from './config-components/config-select/config-select.component';
 import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
+import {FieldSelectorConfigComponent} from './processor-config-components/field-selector-config/field-selector-config.component';
 
 @Component({
     selector: 'app-processor-configs',
@@ -31,7 +32,7 @@ export class ProcessorConfigsComponent implements OnChanges {
     @Input() public selectedProcessor: string = '';
     public processorName: string = '';
     public processorType: string = '';
-    public hasChanged: boolean = false;
+    public hasChanged: boolean = true;
 
     public selectedNode: SelectedNodeModel | null = null;
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
@@ -130,4 +131,12 @@ export class ProcessorConfigsComponent implements OnChanges {
     //
     //     this.selectComponentsReferences.push(childComponentRef);
     // }
+
+    @ViewChild(FieldSelectorConfigComponent) public fieldSelectorConfigComponent!: FieldSelectorConfigComponent;
+
+    public saveConfigs() {
+        if (this.processorType === 'Field selector') {
+            this.fieldSelectorConfigComponent.exportConfigurations();
+        }
+    }
 }
