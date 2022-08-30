@@ -11,6 +11,8 @@ export const PIPELINE_UPDATE_PROCESSES = BASE_URL + '/Pipeline/UpdateProcesses';
 export const PIPELINE_RUNPIPELINE = BASE_URL + '/Pipeline/RunPipelines';
 export const PIPELINE_ADD_SOURCE = BASE_URL + '/Pipeline/AddSource';
 export const PIPELINE_ADD_DESTINATION = BASE_URL + '/Pipeline/AddDestination';
+export const PIPELINE_REMOVE_SOURCE = BASE_URL + '/Pipeline/RemoveSource';
+export const PIPELINE_REMOVE_DESTINATION = BASE_URL + '/Pipeline/RemoveDestination';
 
 export const DEFAULT_POST_REQUEST_INIT: RequestInit = {
     method: 'post',

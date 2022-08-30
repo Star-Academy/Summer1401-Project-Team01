@@ -4,7 +4,12 @@ import {CellClassParams, ColDef, GridApi, GridReadyEvent, ICellRendererParams} f
 import {HttpClient} from '@angular/common/http';
 import {DatasetService} from '../../../../services/api/dataset.service';
 import {DiagramNodeService} from '../../../../services/diagram-node.service';
-import {PIPELINE_ADD_DESTINATION, PIPELINE_ADD_SOURCE} from '../../../../utilities/urls';
+import {
+    PIPELINE_ADD_DESTINATION,
+    PIPELINE_ADD_SOURCE,
+    PIPELINE_REMOVE_DESTINATION,
+    PIPELINE_REMOVE_SOURCE,
+} from '../../../../utilities/urls';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -87,7 +92,10 @@ export class SelectDatasetComponent implements OnInit {
 
         const formDataForSrcDes = new FormData();
 
-        if (this.diagramNodeService.selectedNode?.type === 'Start') {
+        if (
+            this.diagramNodeService.selectedNode?.type === 'Start' &&
+            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'add'
+        ) {
             formDataForSrcDes.append('sourceName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
@@ -96,13 +104,38 @@ export class SelectDatasetComponent implements OnInit {
                 method: 'post',
                 body: formDataForSrcDes,
             });
-        } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+        } else if (
+            this.diagramNodeService.selectedNode?.type === 'Destination' &&
+            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'add'
+        ) {
             formDataForSrcDes.append('destinationName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
 
             await fetch(PIPELINE_ADD_DESTINATION, {
                 method: 'post',
+                body: formDataForSrcDes,
+            });
+        } else if (
+            this.diagramNodeService.selectedNode?.type === 'Start' &&
+            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'remove'
+        ) {
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
+            await fetch(PIPELINE_REMOVE_SOURCE, {
+                method: 'delete',
+                body: formDataForSrcDes,
+            });
+        } else if (
+            this.diagramNodeService.selectedNode?.type === 'Destination' &&
+            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'remove'
+        ) {
+            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
+            formDataForSrcDes.append('username', 'admin');
+
+            await fetch(PIPELINE_REMOVE_DESTINATION, {
+                method: 'delete',
                 body: formDataForSrcDes,
             });
         }

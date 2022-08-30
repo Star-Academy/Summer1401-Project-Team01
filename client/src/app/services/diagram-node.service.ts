@@ -100,18 +100,36 @@ export class DiagramNodeService {
         this.fetchDiagram().then();
     }
 
-    public openSelectDatasetModal(state: string) {
-        if (state === 'start' && !this.isSourceSelected) {
+    public orderForAddOrRemoveSrcDes: string = '';
+
+    public openSelectDatasetModal(state: string, order: string) {
+        if (state === 'start' && !this.isSourceSelected && order === 'add') {
+            this.orderForAddOrRemoveSrcDes = 'add';
             const dialog = this.dialog.open(SelectDatasetComponent);
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
                 this.isSourceSelected = true;
             });
-        } else if (state === 'destination' && !this.isDestinationSelected) {
+        } else if (state === 'destination' && !this.isDestinationSelected && order === 'add') {
+            this.orderForAddOrRemoveSrcDes = 'add';
             const dialog = this.dialog.open(SelectDatasetComponent);
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
                 this.isDestinationSelected = true;
+            });
+        } else if (state === 'start' && !this.isDestinationSelected && order === 'remove') {
+            this.orderForAddOrRemoveSrcDes = 'remove';
+            const dialog = this.dialog.open(SelectDatasetComponent);
+            dialog.afterClosed().subscribe((result) => {
+                console.log(`${result}`);
+                this.isDestinationSelected = false;
+            });
+        } else if (state === 'destination' && !this.isDestinationSelected && order === 'remove') {
+            this.orderForAddOrRemoveSrcDes = 'remove';
+            const dialog = this.dialog.open(SelectDatasetComponent);
+            dialog.afterClosed().subscribe((result) => {
+                console.log(`${result}`);
+                this.isDestinationSelected = false;
             });
         }
     }

@@ -54,6 +54,7 @@ export class DiagramComponent {
                         // @ts-ignore
                         const node = obj.part.adornedPart.qb;
                         console.log('node: ', node);
+                        this.addRemoveSrcDes('start', 'add');
                     },
                 },
                 $(go.TextBlock, 'Add Source', {
@@ -67,6 +68,7 @@ export class DiagramComponent {
                     click: (e, obj) => {
                         console.log(e);
                         console.log(obj);
+                        this.addRemoveSrcDes('start', 'remove');
                     },
                 },
                 $(go.TextBlock, 'Remove Source', {
@@ -107,6 +109,7 @@ export class DiagramComponent {
                         // @ts-ignore
                         const node = obj.part.adornedPart.qb;
                         console.log('node: ', node);
+                        this.addRemoveSrcDes('destination', 'add');
                     },
                 },
                 $(go.TextBlock, 'Add Destination', {
@@ -120,6 +123,7 @@ export class DiagramComponent {
                     click: (e, obj) => {
                         console.log(e);
                         console.log(obj);
+                        this.addRemoveSrcDes('destination', 'remove');
                     },
                 },
                 $(go.TextBlock, 'Remove Destination', {
@@ -135,7 +139,7 @@ export class DiagramComponent {
                 arrangement: go.TreeLayout.ArrangementHorizontal,
                 // properties for most of the tree:
                 angle: 0,
-                layerSpacing: 35,
+                layerSpacing: 150,
                 // properties for the "last parents":
                 // alternateAngle: 90,
                 alternateLayerSpacing: 35,
@@ -289,7 +293,7 @@ export class DiagramComponent {
 
         DiagramNodeService.diagram.model = this.model;
 
-        // when the selection changes, emit event to app-component updating the selected node
+        // when the selection changes, emit event to parent-component updating the selected node
         DiagramNodeService.diagram.addDiagramListener('ChangedSelection', (e) => {
             const node = DiagramNodeService.diagram?.selection.first();
 
@@ -299,13 +303,17 @@ export class DiagramComponent {
             this.nodeClicked.emit(node);
         });
 
-        DiagramNodeService.diagram.addDiagramListener('ObjectSingleClicked', (e) => {
-            const partName = e.subject.part.data.name;
-            if (partName === 'Start') {
-                this.diagramNodeService.openSelectDatasetModal('start');
-            } else if (partName === 'Destination') {
-                this.diagramNodeService.openSelectDatasetModal('destination');
-            }
-        });
+        // DiagramNodeService.diagram.addDiagramListener('ObjectSingleClicked', (e) => {
+        //     const partName = e.subject.part.data.name;
+        //     if (partName === 'Start') {
+        //         this.diagramNodeService.openSelectDatasetModal('start', 'add');
+        //     } else if (partName === 'Destination') {
+        //         this.diagramNodeService.openSelectDatasetModal('destination', 'add');
+        //     }
+        // });
+    }
+
+    public addRemoveSrcDes(state: string, order: string): void {
+        this.diagramNodeService.openSelectDatasetModal(state, order);
     }
 }
