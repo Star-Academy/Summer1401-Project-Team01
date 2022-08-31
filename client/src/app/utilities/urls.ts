@@ -18,6 +18,7 @@ export const PIPELINE_REMOVE_DESTINATION = BASE_URL + '/Pipeline/RemoveDestinati
 export const PIPELINE_GET_PIPELINE = BASE_URL + '/Pipeline/GetPipeLine';
 export const PIPELINE_REMOVE = BASE_URL + '/Pipeline/RemovePipeline';
 export const PIPELINE_CREATE = BASE_URL + '/Pipeline/AddPipeline'
+export const PIPELINE_PREVIEW = BASE_URL + '/Pipeline/GetRunPreview'
 
 export const DEFAULT_POST_REQUEST_INIT: RequestInit = {
     method: 'post',

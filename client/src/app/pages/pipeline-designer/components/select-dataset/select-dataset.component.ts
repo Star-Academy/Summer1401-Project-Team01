@@ -22,6 +22,7 @@ export class SelectDatasetComponent implements OnInit {
 
     private gridApi!: GridApi;
     public rowSelection: 'single' | 'multiple' = 'single';
+    public isSelected: boolean = false;
 
     public columnDefs: ColDef[] = [
         {
@@ -83,7 +84,12 @@ export class SelectDatasetComponent implements OnInit {
             newRowData.push({fileName: data[i], dataType: 'csv'});
         }
         this.gridApi.setRowData(newRowData);
-        console.log(this.rowData$);
+    }
+
+    public validateSelectButton(): void {
+        const selectedData = this.gridApi.getSelectedRows();
+        if (selectedData[0]) this.isSelected = true;
+        else this.isSelected = false;
     }
 
     public async selectDataset(): Promise<void> {

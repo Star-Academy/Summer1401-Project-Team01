@@ -9,6 +9,7 @@ import {PIPELINE_RUNPIPELINE} from '../../utilities/urls';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SampleModalComponent} from './components/sample-modal/sample-modal.component';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
+import {PreviewComponent} from "./components/preview/preview.component";
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -169,7 +170,7 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
     }
 
     public openSampleModal(): void {
-        const dialogRef = this.dialog.open(SampleModalComponent);
+        const dialogRef = this.dialog.open(PreviewComponent);
 
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);

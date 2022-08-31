@@ -1,6 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
-import {DATASET_GET_ALL_DATASETS, DATASET_REMOVE, DATASET_SAMPLE, DOWNLOAD_FILE} from '../../utilities/urls';
+import {
+    DATASET_GET_ALL_DATASETS,
+    DATASET_REMOVE,
+    DATASET_SAMPLE,
+    DOWNLOAD_FILE,
+    PIPELINE_PREVIEW
+} from '../../utilities/urls';
 import {UrlSerializer} from "@angular/router";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {SnackbarService} from "../snackbar.service";
@@ -51,6 +57,15 @@ export class DatasetService {
 
         const response = await fetch(DATASET_SAMPLE, {body: formData, method: 'post'});
         return response.json();
-        //
+    }
+
+    public async getPreview (pipelineName: string, lastProcessId: number): Promise<any> {
+        let formData = new FormData();
+        formData.append('pipelineName', pipelineName );
+        formData.append('username', 'admin');
+        formData.append('count', `${lastProcessId}`);
+
+        const response = await fetch(PIPELINE_PREVIEW, {body: formData, method: 'post'});
+        return response.json();
     }
 }
