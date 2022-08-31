@@ -1,15 +1,15 @@
 <div class="list-wrapper">
     <div class="actions">
-        <h2>Your Datasets</h2>
-        <button title="download selected" (click)="clearData()"><i class="far fa-download"></i></button>
-        <button title="delete selected" (click)="onRemoveSelected()">
-            <i class="far fa-trash-can delete-icon"></i>
+        <button title="view dataset" (click)="viewDataset()"><i class="fas fa-eye"></i></button>
+        <button title="download selected" (click)="downloadSelected()"><i class="fas fa-file-arrow-down"></i></button>
+        <button title="delete selected" class="delete" (click)="onRemoveSelected()">
+            <i class="fas fa-trash-can"></i>
         </button>
     </div>
 
     <ag-grid-angular
         style="height: 100%; width: 100%"
-        class="ag-theme-alpine"
+        class="ag-theme-material"
         [columnDefs]="columnDefs"
         [defaultColDef]="defaultColDef"
         [rowData]="rowData$"
@@ -18,7 +18,6 @@
         (cellClicked)="onCellClicked($event)"
         [paginationAutoPageSize]="true"
         [pagination]="true"
-        [rowSelection]="rowSelection"
-        [rowMultiSelectWithClick]="true"
+        [rowMultiSelectWithClick]="false"
     ></ag-grid-angular>
 </div>

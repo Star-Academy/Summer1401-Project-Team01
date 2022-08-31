@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
 import {UploadService} from '../../services/api/upload.service';
+import {ListOfItemsComponent} from "../../components/list-of-items/list-of-items.component";
 
 @Component({
     selector: 'app-data-inventory',
@@ -9,6 +10,8 @@ import {UploadService} from '../../services/api/upload.service';
     styleUrls: ['./data-inventory.component.scss'],
 })
 export class DataInventoryComponent {
+    @ViewChild(ListOfItemsComponent, {static : true}) public grid!: ListOfItemsComponent;
+
     public file?: File = undefined;
     public fileStr: string = '';
     public fileName: string = '';
@@ -30,8 +33,11 @@ export class DataInventoryComponent {
             this.dialogRefMouseClose = true;
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            if (!this.dialogRefMouseClose) this.fileSubmitHandler();
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (!this.dialogRefMouseClose) {
+                await this.fileSubmitHandler();
+                //await this.grid?.updateGrid();
+            }
 
             this.dialogRefMouseClose = false;
         });
@@ -72,7 +78,7 @@ export class DataInventoryComponent {
         let lines = '';
         reader.onload = (): void => {
             lines = reader.result as string;
-        }
+        };
         reader.readAsText($event);
         return lines;
     }
@@ -93,7 +99,6 @@ export class DataInventoryComponent {
         formData.append('file', fileToUpload);
         formData.append('columnTypes', columnInfoStr);
 
-        formData.forEach((x) => console.log(x));
         this.uploadService.uploadFile(formData).then();
 
         // this.file = undefined;

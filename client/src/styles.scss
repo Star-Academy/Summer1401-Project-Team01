@@ -3,6 +3,7 @@
 @use "~@angular/material" as mat;
 
 @import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-material.css";
 @import "ag-grid-community/styles/ag-theme-alpine.css";
 
 // Plus imports for other components in your app.
@@ -60,18 +61,20 @@ White spaces (px)
     --color-gray-20: hsl(0deg 0% 20%);
     --color-gray-10: hsl(0deg 0% 10%);
 
-    --color-primary-darker: hsl(201deg 100% 3%);
-    --color-primary-dark: hsl(201deg 96% 10%);
-    --color-primary-normal: hsl(201deg 93% 12%);
-    --color-primary-light: hsl(201deg 34% 32%);
-    --color-primary-lighter: hsl(201deg 16% 57%);
+    --color-primary-darker: hsl(0deg 0% 5%);
+    --color-primary-dark: hsl(0deg 0% 9%);
+    --color-primary-normal: hsl(0deg 0% 13%);
+    --color-primary-light: hsl(0deg 0% 17%);
+    --color-primary-lighter: hsl(0deg 0% 21%);
 
-    --color-accent-darker: hsl(192deg 70% 13%);
-    --color-accent-dark: hsl(192deg 70% 35%);
-    --color-accent-normal: hsl(192deg 70% 43%);
-    --color-accent-light: hsl(192deg 53% 55%);
-    --color-accent-lighter: hsl(192deg 53% 77%);
-    --color-accent-lightest: hsl(192deg 50% 94%);
+    --color-accent-darker: hsl(0deg 0% 84%);
+    --color-accent-dark: hsl(0deg 0% 88%);
+    --color-accent-normal: hsl(0deg 0% 92%);
+    --color-accent-light: hsl(0deg 0% 96%);
+    --color-accent-lighter: hsl(0deg 0% 100%);
+
+    --color-tertiary-blue: hsl(196deg 93% 47%);
+    --color-tertiary-green: hsl(153deg 91% 56%);
 
     --color-csv-format: hsl(205deg 100% 45%);
     --color-xls-format: hsl(110deg 100% 35%);
@@ -116,18 +119,28 @@ White spaces (px)
 }
 
 * {
-    font-family: Vazirmatn, sans-serif;
+    font-family: Raleway, sans-serif;
 }
 
 html {
     scroll-behavior: smooth;
 
-    font-family: Vazirmatn, sans-serif;
+    font-family: Raleway, sans-serif;
     font-size: 62.5%;
 }
 
+::selection {
+    background-color: var(--color-primary-normal);
+    color: var(--color-accent-normal);
+
+    a {
+        background-color: var(--color-tertiary-green);
+        color: var(--color-accent-normal);
+    }
+}
+
 body {
-    background-color: var(--color-gray-98);
+    background-color: var(--color-accent-normal);
     color: var(--color-gray-20);
 
     min-block-size: 100vh;
@@ -137,6 +150,9 @@ body {
     font-family: Vazirmatn, Roboto, "Helvetica Neue", sans-serif;
 
     line-height: 1;
+
+    background-image: radial-gradient(rgba(33, 33, 33, 0.5) 1.5px, transparent 1.5px);
+    background-size: 60px 60px;
 
     h1,
     h2,
@@ -166,18 +182,15 @@ body {
         display: inline-flex;
         align-items: center;
 
-        padding: 1.2rem 2.4rem;
-
         border: none;
-        border-radius: var(--border-radius-small);
 
         outline: none;
 
         cursor: pointer;
 
         &:disabled {
-            opacity: 0.6;
-
+            opacity: 0.8;
+            transform: translateY(0) !important;
             cursor: not-allowed;
         }
     }
@@ -214,10 +227,68 @@ body {
 
     .global-button {
         background-color: var(--color-primary-normal);
-        color: var(--color-gray-90);
+        color: var(--color-accent-normal);
+
+        display: grid;
+        place-items: center;
+
+        font-size: 1.6rem;
+
+        padding: 1.2rem 3.6rem;
+        transition: transform 200ms ease-in;
 
         &:hover {
-            background-color: var(--color-primary-dark);
+            background-color: var(--color-primary-light);
+            transform: translateY(-0.3rem);
+        }
+    }
+
+    a.primary-button {
+        background-color: var(--color-primary-normal);
+        color: var(--color-accent-normal);
+
+        padding: 1.2rem 3.6rem;
+
+        font-size: 1.6rem;
+        font-weight: 400;
+
+        text-decoration: none;
+
+        transition: transform 200ms ease-in;
+
+        &:hover {
+            background-color: var(--color-primary-light);
+
+            transform: translateY(-0.3rem);
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a.icon-link:active,
+    a.icon-link:visited {
+        color: var(--color-primary-normal);
+    }
+
+    a.secondary-button {
+        background-color: var(--color-accent-normal);
+        color: var(--color-primary-normal-normal);
+
+        padding: 1.2rem 3.6rem;
+
+        border: 2px solid var(--color-primary-normal);
+
+        font-size: 1.6rem;
+        font-weight: 700;
+
+        text-decoration: none;
+
+        transition: transform 200ms ease-in;
+
+        &:hover {
+            transform: translateY(-0.3rem);
         }
     }
 
@@ -236,6 +307,10 @@ body {
     }
 
     .snackbar-info {
+        color: var(--warning-color);
+    }
+
+    .snackbar-success {
         color: var(--success-color);
     }
 
@@ -266,4 +341,23 @@ body {
 html,
 body {
     height: 100%;
+}
+
+main {
+    position: relative;
+}
+
+.ag-theme-material{
+    --ag-material-primary-color: var(--color-primary-normal);
+    --ag-material-accent-color: var(--color-tertiary-blue);
+    --ag-background-color: var(--color-accent-normal);
+    --ag-header-background-color: var(--color-accent-normal);
+    --ag-subheader-background-color: var(--color-accent-normal);
+    --ag-borders: 2px solid;
+    --ag-border-color: var(--color-primary-normal);
+    --ag-borders-critical: none;
+    --ag-borders-row: solid 1px;
+    --ag-font-family: "Raleway", sans-serif;
+    --ag-font-size: 1.6rem;
+    --ag-row-hover-color: var(--color-accent-light);
 }

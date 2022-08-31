@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TalStart.IServices;
 using TalStart.IServices.IParserService;
 
@@ -33,12 +32,12 @@ public class FileController : ControllerBase
             _parser.ParsePostgresTableToCsv(tableName, path);
             var stream = new FileStream(path, FileMode.Open);
             var res = new FileStreamResult(stream, "text/csv");
-            // return File(res.FileStream, "text/csv", $"{datasetName}");
-            return Ok($"File:/{path}");
+            return File(res.FileStream, "text/csv", $"{datasetName}");
         }
         catch (Exception)
         {
             throw;
+            // return new BadRequestResult();
         }
     }
 }

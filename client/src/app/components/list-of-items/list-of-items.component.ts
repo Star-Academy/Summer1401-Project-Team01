@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
 import {
     CellClassParams,
@@ -10,13 +10,18 @@ import {
 } from 'ag-grid-community';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {DatasetService} from '../../services/api/dataset.service';
+import {ChangeDetection} from '@angular/cli/lib/config/workspace-schema';
+import {ColumnTypesComponent} from "../../pages/data-inventory/components/column-types/column-types.component";
+import {ShowSampleComponent} from "../../pages/data-inventory/components/show-sample/show-sample.component";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-list-of-items',
     templateUrl: './list-of-items.component.html',
     styleUrls: ['./list-of-items.component.scss'],
 })
-export class ListOfItemsComponent {
+export class ListOfItemsComponent implements OnInit {
     @ViewChild(AgGridAngular) public agGrid!: AgGridAngular;
 
     private gridApi!: GridApi;
@@ -28,8 +33,8 @@ export class ListOfItemsComponent {
             headerTooltip: 'double click to edit',
             editable: true,
             checkboxSelection: true,
-            headerCheckboxSelection: true,
-            headerCheckboxSelectionFilteredOnly: true,
+            headerCheckboxSelection: false,
+            headerCheckboxSelectionFilteredOnly: false,
             flex: 1,
         },
         {
@@ -42,7 +47,6 @@ export class ListOfItemsComponent {
                 return ListOfItemsComponent.spanMaker(params);
             },
         },
-        {field: 'createdAt'},
     ];
 
     private static determineFileType(params: CellClassParams): string {
@@ -67,24 +71,40 @@ export class ListOfItemsComponent {
         filter: true,
     };
 
-    public rowData$: any[] = [
-        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
-        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
-        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
-        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
-        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
-        {fileName: 'covid', dataType: 'csv', createdAt: '2022-8-18'},
-        {fileName: 'فایل_توزیع_واکسیناسیون_کرونا', dataType: 'xls', createdAt: '2022-2-12'},
-        {fileName: '653223file_91covid19_extra', dataType: 'xls', createdAt: '2020-5-05'},
-        {fileName: 'فایل_واکسنهای_موجود', dataType: 'json', createdAt: '2022-8-17'},
-        {fileName: 'لیست_بیماری_های_واگیردار', dataType: 'csv', createdAt: '2002-12-25'},
-    ];
+    public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient) {}
+    public constructor(private http: HttpClient, private datasetService: DatasetService, public dialog: MatDialog) {}
+
+    public async ngOnInit(): Promise<void> {
+        let data = await this.datasetService.getDatasets();
+        let newRowData = [];
+
+        for (let i = 0; i < data.length; i++) {
+            newRowData.push({fileName: data[i], dataType: 'csv'});
+        }
+        this.gridApi.setRowData(newRowData);
+        console.log(this.rowData$);
+    }
 
     public onRemoveSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
+        this.datasetService.deleteDataset(selectedData[0].fileName);
         this.gridApi.applyTransaction({remove: selectedData});
+    }
+
+    public async downloadSelected(): Promise<void> {
+        const selectedData = this.gridApi.getSelectedRows();
+        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName);
+        console.log(downloadUrl);
+    }
+
+    public async viewDataset(): Promise<void> {
+        const selectedData = this.gridApi.getSelectedRows();
+        const sampleData = await this.datasetService.getRecords(selectedData[0].fileName, 50);
+
+        const dialogRef = this.dialog.open(ShowSampleComponent, {
+            data: {sampleData: sampleData},
+        });
     }
 
     public clearData(): void {
