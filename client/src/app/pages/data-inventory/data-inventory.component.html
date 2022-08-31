@@ -1,16 +1,21 @@
 <div class="wrapper">
-    <div class="text">
-        <h1>Data Inventory</h1>
-        <p>Upload a Piece of Data to Get Started, or Continue to Select a Pipeline and Start Doing Real Work</p>
+    <div class="header">
+        <div class="text">
+            <h1>Data Inventory</h1>
+            <p>Upload a Piece of Data to Get Started, or Continue to Select a Pipeline and Start Doing Real Work</p>
+        </div>
+        <a routerLink="/pipeline-list" class="primary-button">List of Pipelines</a>
     </div>
     <div class="content">
         <div class="upload">
             <app-drag-n-drop (uploadedFile)="fillNameInput($event)"></app-drag-n-drop>
             <div class="name">
-                <mat-form-field appearance="fill">
-                    <mat-label>File Name</mat-label>
-                    <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()"/>
-                </mat-form-field>
+                <div class="input">
+                    <mat-form-field appearance="fill">
+                        <mat-label>File Name</mat-label>
+                        <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()"/>
+                    </mat-form-field>
+                </div>
                 <button
                         class="global-button add-processor-button"
                         (click)="openSelectTypeModal()"
@@ -20,6 +25,8 @@
                 </button>
             </div>
         </div>
-        <div class="grid"><app-list-of-items #grid></app-list-of-items></div>
+        <div class="grid">
+            <app-list-of-items #grid></app-list-of-items>
+        </div>
     </div>
 </div>

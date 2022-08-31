@@ -1,20 +1,19 @@
-import {ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgGridAngular} from 'ag-grid-angular';
 import {
     CellClassParams,
     CellClickedEvent,
     ColDef,
-    GridReadyEvent,
     GridApi,
+    GridReadyEvent,
     ICellRendererParams,
 } from 'ag-grid-community';
-import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {DatasetService} from '../../services/api/dataset.service';
-import {ChangeDetection} from '@angular/cli/lib/config/workspace-schema';
-import {ColumnTypesComponent} from "../../pages/data-inventory/components/column-types/column-types.component";
 import {ShowSampleComponent} from "../../pages/data-inventory/components/show-sample/show-sample.component";
 import {MatDialog} from '@angular/material/dialog';
+import {SnackbarService} from "../../services/snackbar.service";
+import {snackbarType} from "../../models/snackbar-type.enum";
 
 @Component({
     selector: 'app-list-of-items',
@@ -30,6 +29,7 @@ export class ListOfItemsComponent implements OnInit {
     public columnDefs: ColDef[] = [
         {
             field: 'fileName',
+            headerName: 'Your Datasets',
             headerTooltip: 'double click to edit',
             editable: true,
             checkboxSelection: true,
@@ -39,7 +39,8 @@ export class ListOfItemsComponent implements OnInit {
         },
         {
             field: 'dataType',
-            maxWidth: 150,
+            headerName: 'Dataset Type',
+            maxWidth: 170,
             cellClass: (params: CellClassParams): string => {
                 return ListOfItemsComponent.determineFileType(params);
             },
@@ -73,7 +74,7 @@ export class ListOfItemsComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient, private datasetService: DatasetService, public dialog: MatDialog) {}
+    public constructor(private http: HttpClient, private datasetService: DatasetService, public dialog: MatDialog, private snackbar: SnackbarService) {}
 
     public async ngOnInit(): Promise<void> {
         let data = await this.datasetService.getDatasets();
@@ -88,23 +89,30 @@ export class ListOfItemsComponent implements OnInit {
 
     public onRemoveSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
-        this.datasetService.deleteDataset(selectedData[0].fileName);
-        this.gridApi.applyTransaction({remove: selectedData});
+        if (selectedData[0]) {
+            this.datasetService.deleteDataset(selectedData[0].fileName);
+            this.gridApi.applyTransaction({remove: selectedData});
+        }
+        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
     }
 
     public async downloadSelected(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
-        const downloadUrl = this.datasetService.getDownloadDataset(selectedData[0].fileName);
-        console.log(downloadUrl);
+        if (selectedData[0]) await this.datasetService.getDownloadDataset(selectedData[0].fileName);
+        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
+
     }
 
     public async viewDataset(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
-        const sampleData = await this.datasetService.getRecords(selectedData[0].fileName, 50);
+        if(selectedData[0]) {
+            const sampleData = await this.datasetService.getRecords(selectedData[0].fileName, 50);
 
-        const dialogRef = this.dialog.open(ShowSampleComponent, {
-            data: {sampleData: sampleData},
-        });
+            const dialogRef = this.dialog.open(ShowSampleComponent, {
+                data: {sampleData: sampleData},
+            });
+        }
+        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
     }
 
     public clearData(): void {

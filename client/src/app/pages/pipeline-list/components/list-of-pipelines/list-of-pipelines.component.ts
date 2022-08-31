@@ -13,6 +13,11 @@ import {HttpClient} from '@angular/common/http';
 import {DatasetService} from '../../../../services/api/dataset.service';
 import {PipelineService} from '../../../../services/api/pipeline.service';
 import {RouterLinkRendererComponent} from '../../../../components/router-link-renderer/router-link-renderer';
+import {snackbarType} from "../../../../models/snackbar-type.enum";
+import {SnackbarService} from "../../../../services/snackbar.service";
+import {ShowSampleComponent} from "../../../data-inventory/components/show-sample/show-sample.component";
+import {MatDialog} from "@angular/material/dialog";
+import {CreatePipelineComponent} from "../create-pipeline/create-pipeline.component";
 
 @Component({
     selector: 'app-list-of-pipelines',
@@ -41,10 +46,6 @@ export class ListOfPipelinesComponent implements OnInit {
         },
     ];
 
-    private static linkMaker(params: ICellRendererParams): string {
-        return '<a href="https://www.google.com">' + params.value + '</a>';
-    }
-
     public defaultColDef: ColDef = {
         sortable: true,
         filter: true,
@@ -52,7 +53,7 @@ export class ListOfPipelinesComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient, private pipelineService: PipelineService) {}
+    public constructor(private http: HttpClient, private pipelineService: PipelineService, private snackbar: SnackbarService, public dialog: MatDialog) {}
 
     public async ngOnInit(): Promise<void> {
         let data = await this.pipelineService.getAllPipelineNames();
@@ -67,12 +68,15 @@ export class ListOfPipelinesComponent implements OnInit {
 
     public onRemoveSelected(): void {
         const selectedData = this.gridApi.getSelectedRows();
+        if (selectedData[0]) {
+            this.pipelineService.deletePipeline(selectedData[0].pipelines);
+            this.gridApi.applyTransaction({remove: selectedData});
+        }
+        else this.snackbar.show("You must select a pipeline first", snackbarType.WARNING);
     }
 
-    public downloadSelected(): void {}
-
-    public clearData(): void {
-        this.gridApi.setRowData([]);
+    public openAddPipelineModal(): void {
+        const dialogRef = this.dialog.open(CreatePipelineComponent);
     }
 
     public onGridReady(params: GridReadyEvent): void {
