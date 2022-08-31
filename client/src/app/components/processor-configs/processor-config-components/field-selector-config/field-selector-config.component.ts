@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
 
 @Component({
     selector: 'app-field-selector-config',
@@ -12,10 +13,21 @@ export class FieldSelectorConfigComponent {
 
     public columns: string = '';
 
-    public constructor(public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+    public constructor(
+        public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
+        private diagramNodeService: DiagramNodeService
+    ) {
         //TODO
-        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
-        this.initializeConfigurations(configsFromBack);
+        if (!!diagramNodeService.selectedNodeData?.key) {
+            const configsFromBack = JSON.stringify(
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
+            );
+
+            console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
+
+            this.initializeConfigurations(configsFromBack);
+        }
+        this.initializeConfigurations('');
 
         this.getColumns().then((res) => (this.columns = res));
     }
@@ -31,8 +43,6 @@ export class FieldSelectorConfigComponent {
     }
 
     public exportConfigurations(): void {
-        this.configsIfOnlyAndOnlyOptionsService.selectorToOption([this.selectedColumns]);
-
         this.configsIfOnlyAndOnlyOptionsService.selectExportConfigurations(this.selectedColumns);
     }
 

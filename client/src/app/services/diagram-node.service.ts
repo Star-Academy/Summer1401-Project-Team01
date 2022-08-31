@@ -56,6 +56,7 @@ export class DiagramNodeService {
             const pipelineData = await JSON.parse(data?.Json);
 
             for (let i = 0; i < pipelineData.length; i++) {
+                console.log(JSON.parse(JSON.stringify(pipelineData[i].option)));
                 const newNode = {
                     key: pipelineData[i].id,
                     name: this.backNameToFrontNameViceVersaService.backProcessNameToFrontName(pipelineData[i].name),
