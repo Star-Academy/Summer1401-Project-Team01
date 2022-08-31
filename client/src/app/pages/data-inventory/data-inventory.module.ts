@@ -9,9 +9,12 @@ import {MatInputModule} from '@angular/material/input';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DataInventoryComponent} from './data-inventory.component';
+import { ShowSampleComponent } from './components/show-sample/show-sample.component';
+import {AgGridModule} from "ag-grid-angular";
+import 'ag-grid-enterprise';
 
 @NgModule({
-    declarations: [DataInventoryComponent],
+    declarations: [DataInventoryComponent, ShowSampleComponent],
     imports: [
         CommonModule,
         MatSliderModule,
@@ -23,6 +26,7 @@ import {DataInventoryComponent} from './data-inventory.component';
         ReactiveFormsModule,
         FormsModule,
         MatFormFieldModule,
+        AgGridModule,
     ],
 })
 export class DataInventoryModule {}

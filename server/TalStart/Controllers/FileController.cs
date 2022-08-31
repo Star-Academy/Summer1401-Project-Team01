@@ -36,7 +36,8 @@ public class FileController : ControllerBase
         }
         catch (Exception)
         {
-            return new BadRequestResult();
+            throw;
+            // return new BadRequestResult();
         }
     }
 }

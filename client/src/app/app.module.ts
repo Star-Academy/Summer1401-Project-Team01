@@ -12,7 +12,6 @@ import {DragNDropModule} from './components/drag-n-drop/drag-n-drop.module';
 import {MatDialogContainer, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
 import {AddProcessorModalComponent} from './pages/pipeline-designer/components/add-processor-modal/add-processor-modal.component';
 import {PipelineDesignerModule} from './pages/pipeline-designer/pipeline-designer.module';
-import {SnackbarComponent} from './components/snackbar/snackbar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {ColumnTypesComponent} from './pages/data-inventory/components/column-types/column-types.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,11 +20,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {DataInventoryModule} from './pages/data-inventory/data-inventory.module';
 import {ProcessorConfigsModule} from './components/processor-configs/processor-configs.module';
-import {MatOptionModule} from "@angular/material/core";
-import {MatSelectModule} from "@angular/material/select";
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {PipelineListModule} from './pages/pipeline-list/pipeline-list.module';
+import {RouterLinkRendererComponent} from './components/router-link-renderer/router-link-renderer';
 
 @NgModule({
-    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent],
+    declarations: [AppComponent, AddProcessorModalComponent, ColumnTypesComponent, RouterLinkRendererComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -46,6 +47,7 @@ import {MatSelectModule} from "@angular/material/select";
         ProcessorConfigsModule,
         MatOptionModule,
         MatSelectModule,
+        PipelineListModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

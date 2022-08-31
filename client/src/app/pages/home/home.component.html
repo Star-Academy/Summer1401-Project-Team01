@@ -1,7 +1,22 @@
-<main class="home">
-    <h1 class="welcome">Welcome to Data Area!</h1>
-    <div class="button-container">
-        <button class="global-button" (click)="goDataInventory()">Data Inventory</button>
-        <button class="global-button" (click)="goPipelineDesigner()">Pipeline Designer</button>
+<div class="wrapper">
+    <div class="content">
+        <div class="logo-box">
+            <img src="assets/logo/logo-with-bg.jpg" alt="company logo">
+            <h2>DATAGATE</h2>
+        </div>
+        <div class="cta">
+            <div class="text">
+                <h1 class="slogan">We Help You Turn <span>Data</span> into Doing.</h1>
+                <p>Our extensible data platform delivers unified security, full-stack observability and limitless custom
+                    applications.</p>
+            </div>
+            <div class="buttons">
+                <a class="primary-button" routerLink="/data-inventory">Let's Process Your Data</a>
+                <a class="secondary-button" routerLink="/">Learn More</a>
+            </div>
+        </div>
     </div>
-</main>
+    <div class="hero-image">
+        <img src="assets/img/hero-image.webp" alt="" />
+    </div>
+</div>

@@ -28,7 +28,7 @@ export class DragNDropComponent {
         if (!this.fileDropEl.nativeElement.files) return;
 
         let file = <File>this.fileDropEl.nativeElement.files[0];
-        formData.append('file', file)
+        formData.append('file', file);
 
         this.uploadedFile.emit(file);
         this.fileDropEl.nativeElement.value = '';
