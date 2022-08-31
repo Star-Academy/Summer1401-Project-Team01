@@ -13,7 +13,7 @@ builder.Services.AddTransient<IPipelineService, PipelineService>();
 builder.Services.AddTransient<IDatasetService, DatasetService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ISqlService, SqlService>();
-builder.Services.AddTransient<IQueryBuilder, QueryBuilder>();
+builder.Services.AddTransient<IQueryBuilder, PostgresQueryBuilder>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>(x =>
     new ScenarioService(x.GetRequiredService<IDatasetService>()));
 builder.Services.AddTransient<IParser>(x => new Parser(x.GetRequiredService<IQueryBuilder>()
