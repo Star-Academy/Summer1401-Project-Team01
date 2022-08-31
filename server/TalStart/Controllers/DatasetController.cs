@@ -22,7 +22,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
+    public async Task<IActionResult> AddDataset([FromForm] string datasetName,
         [FromForm] string columnTypes, [FromForm] string username)
     {
         try
@@ -40,12 +40,13 @@ public class DatasetController : ControllerBase
                     columns[columnName] = "DOUBLE PRECISION";
                 }
             }
-            _fileService.UploadFile(file, columns, username, datasetName);
+            await _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -54,7 +55,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
+    public IActionResult RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
         if (_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
@@ -65,7 +66,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RenameDataset([FromForm] string currentDatasetName, [FromForm] string username,
+    public IActionResult RenameDataset([FromForm] string currentDatasetName, [FromForm] string username,
         [FromForm] string newDatasetName)
     {
         if (_datasetService.RenameDataset(currentDatasetName, username, newDatasetName))
@@ -77,14 +78,15 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllDatasets([FromRoute] string username)
+    public IActionResult GetAllDatasets([FromRoute] string username)
     {
         try
         {
             return Ok(_datasetService.GetAllDatasetNames(username));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -97,11 +99,11 @@ public class DatasetController : ControllerBase
         try
         {
             var dt = await  _datasetService.PreviewDataset(username, datasetName, count);
-            var JSONresult = JsonConvert.SerializeObject(dt);
-            return Ok(JSONresult);
+            return Ok(JsonConvert.SerializeObject(dt));
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -110,7 +112,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDatasetColumns([FromQuery] string datasetName,[FromQuery] string username)
+    public IActionResult GetDatasetColumns([FromQuery] string datasetName,[FromQuery] string username)
     {
         try
         {
@@ -118,6 +120,7 @@ public class DatasetController : ControllerBase
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }

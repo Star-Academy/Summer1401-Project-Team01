@@ -21,6 +21,11 @@ public class QueryBuilder : IQueryBuilder
         return $"DROP TABLE IF EXISTS {tableName};\n";
     }
 
+    public string SelectIntoQuery(string sourceTable, string finalTable)
+    {
+        return $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+    }
+
     public string GetColumnNamesQuery(string tableName)
     {
         return

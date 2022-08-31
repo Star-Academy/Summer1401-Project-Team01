@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using Npgsql;
+﻿using Npgsql;
 using TalStart.IServices;
 using TalStart.Properties;
 
@@ -7,10 +6,7 @@ namespace TalStart.Services;
 
 public class SqlService : ISqlService
 {
-    public SqlService()
-    {
-    }
-
+    
     private static SqlService? _instance;
 
     public static SqlService GetInstance()
@@ -26,7 +22,7 @@ public class SqlService : ISqlService
         cmd.ExecuteNonQuery();
     }
 
-    public async Task<Object?> ExecuteScalarPostgres(string query)
+    public async Task<object?> ExecuteScalarPostgres(string query)
     {
         await using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
@@ -40,7 +36,7 @@ public class SqlService : ISqlService
         using var conn = new NpgsqlConnection(CString.connectionString);
         conn.Open();
         using var cmd = new NpgsqlCommand(query, conn);
-        using var reader = cmd.ExecuteReader();
+        var reader = cmd.ExecuteReader();
 
         while (reader.Read())
         {

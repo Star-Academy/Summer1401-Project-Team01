@@ -1,5 +1,4 @@
 using System.Data;
-using System.Data.Common;
 using Newtonsoft.Json;
 using Npgsql;
 using SqlKata.Execution;
@@ -27,19 +26,11 @@ namespace TalStart.Services
             _fileService = fileService;
         }
 
-        public bool AddDataset(string username, string datasetName)
+        public void AddDataset(string username, string datasetName)
         {
-            try
-            {
-                _db.Datasets.Add(new Dataset
-                    {User = _db.Users.Single(user => user.Username == username), Name = datasetName});
-                _db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+            _db.Datasets.Add(new Dataset
+                {User = _db.Users.Single(user => user.Username == username), Name = datasetName});
+            _db.SaveChanges();
         }
 
         public bool RemoveDataset(string datasetName, string username)
@@ -109,21 +100,14 @@ namespace TalStart.Services
             return SqlService.GetInstance().ExecuteReaderPostgres(query);
         }
 
-        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count, bool isFullName = false)
+        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count,
+            bool isFullName = false)
         {
             await using var conn = new NpgsqlConnection(CString.connectionString);
             var compiler = new PostgresCompiler();
             var db = new QueryFactory(conn, compiler);
-            var tableName = "";
-            if (isFullName)
-            {
-                tableName = datasetName;
-            }
-            else
-            {
-                tableName = $"{datasetName}_{username}";
-            }
-            var query = db.Query(tableName).Limit(count).Get();
+            var tableName = isFullName ? datasetName : $"{datasetName}_{username}";
+            var query = await db.Query(tableName).Limit(count).GetAsync();
             var json = JsonConvert.SerializeObject(query);
             var dataTable = (DataTable) JsonConvert.DeserializeObject(json, typeof(DataTable))!;
             return dataTable;

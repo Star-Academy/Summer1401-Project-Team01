@@ -10,14 +10,16 @@ namespace TalStart.Services
 {
     public class ScenarioService : IScenarioService
     {
-        private TalStartContext _db = new();
-        private ISqlService _sqlService;
-        private IDatasetService _datasetService;
+        private readonly TalStartContext _db = new();
+        private readonly ISqlService _sqlService;
+        private readonly IDatasetService _datasetService;
+        private readonly IQueryBuilder _queryBuilder;
 
-        public ScenarioService(IDatasetService datasetService)
+        public ScenarioService(IDatasetService datasetService, IQueryBuilder queryBuilder)
         {
             _sqlService = SqlService.GetInstance();
             _datasetService = datasetService;
+            _queryBuilder = queryBuilder;
         }
 
         public async Task<DataTable> RunPipeline(string pipelineName, string username)
@@ -33,17 +35,17 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
-            finalTable = finalTable.Substring(0, finalTable.Length - 1);
+            finalTable = finalTable[..^1];
             sourceTable = finalTable;
-            finalTable = $"{pipe.DestinationDataset.Name}_{pipe.User.Username}";
-            var query = $"DROP TABLE IF EXISTS \"{pipe.DestinationDataset.Name}_{pipe.User.Username}\" ";
+            finalTable = $"{pipe.DestinationDataset?.Name}_{pipe.User.Username}";
+            var query = _queryBuilder.DropTableQuery($"\"{finalTable}\"");
             _sqlService.ExecuteNonQueryPostgres(query);
-            query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+            query = _queryBuilder.SelectIntoQuery(sourceTable, finalTable);
             _sqlService.ExecuteNonQueryPostgres(query);
 
             foreach (var temp in tempTables)
             {
-                query = $"DROP TABLE \"{temp}\" ";
+                query = _queryBuilder.DropTableQuery($"\"{temp}\"");
                 _sqlService.ExecuteNonQueryPostgres(query);
             }
 
@@ -68,7 +70,7 @@ namespace TalStart.Services
 
             var finalRes = await _datasetService.PreviewDataset(username, finalTable, 50, true);
 
-            foreach (var query in tempTables.Select(temp => $"DROP TABLE IF EXISTS \"{temp}\" "))
+            foreach (var query in tempTables.Select(temp => _queryBuilder.DropTableQuery($"\"{temp}\"")))
             {
                 _sqlService.ExecuteNonQueryPostgres(query);
             }
@@ -101,22 +103,22 @@ namespace TalStart.Services
                             pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "aggregate":
-                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "join":
-                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "filter":
-                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "fieldRemover":
-                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "sort":
-                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                     }
                 }
@@ -151,22 +153,22 @@ namespace TalStart.Services
                             pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "aggregate":
-                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "join":
-                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "filter":
-                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "fieldRemover":
-                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "sort":
-                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                     }
                 }

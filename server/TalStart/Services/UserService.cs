@@ -11,17 +11,12 @@ public class UserService : IUserService
     {
         _db = new TalStartContext();
     }
-    public bool CreateUser(string firstName, string lastName, string username, string email, string password)
+
+    public void CreateUser(string firstName, string lastName, string username, string email, string password)
     {
-        try
-        {
-            _db.Users.Add(new User() { Firstname = firstName, Lastname = lastName, Username = username, Email = email, Password = password});
-            _db.SaveChanges();
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }    
+        _db.Users.Add(new User()
+            {Firstname = firstName, Lastname = lastName, Username = username, Email = email, Password = password});
+        _db.SaveChanges();
     }
+
 }

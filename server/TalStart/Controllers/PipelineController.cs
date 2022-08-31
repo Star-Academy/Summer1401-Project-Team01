@@ -1,5 +1,4 @@
-﻿using System.Runtime.ExceptionServices;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TalStart.IServices;
 
@@ -21,59 +20,71 @@ public class PipelineController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddPipeline([FromForm] string pipelineName, [FromForm] string username)
+    public IActionResult AddPipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        if (_pipelineService.AddPipeline(pipelineName, username))
+        try
+        {
+            _pipelineService.AddPipeline(pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
+    public IActionResult RemovePipeline([FromForm] string pipelineName, [FromForm] string username)
     {
-        if (_pipelineService.RemovePipeline(pipelineName, username))
+        try
+        {
+            _pipelineService.RemovePipeline(pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateProcesses([FromForm] string processes, [FromForm] string name, [FromForm] string username)
+    public IActionResult UpdateProcesses([FromForm] string processes, [FromForm] string name,
+        [FromForm] string username)
     {
-        if(_pipelineService.UpdateJson(processes, name,username))
+        try
+        {
+            _pipelineService.UpdateJson(processes, name, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
-
-
-    /*  [HttpGet]
-      [ProducesResponseType(StatusCodes.Status200OK)]
-      [ProducesResponseType(StatusCodes.Status400BadRequest)]
-      [ProducesResponseType(StatusCodes.Status404NotFound)]
-      public async Task<IActionResult> GetPipeline([FromForm] string pipelineName, [FromForm] string username)
-      {
-          await Task.Delay(3);
-          return new BadRequestResult();
-      }*/
 
 
     [HttpGet("{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllPipelinesNames([FromRoute] string username)
+    public IActionResult GetAllPipelinesNames([FromRoute] string username)
     {
         try
         {
             return Ok(_pipelineService.GetAllPipelinesNames(username));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -83,22 +94,20 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetPipeLine([FromQuery] string pipelineName,[FromQuery] string username)
+    public IActionResult GetPipeLine([FromQuery] string pipelineName, [FromQuery] string username)
     {
         try
         {
             var pipeline = _pipelineService.GetPipeline(pipelineName, username);
-            var JSONresult = JsonConvert.SerializeObject(pipeline);
-            return Ok(JSONresult);
+            return Ok(JsonConvert.SerializeObject(pipeline));
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return new BadRequestResult();
         }
     }
-    
-    
+
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -108,12 +117,12 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var dt = await  _scenarioService.RunPipeline(pipelineName, username);
-            var JSONresult = JsonConvert.SerializeObject(dt);
-            return Ok(JSONresult);
+            var dt = await _scenarioService.RunPipeline(pipelineName, username);
+            return Ok(JsonConvert.SerializeObject(dt));
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -122,75 +131,109 @@ public class PipelineController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetRunPreview([FromForm] string pipelineName, [FromForm] string username, [FromForm]
-        int lastProcessId)
+    public async Task<IActionResult> GetRunPreview([FromForm] string pipelineName, [FromForm] string username,
+        [FromForm] int lastProcessId)
     {
         try
         {
             var dt = await _scenarioService.PreviewRun(pipelineName, username, lastProcessId);
-            var JSONresult = JsonConvert.SerializeObject(dt);
-            return Ok(JSONresult);
+            return Ok(JsonConvert.SerializeObject(dt));
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return new BadRequestResult();
         }
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddSource([FromForm] string sourceName, [FromForm] string pipelineName,
+    public IActionResult AddSource([FromForm] string sourceName, [FromForm] string pipelineName,
         [FromForm] string username)
     {
-        if (_pipelineService.AddSource(sourceName, pipelineName, username))
+        try
+        {
+            _pipelineService.AddSource(sourceName, pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RemoveSource([FromForm] string pipelineName, [FromForm] string username)
+    public IActionResult RemoveSource([FromForm] string pipelineName, [FromForm] string username)
     {
-        if (_pipelineService.RemoveSource(pipelineName, username))
+        try
+        {
+            _pipelineService.RemoveSource(pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddDestination([FromForm] string destinationName, [FromForm] string pipelineName,
+    public IActionResult AddDestination([FromForm] string destinationName, [FromForm] string pipelineName,
         [FromForm] string username)
     {
-        if (_pipelineService.AddDestination(destinationName, pipelineName, username))
+        try
+        {
+            _pipelineService.AddDestination(destinationName, pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
+    public IActionResult RemoveDestination([FromForm] string pipelineName, [FromForm] string username)
     {
-        if (_pipelineService.RemoveDestination(pipelineName, username))
+        try
+        {
+            _pipelineService.RemoveDestination(pipelineName, username);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> RenamePipeline([FromForm] string pipelineName, [FromForm] string username,
+    public IActionResult RenamePipeline([FromForm] string pipelineName, [FromForm] string username,
         [FromForm] string newPipelineName)
     {
-        if (_pipelineService.RenamePipeline(pipelineName, username, newPipelineName))
+        try
+        {
+            _pipelineService.RenamePipeline(pipelineName, username, newPipelineName);
             return new OkResult();
-        return new BadRequestResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new BadRequestResult();
+        }
     }
 }

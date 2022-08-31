@@ -15,7 +15,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ISqlService, SqlService>();
 builder.Services.AddTransient<IQueryBuilder, QueryBuilder>();
 builder.Services.AddTransient<IScenarioService, ScenarioService>(x =>
-    new ScenarioService(x.GetRequiredService<IDatasetService>()));
+    new ScenarioService(x.GetRequiredService<IDatasetService>(),x.GetRequiredService<IQueryBuilder>()));
 builder.Services.AddTransient<IParser>(x => new Parser(x.GetRequiredService<IQueryBuilder>()
     , x.GetRequiredService<ISqlService>()));
 builder.Services.AddTransient<IFileService>(x => new FileService(x.GetRequiredService<IParser>()));

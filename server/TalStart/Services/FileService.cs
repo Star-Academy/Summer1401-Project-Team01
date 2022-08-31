@@ -25,23 +25,11 @@ public class FileService : IFileService
             Directory.CreateDirectory(dir);
         }
         var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
-        using (var stream = new FileStream(path, FileMode.Create))
+        await using (var stream = new FileStream(path, FileMode.Create))
         {
-            file.CopyTo(stream);
+            await file.CopyToAsync(stream);
         }
         _parser.ParseCsvToPostgresTable(columns, $"{datasetName}_{username}", path);
-    }
-
-    public string DownloadFile(string datasetName, string username)
-    {
-        var tableName = $"{datasetName}_{username}";
-
-        var path = Path.Combine(Configurations.PathToResources, $"{username}/{datasetName}.csv");
-        
-        _parser.ParsePostgresTableToCsv(tableName, path);
-        using var stream = new FileStream(path, FileMode.Open);
-        var res = new FileStreamResult(stream, "text/csv");
-        return path;
     }
 
     public void DeleteFile(string datasetName, string username)

@@ -9,6 +9,8 @@ public interface IQueryBuilder
 
     public string BuildTableQuery(Dictionary<string, string> columnType, string tableName);
 
+    public string SelectIntoQuery(string sourceTable, string finalTable);
+
     public string GetColumnNamesQuery(string tableName);
     public string RenameTableQuery(string tableName, string newTableName);
 }
