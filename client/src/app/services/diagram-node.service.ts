@@ -11,6 +11,7 @@ import {
     PIPELINE_UPDATE_PROCESSES,
 } from '../utilities/urls';
 import {Subject} from 'rxjs';
+import {BackNameToFrontNameViceVersaService} from './back-name-to-front-name-vice-versa.service';
 
 @Injectable({
     providedIn: 'root',
@@ -19,7 +20,7 @@ export class DiagramNodeService {
     public pipelinePage: string = '';
     public source: string | null = null;
 
-    public nodeDataArray: NodeDataModel[] = [{key: 0, name: 'Start', option: null}];
+    public nodeDataArray: NodeDataModel[] = [];
 
     private isSourceSelected: boolean = false;
     private isDestinationSelected: boolean = false;
@@ -32,7 +33,10 @@ export class DiagramNodeService {
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
-    public constructor(public dialog: MatDialog) {}
+    public constructor(
+        public dialog: MatDialog,
+        private backNameToFrontNameViceVersaService: BackNameToFrontNameViceVersaService
+    ) {}
 
     public async getCurrentPipeLine(): Promise<void> {
         this.nodeDataArray = [];
@@ -54,7 +58,7 @@ export class DiagramNodeService {
             for (let i = 0; i < pipelineData.length; i++) {
                 const newNode = {
                     key: pipelineData[i].id,
-                    name: pipelineData[i].name,
+                    name: this.backNameToFrontNameViceVersaService.backProcessNameToFrontName(pipelineData[i].name),
                     parent: pipelineData[i].id - 1,
                     option: JSON.parse(JSON.stringify(pipelineData[i].option)),
                 };
@@ -236,10 +240,9 @@ export class DiagramNodeService {
     public createNodeArray(): NodeModel[] {
         const nodeArray = [];
         for (let i = 0; i < this.nodeDataArray.length; i++) {
-            let name = 'foo';
-            if (this.nodeDataArray[i].name === 'Field selector') {
-                name = 'select';
-            }
+            const name = this.backNameToFrontNameViceVersaService.frontProcessNameToBackName(
+                this.nodeDataArray[i].name
+            );
 
             const newNode = {
                 id: this.nodeDataArray[i].key,
