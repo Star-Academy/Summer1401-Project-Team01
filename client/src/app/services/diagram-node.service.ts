@@ -35,6 +35,10 @@ export class DiagramNodeService {
     public constructor(public dialog: MatDialog) {}
 
     public async getCurrentPipeLine(): Promise<void> {
+        this.nodeDataArray = [];
+
+        this.nodeDataArray.push({key: 0, name: 'Start', option: null});
+
         try {
             const response = await fetch(
                 PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin',
@@ -66,6 +70,10 @@ export class DiagramNodeService {
 
             this.nodeDataArray.push(lastNode);
         } catch (err) {
+            this.nodeDataArray = [];
+
+            this.nodeDataArray.push({key: 0, name: 'Start', option: null});
+
             this.justCreateInitialNodeData();
         }
 
