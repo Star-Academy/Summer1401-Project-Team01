@@ -1,8 +1,11 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
 import {UploadService} from '../../services/api/upload.service';
 import {ListOfItemsComponent} from "../../components/list-of-items/list-of-items.component";
+import {DatasetService} from "../../services/api/dataset.service";
+import {SnackbarService} from "../../services/snackbar.service";
+import {snackbarType} from "../../models/snackbar-type.enum";
 
 @Component({
     selector: 'app-data-inventory',
@@ -19,10 +22,11 @@ export class DataInventoryComponent {
     public columnTypes: string[] = [];
     public columnInfo: {[key: string]: string} = {};
     public disableContinue: boolean = true;
+    public isUnique: boolean = false;
 
     private dialogRefMouseClose: boolean = false;
 
-    public constructor(public dialog: MatDialog, private uploadService: UploadService) {}
+    public constructor(public dialog: MatDialog, private uploadService: UploadService, private dataset: DatasetService, private snackbar: SnackbarService) {}
 
     public openSelectTypeModal(): void {
         const dialogRef = this.dialog.open(ColumnTypesComponent, {
@@ -36,7 +40,7 @@ export class DataInventoryComponent {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (!this.dialogRefMouseClose) {
                 await this.fileSubmitHandler();
-                //await this.grid?.updateGrid();
+                await this.grid?.updateGrid(this.fileName);
             }
 
             this.dialogRefMouseClose = false;
@@ -106,8 +110,24 @@ export class DataInventoryComponent {
         // this.columnInfo = {};
     }
 
-    public validateContinue(): void {
-        if (this.file !== undefined && this.fileName !== '') {
+    public async checkUnique(): Promise<void> {
+        const fileNames = await this.dataset.getDatasets();
+        console.log(fileNames)
+        for(let i = 0; i < fileNames.length; i++) {
+            if (fileNames[i] === this.fileName) {
+                this.isUnique = false;
+                this.snackbar.show('Enter a Unique Name', snackbarType.WARNING);
+                break;
+            } else {
+                this.isUnique = true;
+            }
+
+        }
+    }
+
+    public async validateContinue(): Promise<void> {
+        await this.checkUnique();
+        if (this.file !== undefined && this.fileName !== '' && this.isUnique) {
             this.disableContinue = false;
         } else {
             this.disableContinue = true;

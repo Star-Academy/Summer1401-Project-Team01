@@ -8,9 +8,10 @@ import { CreatePipelineComponent } from './components/create-pipeline/create-pip
 import {FormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [PipelineListComponent, ListOfPipelinesComponent, CreatePipelineComponent],
-    imports: [CommonModule, AgGridModule, RouterModule, FormsModule, MatFormFieldModule, MatInputModule],
+    imports: [CommonModule, AgGridModule, RouterModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule],
 })
 export class PipelineListModule {}
