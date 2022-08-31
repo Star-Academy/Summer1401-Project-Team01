@@ -2,14 +2,22 @@
     <nav class="navbar">
         <div class="top">
             <a [routerLink]="navigateTo" class="icon-link">
-             <div class="small-container" *ngIf="!isAtHome">
-               <i class="fas fa-angle-left icon"></i>
-             </div>
+                <div class="small-container" *ngIf="!isAtHome">
+                    <i class="fas fa-angle-left icon"></i>
+                </div>
             </a>
         </div>
 
         <div class="bottom">
-            <a routerLink="/"> <div class="small-container"><img src="assets/logo/logo.svg" alt="company logo" title="home"></div></a>
+            <a routerLink="/pipeline-list" class="text-link">
+                <div class="small-container" title="Pipeline list"><span class="text-icon">P</span></div>
+            </a>
+            <a routerLink="/data-inventory" class="text-link">
+                <div class="small-container text-icon" title="Data Inventory"><span class="text-icon">D</span></div>
+            </a>
+            <a routerLink="/">
+                <div class="small-container"><img src="assets/logo/logo.svg" alt="company logo" title="Home"></div>
+            </a>
         </div>
     </nav>
 </header>

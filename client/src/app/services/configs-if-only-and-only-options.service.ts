@@ -36,15 +36,17 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
     public selectorToOption(selectedColumn: string[]): void {
         const option = {columns: selectedColumn};
 
+        console.log(option);
+
         this.diagramNodeService.changeNodeOption(option);
     }
 
     public selectExportConfigurations(selectedColumns: string): string {
-        const configsObject: JSON = <JSON>(<any>{
+        const configsObject = {
             columns: [selectedColumns],
-        });
+        };
 
-        console.log(selectedColumns);
+        console.log(configsObject);
 
         return JSON.stringify(configsObject);
     }

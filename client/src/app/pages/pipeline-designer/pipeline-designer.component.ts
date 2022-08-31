@@ -53,6 +53,10 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
 
         // @ts-ignore
         this.diagramNodeService.pipelinePage = this.pipelineName;
+
+        if (!!this.pipelineName && this.pipelineName !== '') {
+            this.diagramNodeService.getCurrentPipeLine().then();
+        }
     }
 
     public ngAfterContentChecked() {
@@ -153,11 +157,11 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
         formDataForRun.append('username', 'admin');
 
         const response = await fetch(PIPELINE_RUNPIPELINE, {
-            method: 'patch',
+            method: 'post',
             body: formDataForRun,
         });
 
-        console.log(response.json());
+        console.log(await response.json());
     }
 
     public openSampleModal(): void {

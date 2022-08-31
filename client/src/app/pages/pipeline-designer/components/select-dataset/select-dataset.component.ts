@@ -92,10 +92,9 @@ export class SelectDatasetComponent implements OnInit {
 
         const formDataForSrcDes = new FormData();
 
-        if (
-            this.diagramNodeService.selectedNode?.type === 'Start' &&
-            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'add'
-        ) {
+        console.log(this.diagramNodeService.selectedNode?.type);
+
+        if (this.diagramNodeService.selectedNodeData?.name === 'Start') {
             this.diagramNodeService.source = fileName;
 
             formDataForSrcDes.append('sourceName', fileName);
@@ -106,40 +105,13 @@ export class SelectDatasetComponent implements OnInit {
                 method: 'post',
                 body: formDataForSrcDes,
             });
-        } else if (
-            this.diagramNodeService.selectedNode?.type === 'Destination' &&
-            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'add'
-        ) {
+        } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
             formDataForSrcDes.append('destinationName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
 
             await fetch(PIPELINE_ADD_DESTINATION, {
                 method: 'post',
-                body: formDataForSrcDes,
-            });
-        } else if (
-            this.diagramNodeService.selectedNode?.type === 'Start' &&
-            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'remove'
-        ) {
-            this.diagramNodeService.source = null;
-
-            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
-            formDataForSrcDes.append('username', 'admin');
-
-            await fetch(PIPELINE_REMOVE_SOURCE, {
-                method: 'delete',
-                body: formDataForSrcDes,
-            });
-        } else if (
-            this.diagramNodeService.selectedNode?.type === 'Destination' &&
-            this.diagramNodeService.orderForAddOrRemoveSrcDes === 'remove'
-        ) {
-            formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
-            formDataForSrcDes.append('username', 'admin');
-
-            await fetch(PIPELINE_REMOVE_DESTINATION, {
-                method: 'delete',
                 body: formDataForSrcDes,
             });
         }

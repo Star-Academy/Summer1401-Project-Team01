@@ -109,12 +109,20 @@ namespace TalStart.Services
             return SqlService.GetInstance().ExecuteReaderPostgres(query);
         }
 
-        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count)
+        public async Task<DataTable> PreviewDataset(string username, string datasetName, int count, bool isFullName = false)
         {
             await using var conn = new NpgsqlConnection(CString.connectionString);
             var compiler = new PostgresCompiler();
             var db = new QueryFactory(conn, compiler);
-            var tableName = $"{datasetName}_{username}";
+            var tableName = "";
+            if (isFullName)
+            {
+                tableName = datasetName;
+            }
+            else
+            {
+                tableName = $"{datasetName}_{username}";
+            }
             var query = db.Query(tableName).Limit(count).Get();
             var json = JsonConvert.SerializeObject(query);
             var dataTable = (DataTable) JsonConvert.DeserializeObject(json, typeof(DataTable))!;

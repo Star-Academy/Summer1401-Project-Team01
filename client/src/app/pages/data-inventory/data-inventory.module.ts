@@ -12,6 +12,7 @@ import {DataInventoryComponent} from './data-inventory.component';
 import { ShowSampleComponent } from './components/show-sample/show-sample.component';
 import {AgGridModule} from "ag-grid-angular";
 import 'ag-grid-enterprise';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [DataInventoryComponent, ShowSampleComponent],
@@ -27,6 +28,7 @@ import 'ag-grid-enterprise';
         FormsModule,
         MatFormFieldModule,
         AgGridModule,
+        RouterModule,
     ],
 })
 export class DataInventoryModule {}

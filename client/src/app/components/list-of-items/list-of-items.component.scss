@@ -6,7 +6,7 @@
     align-items: flex-end;
     gap: 1.2rem;
 
-    height: 50rem;
+    height: 60rem;
 
     .actions {
         position: absolute;
@@ -34,7 +34,7 @@
             }
 
             &.delete:hover {
-                background-color: var(--error-color-dark);
+                background-image: linear-gradient(to top right, var(--error-color-dark), var(--error-color));
 
                 i{
                     color: var(--color-accent-normal);
