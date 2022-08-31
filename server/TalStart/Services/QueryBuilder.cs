@@ -1,8 +1,4 @@
-﻿using System.Text;
-using TalStart.IServices;
-
-namespace TalStart.Services;
-
+﻿
 public class QueryBuilder : IQueryBuilder
 {
     public string ExportCsvQuery(string tableName, string filePath)

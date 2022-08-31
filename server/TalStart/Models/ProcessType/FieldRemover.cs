@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using TalStart.IServices;
 using TalStart.Models.Interfaces;
 using TalStart.Models.ProcessType.Options;
 using TalStart.Services;
@@ -8,30 +9,32 @@ namespace TalStart.Models.ProcessType;
 public class FieldRemover : IProcess
 {
     private readonly SqlService _sqlService;
+    private readonly IQueryBuilder _queryBuilder;
+    
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public object? Options { get; set; }
 
     public FieldRemover()
     {
         _sqlService = SqlService.GetInstance();
+        _queryBuilder = new PostgresQueryBuilder();
     }
-
-    public string Name { get; set; }
-    public int Id { get; set; }
-
-    public object? Options { get; set; }
-
 
     public bool Run(string sourceTable, string finalTable)
     {
         try
         {
-            var selectOptions = JsonSerializer.Deserialize<FieldRemoverOptions>(Options.ToString());
-            var query = $"ALTER TABLE \"{sourceTable}\" \n";
-            query = selectOptions.columns.Aggregate(query, (current, column) => current + $"DROP COLUMN {column},\n");
-
-            query = query[..^1] + ";";
+            var fieldRemoverOptions = JsonSerializer.Deserialize<FieldRemoverOptions>(Options.ToString());
+            
+            var query = _queryBuilder.FieldRemoverQuery(sourceTable, fieldRemoverOptions.columns);
+            
             _sqlService.ExecuteNonQueryPostgres(query);
-            query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+            
+            query = _queryBuilder.CopyTableIntoTable(sourceTable, finalTable);
+            
             _sqlService.ExecuteNonQueryPostgres(query);
+            
             return true;
         }
         catch

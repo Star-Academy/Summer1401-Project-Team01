@@ -9,15 +9,17 @@ namespace TalStart.Models.ProcessType;
 public class Select : IProcess
 {
     private readonly ISqlService _sqlService;
+    private readonly IQueryBuilder _queryBuilder;
+    
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public object? Options { get; set; }
+    
     public Select()
     {
         _sqlService = SqlService.GetInstance();
+        _queryBuilder = new PostgresQueryBuilder();
     }
-
-    public string Name { get; set; }
-    public int Id { get; set; }
-
-    public object? Options { get; set; }
 
     public bool Run(string sourceTable, string finalTable)
     {
@@ -25,15 +27,10 @@ public class Select : IProcess
         {
             var selectOptions = JsonSerializer.Deserialize<SelectOptions>(Options.ToString());
 
-            var query = $"SELECT ";
-            foreach (var column in selectOptions.columns)
-            {
-                query += $"\"{column}\"" +',';
-            }
-            query = query.Substring(0,query.Length - 1);
-            query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-
+            var query = _queryBuilder.SelectQuery(sourceTable, finalTable, selectOptions.columns);
+            
             _sqlService.ExecuteNonQueryPostgres(query);
+            
             return true;
         }
         catch (Exception)

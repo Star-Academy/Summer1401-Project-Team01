@@ -10,32 +10,27 @@ namespace TalStart.Models.ProcessType
     public class SortProcess :IProcess
     {
         private readonly ISqlService _sqlService;
+        private readonly IQueryBuilder _queryBuilder;
+        
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public object? Options { get; set; }
+
         public SortProcess()
         {
             _sqlService = SqlService.GetInstance();
+            _queryBuilder = new PostgresQueryBuilder();
         }
-        public string Name { get; set; }
-        public int Id { get; set; }
-
-        public object? Options { get; set; }
         public bool Run(string sourceTable, string finalTable)
         {
             try
             {
                 var sortOptions = JsonSerializer.Deserialize<SortOptions>(Options.ToString());
 
-                var query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-                query += $" ORDER BY \"{sortOptions.OperationColumn}\" ";
-                if (sortOptions.SortAscending)
-                {
-                    query += "ASC";
-                }
-                else
-                {
-                    query += "DESC";
-                }
-
+                var query = _queryBuilder.SortQuery(sourceTable, finalTable, sortOptions.OperationColumn, sortOptions.SortAscending);
+                
                 _sqlService.ExecuteNonQueryPostgres(query);
+                
                 return true;
             }
             catch (Exception)

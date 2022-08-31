@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using TalStart.IServices;
 using TalStart.Models.Interfaces;
 using TalStart.Models.ProcessType.Options;
 using TalStart.Services;
@@ -7,13 +8,13 @@ namespace TalStart.Models.ProcessType;
 
 public class Aggregate : IProcess
 {
-    private readonly SqlService _sqlService;
-    private readonly QueryBuilder _queryBuilder;
+    private readonly ISqlService _sqlService;
+    private readonly IQueryBuilder _queryBuilder;
     
     public Aggregate()
     {
         _sqlService = SqlService.GetInstance();
-        _queryBuilder = new QueryBuilder();
+        _queryBuilder = new PostgresQueryBuilder();
     }
 
     public string Name { get; set; }

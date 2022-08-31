@@ -1,4 +1,5 @@
 using System.Text.Json;
+using TalStart.IServices;
 using TalStart.Models.Interfaces;
 using TalStart.Models.ProcessType.Options;
 using TalStart.Services;
@@ -8,17 +9,17 @@ namespace TalStart.Models.ProcessType;
 public class Join : IProcess
 {
     private readonly SqlService _sqlService;
+    private readonly IQueryBuilder _queryBuilder;
+    
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public object? Options { get; set; }
 
     public Join()
     {
         _sqlService = SqlService.GetInstance();
+        _queryBuilder = new PostgresQueryBuilder();
     }
-
-    public string Name { get; set; }
-    public int Id { get; set; }
-
-    public object? Options { get; set; }
-
 
     public bool Run(string sourceTable, string finalTable)
     {
@@ -26,13 +27,11 @@ public class Join : IProcess
         {
             var joinOptions = JsonSerializer.Deserialize<JoinOptions>(Options.ToString());
 
-            var query = $"SELECT *\n";
-            query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\" \n";
-            query += $" {joinOptions.type} JOIN \"{joinOptions.middleDatasetName}\"\n";
-            query +=
-                $"ON \"{sourceTable}\".{joinOptions.leftVal} = \"{joinOptions.middleDatasetName}\".{joinOptions.rightVal}";
-            query += ";";
+            var query = _queryBuilder.JoinQuery(sourceTable, finalTable, joinOptions.type,
+                joinOptions.middleDatasetName, joinOptions.leftVal, joinOptions.rightVal);
+
             _sqlService.ExecuteNonQueryPostgres(query);
+
             return true;
         }
         catch (Exception e)
