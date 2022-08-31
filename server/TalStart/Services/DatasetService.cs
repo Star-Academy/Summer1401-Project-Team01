@@ -97,7 +97,18 @@ namespace TalStart.Services
         public List<string> GetDatasetColumns(string datasetName, string username)
         {
             var query = _queryBuilder.GetColumnNamesQuery($"{datasetName}_{username}");
-            return SqlService.GetInstance().ExecuteReaderPostgres(query);
+            var columnNames = new List<string>();
+            using var conn = new NpgsqlConnection(CString.connectionString);
+            conn.Open();
+            using var cmd = new NpgsqlCommand(query, conn);
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                columnNames.Add(reader.GetString(0));
+            }
+
+            return columnNames;
         }
 
         public async Task<DataTable> PreviewDataset(string username, string datasetName, int count,

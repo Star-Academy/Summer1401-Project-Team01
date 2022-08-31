@@ -6,7 +6,6 @@ namespace TalStart.Services;
 
 public class SqlService : ISqlService
 {
-    
     private static SqlService? _instance;
 
     public static SqlService GetInstance()
@@ -28,21 +27,5 @@ public class SqlService : ISqlService
         conn.Open();
         await using var cmd = new NpgsqlCommand(query, conn);
         return await cmd.ExecuteScalarAsync();
-    }
-
-    public List<string> ExecuteReaderPostgres(string query)
-    {
-        var columnNames = new List<string>();
-        using var conn = new NpgsqlConnection(CString.connectionString);
-        conn.Open();
-        using var cmd = new NpgsqlCommand(query, conn);
-        var reader = cmd.ExecuteReader();
-
-        while (reader.Read())
-        {
-            columnNames.Add(reader.GetString(0));
-        }
-
-        return columnNames;
     }
 }

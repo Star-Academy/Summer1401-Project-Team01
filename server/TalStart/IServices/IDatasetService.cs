@@ -11,5 +11,5 @@ public interface IDatasetService
     public void UpdateDatasetFromTable(string datasetName, string username);
     List<string> GetAllDatasetNames(string username);
 
-    List<String> GetDatasetColumns(string datasetName, string username);
+    List<string> GetDatasetColumns(string datasetName, string username);
 }
