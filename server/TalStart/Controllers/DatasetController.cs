@@ -102,6 +102,7 @@ public class DatasetController : ControllerBase
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }

@@ -31,13 +31,16 @@ namespace TalStart.Services
         {
             try
             {
+                Console.WriteLine(username, datasetName);
                 _db.Datasets.Add(new Dataset
                     {User = _db.Users.Single(user => user.Username == username), Name = datasetName});
+                Console.WriteLine("SALAM");
                 _db.SaveChanges();
                 return true;
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }

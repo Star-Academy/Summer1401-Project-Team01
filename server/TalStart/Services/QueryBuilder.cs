@@ -33,7 +33,7 @@ public class QueryBuilder : IQueryBuilder
 
         foreach (var (key, value) in columnType)
         {
-            query.Append($"{key} {value},");
+            query.Append($"{key} {value},\n");
         }
 
         query.Remove(query.Length - 1, 1);
