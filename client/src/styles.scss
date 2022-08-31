@@ -226,6 +226,45 @@ body {
     }
   }
 
+  .canvas-circle {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--border-radius-small);
+
+    display: grid;
+    place-items: center;
+
+    color: var(--color-primary-normal);
+    font-size: 2.4rem;
+
+    &:not(:disabled):hover {
+      background-color: var(--color-primary-normal);
+      color: var(--color-accent-normal);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+    }
+  }
+
+  .canvas-run{
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--border-radius-small);
+
+    display: grid;
+    place-items: center;
+
+    color: var(--color-accent-normal);
+    background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue)50%);
+    font-size: 2.4rem;
+
+    transition: transform 200ms ease-in;
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+
   .global-button {
     background-color: var(--color-primary-normal);
     color: var(--color-accent-normal);

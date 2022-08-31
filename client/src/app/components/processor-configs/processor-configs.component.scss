@@ -6,19 +6,22 @@
     block-size: 100%;
 
     &__header {
-        background-color: var(--color-gray-98);
 
         block-size: max-content;
 
-        padding-block: var(--padding-small);
-        padding-inline: var(--padding-large);
+        padding: var(--padding-medium);
+        padding-bottom: 0;
 
         &--name {
             font-size: var(--font-size-tertiary-heading);
+            font-family: Raleway, sans-serif;
+            font-weight: 900;
         }
 
         &--type {
             font-size: var(--font-size-paragraph);
+            font-family: Raleway, sans-serif;
+            font-weight: 700;
         }
     }
 
@@ -38,12 +41,7 @@
     }
 
     &__buttons {
-        background-color: var(--color-gray-98);
-
         overflow: hidden;
-
-        display: flex;
-        justify-content: space-between;
 
         min-block-size: 8rem;
         block-size: max-content;
@@ -53,5 +51,9 @@
         margin-block-start: auto;
         padding-block: var(--padding-medium);
         padding-inline: var(--padding-large);
+
+        .save-button {
+            inline-size: 100%;
+        }
     }
 }

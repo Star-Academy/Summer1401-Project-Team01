@@ -2,24 +2,22 @@
 <main #designer class="designer">
     <div class="designer__header">
         <button
-            class="global-button processor-button"
-            (click)="openAddProcessorModal()"
-            k
-            [disabled]="!isNodeSelectedForStartBtn"
+                class="canvas-circle"
+                (click)="removeNode()"
+                k
+                [disabled]="!isNodeSelectedForDeleteBtn"
         >
-            Add processor After This
+            <i class="far fa-square-minus"></i>
         </button>
         <button
-            class="global-button processor-button"
-            (click)="removeNode()"
-            k
-            [disabled]="!isNodeSelectedForDeleteBtn"
-        >
-            Delete processor
+            class="canvas-circle"
+            (click)="openAddProcessorModal()" k
+            [disabled]="!isNodeSelectedForStartBtn">
+            <i class="far fa-square-plus"></i>
         </button>
-        <button class="global-button processor-button" (click)="runProcess()" k>Run</button>
-        <button class="global-button processor-button" (click)="openSampleModal()" k [disabled]="!isSourceSelected">
-            Show Sample
+        <button class="canvas-run" (click)="runProcess()" k><i class="fas fa-play"></i></button>
+        <button class="canvas-circle" (click)="openSampleModal()" k [disabled]="!isSourceSelected">
+            <i class="far fa-eye"></i>
         </button>
     </div>
 

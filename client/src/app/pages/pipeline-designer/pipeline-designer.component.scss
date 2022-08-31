@@ -9,12 +9,13 @@
     overflow: hidden;
 
     &__header {
-        background-color: #fff;
 
+        position: relative;
+        z-index: 10;
 
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         gap: var(--flex-gap-large);
 
         //block-size: 5vh;
@@ -64,7 +65,7 @@
             right: 0;
 
             background-color: var(--color-accent-lighter);
-            border-left: 1px solid var(--color-primary-normal);
+            border-left: 1px solid var(--color-accent-darker);
             //box-shadow: -10px 5px 20px -15px var(--color-gray-40);
             inline-size: 90%;
             block-size: 100%;
