@@ -12,7 +12,6 @@ import {
 } from '../utilities/urls';
 import {Subject} from 'rxjs';
 import {BackNameToFrontNameViceVersaService} from './back-name-to-front-name-vice-versa.service';
-import {ConfigsIfOnlyAndOnlyOptionsService} from './configs-if-only-and-only-options.service';
 
 @Injectable({
     providedIn: 'root',
@@ -36,8 +35,7 @@ export class DiagramNodeService {
 
     public constructor(
         public dialog: MatDialog,
-        private backNameToFrontNameViceVersaService: BackNameToFrontNameViceVersaService,
-        private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService
+        private backNameToFrontNameViceVersaService: BackNameToFrontNameViceVersaService
     ) {}
 
     public async getCurrentPipeLine(): Promise<void> {
@@ -115,8 +113,6 @@ export class DiagramNodeService {
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};
         this.selectedNodeChange.next(this.selectedNode);
         this.selectedNodeData = JSON.parse(JSON.stringify(_selectedNodeData));
-
-        this.configsIfOnlyAndOnlyOptionsService.setPreviousData();
     }
 
     public addNode(type: string): void {
