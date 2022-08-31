@@ -37,10 +37,12 @@
 
     <aside #side class="designer__side">
         <button class="collapse-button" (click)="sidebarCollapseService.collapse()">
-            <i #rightArrow class="fa-solid fa-chevron-right show"></i>
+            <i #rightArrow class=" show"></i>
             <i #leftArrow class="fa-solid fa-chevron-left hide"></i>
         </button>
-        <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        <div class="content">
+           <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        </div>
         <!--        <div #dragH class="drag-h" (mousedown)="dragHHandler($event)"></div>-->
     </aside>
 </main>
