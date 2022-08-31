@@ -31,7 +31,7 @@ public class FieldRemover : IProcess
             
             _sqlService.ExecuteNonQueryPostgres(query);
             
-            query = _queryBuilder.CopyTableIntoTable(sourceTable, finalTable);
+            query = _queryBuilder.CopyTableIntoTableQuery(sourceTable, finalTable);
             
             _sqlService.ExecuteNonQueryPostgres(query);
             

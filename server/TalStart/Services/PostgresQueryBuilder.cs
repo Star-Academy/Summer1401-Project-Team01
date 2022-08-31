@@ -22,11 +22,6 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"DROP TABLE IF EXISTS {tableName};\n";
     }
 
-    public string SelectIntoQuery(string sourceTable, string finalTable)
-    {
-        return $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-    }
-
     public string GetColumnNamesQuery(string tableName)
     {
         return
@@ -101,7 +96,7 @@ public class PostgresQueryBuilder : IQueryBuilder
         return query;
     }
 
-    public string CopyTableIntoTable(string sourceTable, string finalTable)
+    public string CopyTableIntoTableQuery(string sourceTable, string finalTable)
     {
         return $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
     }

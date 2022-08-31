@@ -40,7 +40,7 @@ namespace TalStart.Services
             finalTable = $"{pipe.DestinationDataset?.Name}_{pipe.User.Username}";
             var query = _queryBuilder.DropTableQuery($"\"{finalTable}\"");
             _sqlService.ExecuteNonQueryPostgres(query);
-            query = _queryBuilder.SelectIntoQuery(sourceTable, finalTable);
+            query = _queryBuilder.CopyTableIntoTableQuery(sourceTable, finalTable);
             _sqlService.ExecuteNonQueryPostgres(query);
 
             foreach (var temp in tempTables)
