@@ -79,6 +79,7 @@ export class ListOfPipelinesComponent implements OnInit {
         const dialogRef = this.dialog.open(CreatePipelineComponent);
     }
 
+
     public onGridReady(params: GridReadyEvent): void {
         this.gridApi = params.api;
     }
