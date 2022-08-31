@@ -22,8 +22,8 @@ export class DiagramNodeService {
 
     public nodeDataArray: NodeDataModel[] = [];
 
-    private isSourceSelected: boolean = false;
-    private isDestinationSelected: boolean = false;
+    public isSourceSelected: boolean = false;
+    public isDestinationSelected: boolean = false;
 
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
 
@@ -175,14 +175,12 @@ export class DiagramNodeService {
 
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
-                this.isSourceSelected = true;
             });
         } else if (state === 'destination' && !this.isDestinationSelected && order === 'add') {
             const dialog = this.dialog.open(SelectDatasetComponent);
 
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
-                this.isDestinationSelected = true;
             });
         } else if (state === 'start' && this.isSourceSelected && order === 'remove') {
             const formDataForSrcDes = new FormData();
@@ -195,7 +193,9 @@ export class DiagramNodeService {
             fetch(PIPELINE_REMOVE_SOURCE, {
                 method: 'delete',
                 body: formDataForSrcDes,
-            }).then();
+            }).then((Response) => {
+                if (Response.ok) this.isSourceSelected = false;
+            });
 
             this.isSourceSelected = false;
         } else if (state === 'destination' && this.isDestinationSelected && order === 'remove') {
@@ -207,7 +207,9 @@ export class DiagramNodeService {
             fetch(PIPELINE_REMOVE_DESTINATION, {
                 method: 'delete',
                 body: formDataForSrcDes,
-            }).then();
+            }).then((Response) => {
+                if (Response.ok) this.isDestinationSelected = false;
+            });
 
             this.isDestinationSelected = false;
         }

@@ -107,19 +107,23 @@ export class SelectDatasetComponent implements OnInit {
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
 
-            await fetch(PIPELINE_ADD_SOURCE, {
+            const response = await fetch(PIPELINE_ADD_SOURCE, {
                 method: 'post',
                 body: formDataForSrcDes,
             });
+
+            if (response.ok) this.diagramNodeService.isSourceSelected = true;
         } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
             formDataForSrcDes.append('destinationName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');
 
-            await fetch(PIPELINE_ADD_DESTINATION, {
+            const response = await fetch(PIPELINE_ADD_DESTINATION, {
                 method: 'post',
                 body: formDataForSrcDes,
             });
+
+            if (response.ok) this.diagramNodeService.isDestinationSelected = true;
         }
     }
 }
