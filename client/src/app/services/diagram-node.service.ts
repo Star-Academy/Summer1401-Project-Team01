@@ -35,29 +35,48 @@ export class DiagramNodeService {
     public constructor(public dialog: MatDialog) {}
 
     public async getCurrentPipeLine(): Promise<void> {
-        const response = await fetch(PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin', {
-            method: 'get',
-        });
-        const data = await response.json();
+        try {
+            const response = await fetch(
+                PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin',
+                {
+                    method: 'get',
+                }
+            );
 
-        const pipelineData = await JSON.parse(data?.Json);
+            const data = await response.json();
 
-        if (!pipelineData) return;
+            const pipelineData = await JSON.parse(data?.Json);
 
-        for (let i = 0; i < pipelineData.length; i++) {
-            const newNode = {
-                key: pipelineData[i].id,
-                name: pipelineData[i].name,
-                parent: pipelineData[i].id - 1,
-                option: JSON.parse(JSON.stringify(pipelineData[i].option)),
+            for (let i = 0; i < pipelineData.length; i++) {
+                const newNode = {
+                    key: pipelineData[i].id,
+                    name: pipelineData[i].name,
+                    parent: pipelineData[i].id - 1,
+                    option: JSON.parse(JSON.stringify(pipelineData[i].option)),
+                };
+
+                this.nodeDataArray.push(newNode);
+            }
+
+            const lastNode = {
+                key: pipelineData.length + 1,
+                name: 'Destination',
+                parent: pipelineData.length,
             };
 
-            this.nodeDataArray.push(newNode);
+            this.nodeDataArray.push(lastNode);
+        } catch (err) {
+            this.justCreateInitialNodeData();
         }
+
+        this.createDiagramAgain();
+    }
+
+    public justCreateInitialNodeData(): void {
         const lastNode = {
-            key: pipelineData.length + 1,
+            key: 1,
             name: 'Destination',
-            parent: pipelineData.length,
+            parent: 0,
         };
 
         this.nodeDataArray.push(lastNode);
