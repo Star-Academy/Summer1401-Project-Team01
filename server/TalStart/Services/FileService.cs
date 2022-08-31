@@ -24,7 +24,8 @@ public class FileService : IFileService
         {
             Directory.CreateDirectory(dir);
         }
-        var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
+
+        var path = Path.Combine(Configurations.PathToResources, $"{username}/{datasetName}.csv");
         await using (var stream = new FileStream(path, FileMode.Create))
         {
             await file.CopyToAsync(stream);

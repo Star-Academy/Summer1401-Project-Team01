@@ -84,7 +84,7 @@ namespace TalStart.Services
         public void UpdateDatasetFromTable(string datasetName, string username)
         {
             var tableName = $"{datasetName}.{username}";
-            var path = Path.Combine(Directory.GetCurrentDirectory(), $"resources\\{username}", $"{tableName}.csv");
+            var path = Path.Combine(Configurations.PathToResources, $"{username}", $"{tableName}.csv");
             _parser.ParsePostgresTableToCsv(tableName, path);
         }
 
