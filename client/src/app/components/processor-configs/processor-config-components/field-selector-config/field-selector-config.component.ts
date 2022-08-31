@@ -32,6 +32,8 @@ export class FieldSelectorConfigComponent {
 
     public exportConfigurations(): void {
         this.configsIfOnlyAndOnlyOptionsService.selectorToOption([this.selectedColumns]);
+
+        this.configsIfOnlyAndOnlyOptionsService.selectExportConfigurations(this.selectedColumns);
     }
 
     public async getColumns(): Promise<string> {
