@@ -63,15 +63,17 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
-
             finalTable = finalTable[..^1];
+
+
+            var finalRes = await _datasetService.PreviewDataset(username, finalTable, 50, true);
 
             foreach (var query in tempTables.Select(temp => $"DROP TABLE IF EXISTS \"{temp}\" "))
             {
                 _sqlService.ExecuteNonQueryPostgres(query);
             }
 
-            return await _datasetService.PreviewDataset(username, finalTable, 50);
+            return finalRes;
         }
 
         private Pipeline? MakePartialPipeline(string pipelineName, string username, int lastProcessId)
@@ -89,6 +91,10 @@ namespace TalStart.Services
                 var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
                 foreach (var r in res.OrderBy(r => r.Id))
                 {
+                    if (r.Id > lastProcessId)
+                    {
+                        continue;
+                    }
                     switch (r.Name)
                     {
                         case "foo":
