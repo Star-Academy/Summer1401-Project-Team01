@@ -115,6 +115,9 @@ namespace TalStart.Services
                         case "fieldRemover":
                             pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
+                        case "sort":
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
                     }
                 }
 
@@ -161,6 +164,9 @@ namespace TalStart.Services
                             break;
                         case "fieldRemover":
                             pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "sort":
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }
