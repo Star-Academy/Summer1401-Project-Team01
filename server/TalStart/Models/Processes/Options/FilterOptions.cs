@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace TalStart.Models.ProcessType.Options;
+namespace TalStart.Models.Processes.Options;
 
 public class FilterOptions
 {

@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
 using TalStart.IServices;
 using TalStart.Models.Interfaces;
-using TalStart.Models.ProcessType.Options;
+using TalStart.Models.Processes.Options;
 using TalStart.Services;
 
-namespace TalStart.Models.ProcessType;
+namespace TalStart.Models.Processes;
 
-public class Select : IProcess
+public class Filter : IProcess
 {
     private readonly ISqlService _sqlService;
     private readonly IQueryBuilder _queryBuilder;
@@ -14,8 +14,8 @@ public class Select : IProcess
     public string Name { get; set; }
     public int Id { get; set; }
     public object? Options { get; set; }
-    
-    public Select()
+
+    public Filter()
     {
         _sqlService = SqlService.GetInstance();
         _queryBuilder = new PostgresQueryBuilder();
@@ -25,15 +25,15 @@ public class Select : IProcess
     {
         try
         {
-            var selectOptions = JsonSerializer.Deserialize<SelectOptions>(Options.ToString());
+            var filterOptions = JsonSerializer.Deserialize<FilterOptions>(Options.ToString());
 
-            var query = _queryBuilder.SelectQuery(sourceTable, finalTable, selectOptions.columns);
+            var query = _queryBuilder.FilterQuery(sourceTable, finalTable, filterOptions);
             
             _sqlService.ExecuteNonQueryPostgres(query);
             
             return true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
             return false;
         }

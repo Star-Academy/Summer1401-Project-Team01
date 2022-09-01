@@ -2,7 +2,7 @@
 using TalStart.Models.Interfaces;
 using TalStart.Services;
 
-namespace TalStart.Models.ProcessType
+namespace TalStart.Models.Processes
 {
     public class FooProcess : IProcess
     {

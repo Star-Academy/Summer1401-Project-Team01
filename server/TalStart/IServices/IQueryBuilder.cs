@@ -1,4 +1,4 @@
-﻿using TalStart.Models.ProcessType.Options;
+﻿using TalStart.Models.Processes.Options;
 
 namespace TalStart.IServices;
 

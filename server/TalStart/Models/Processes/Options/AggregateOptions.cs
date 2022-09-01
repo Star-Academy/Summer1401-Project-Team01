@@ -1,6 +1,6 @@
 using TalStart.Models.Enums;
 
-namespace TalStart.Models.ProcessType.Options;
+namespace TalStart.Models.Processes.Options;
 
 public class AggregateOptions
 {

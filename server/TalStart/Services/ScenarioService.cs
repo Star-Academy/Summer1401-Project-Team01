@@ -4,7 +4,7 @@ using TalStart.IServices;
 using TalStart.Models;
 using TalStart.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using TalStart.Models.ProcessType;
+using TalStart.Models.Processes;
 
 namespace TalStart.Services
 {
