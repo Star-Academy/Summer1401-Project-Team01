@@ -37,5 +37,6 @@ export class PreviewComponent implements OnInit {
         });
         console.log(data);
         this.rowData$ = data;
+        //
     }
 }
