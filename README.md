@@ -3,5 +3,14 @@
 
 ## Who this is for
 TalStart is for whoever has some data and wants to analyze them
-## What processes can be done on data?
+## What processes can be done on data
+- Join datasets
+- Give score to records based on your choice
+- Do math calculations on two selected columns
+- Remove column from dataset
+- Sort database records
+- Select only some columns
+- Filter dataset according to special conditions
+- Aggregate over a selected column to find min, max, avg ...
+
 
