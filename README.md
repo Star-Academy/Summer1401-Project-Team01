@@ -2,7 +2,7 @@
 ![This is an image](/client/src/assets/img/hero-image.webp)
 
 ## Who this is for
-TalStart is for whoever has some data and wants to analyze them
+DataGate is for whoever has some data and wants to analyze them
 ## What processes can be done on data
 - Join datasets
 - Give score to records based on your choice
