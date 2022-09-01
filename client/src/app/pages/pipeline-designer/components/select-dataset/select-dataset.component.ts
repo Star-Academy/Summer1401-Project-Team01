@@ -11,6 +11,8 @@ import {
     PIPELINE_REMOVE_SOURCE,
 } from '../../../../utilities/urls';
 import {ActivatedRoute} from '@angular/router';
+import {snackbarType} from "../../../../models/snackbar-type.enum";
+import {SnackbarService} from "../../../../services/snackbar.service";
 
 @Component({
     selector: 'app-select-dataset',
@@ -23,10 +25,15 @@ export class SelectDatasetComponent implements OnInit {
     private gridApi!: GridApi;
     public rowSelection: 'single' | 'multiple' = 'single';
     public isSelected: boolean = false;
+    public isInDestination: boolean = false;
+    public fileName: string = '';
+    public isUnique: boolean = false;
+    public disableContinue: boolean = true;
 
     public columnDefs: ColDef[] = [
         {
             field: 'fileName',
+            headerName: 'Your Datasets',
             checkboxSelection: true,
             flex: 1,
         },
@@ -69,7 +76,9 @@ export class SelectDatasetComponent implements OnInit {
     public constructor(
         private http: HttpClient,
         private datasetService: DatasetService,
-        private diagramNodeService: DiagramNodeService
+        private diagramNodeService: DiagramNodeService,
+        private dataset: DatasetService,
+        private snackbar: SnackbarService
     ) {}
 
     public onGridReady(params: GridReadyEvent): void {
@@ -84,6 +93,8 @@ export class SelectDatasetComponent implements OnInit {
             newRowData.push({fileName: data[i], dataType: 'csv'});
         }
         this.gridApi.setRowData(newRowData);
+
+        if(this.diagramNodeService.selectedNode?.type === 'Destination') this.isInDestination = true;
     }
 
     public validateSelectButton(): void {
@@ -125,5 +136,33 @@ export class SelectDatasetComponent implements OnInit {
 
             if (response.ok) this.diagramNodeService.isDestinationSelected = true;
         }
+    }
+
+    public async validateContinue(): Promise<void> {
+        await this.checkUnique();
+        if (this.fileName !== '' && this.isUnique) {
+            this.disableContinue = false;
+        } else {
+            this.disableContinue = true;
+        }
+    }
+
+    public async checkUnique(): Promise<void> {
+        const fileNames = await this.dataset.getDatasets();
+        console.log(fileNames);
+        for (let i = 0; i < fileNames.length; i++) {
+            if (fileNames[i] === this.fileName) {
+                this.isUnique = false;
+                this.snackbar.show('Enter a Unique Name', snackbarType.WARNING);
+                break;
+            } else {
+                this.isUnique = true;
+            }
+        }
+    }
+
+    public async createNewFile() {
+        await this.dataset.createNew(this.fileName);
+        this.gridApi.applyTransaction({add: [{fileName: this.fileName}]});
     }
 }

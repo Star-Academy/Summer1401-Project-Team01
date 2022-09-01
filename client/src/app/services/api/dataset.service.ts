@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {
-    DATASET_GET_ALL_DATASETS,
+    DATASET_GET_ALL_DATASETS, DATASET_NEW,
     DATASET_REMOVE,
     DATASET_SAMPLE,
     DOWNLOAD_FILE,
@@ -67,5 +67,14 @@ export class DatasetService {
 
         const response = await fetch(PIPELINE_PREVIEW, {body: formData, method: 'post'});
         return response.json();
+    }
+
+    public async createNew(datasetName: string): Promise<void> {
+        let formData = new FormData();
+        formData.append('datasetName', datasetName);
+        formData.append('username', 'admin');
+
+        const response = await fetch(DATASET_NEW, {body: formData, method: 'post'});
+        if (response.ok) this.snackbar.show('New File Created', snackbarType.SUCCESS);
     }
 }

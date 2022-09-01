@@ -137,4 +137,6 @@ export class DataInventoryComponent {
             this.disableContinue = true;
         }
     }
+
+
 }

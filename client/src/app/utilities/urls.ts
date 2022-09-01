@@ -8,6 +8,7 @@ export const DATASET_REMOVE = BASE_URL + '/Dataset/RemoveDataset';
 export const DATASET_SAMPLE = BASE_URL + '/Dataset/GetDatasetSample';
 export const DATASET_GET_ALL_COLUMNS = BASE_URL + '/Dataset/GetDatasetColumns';
 export const DATASET_GET_ALL_COLUMNS_AFTER_RUN = BASE_URL + '/Dataset/GetColumnsAfterRun';
+export const DATASET_NEW = BASE_URL + '/Dataset/CreateEmptyDataset'
 
 export const PIPELINE_GET_ALL_PIPELINE_NAMES = BASE_URL + '/Pipeline/GetAllPipelinesNames';
 export const PIPELINE_UPDATE_PROCESSES = BASE_URL + '/Pipeline/UpdateProcesses';

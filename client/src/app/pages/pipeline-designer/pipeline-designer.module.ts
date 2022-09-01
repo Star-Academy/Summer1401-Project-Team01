@@ -8,10 +8,13 @@ import 'ag-grid-enterprise';
 import {PreviewComponent} from './components/preview/preview.component';
 import {ProcessorConfigsModule} from '../../components/processor-configs/processor-configs.module';
 import {CanvasDiagramModule} from '../../components/canvas-diagram/canvas-diagram.module';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
     declarations: [PipelineDesignerComponent, SelectDatasetComponent, PreviewComponent],
-    imports: [CommonModule, MatDialogModule, AgGridModule, ProcessorConfigsModule, CanvasDiagramModule],
+    imports: [CommonModule, MatDialogModule, AgGridModule, ProcessorConfigsModule, CanvasDiagramModule, MatFormFieldModule, FormsModule, MatInputModule],
     exports: [PipelineDesignerComponent],
 })
 export class PipelineDesignerModule {}

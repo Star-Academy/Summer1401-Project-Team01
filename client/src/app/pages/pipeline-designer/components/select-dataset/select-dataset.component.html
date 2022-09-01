@@ -1,18 +1,39 @@
 <div class="wrapper">
+    <div class="input">
+        <ng-container *ngIf="isInDestination">
+            <h2>Select a Previous File or Create a New File If you Don't want to Overwrite Your Files.</h2>
+            <div class="form">
+                <mat-form-field appearance="fill">
+                    <mat-label>New File Name</mat-label>
+                    <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()"/>
+                </mat-form-field>
+            </div>
+            <button
+                    class="global-button add-processor-button"
+                    (click)="createNewFile()"
+                    [disabled]="disableContinue"
+            >
+                Create New File
+            </button>
+        </ng-container>
+    </div>
+
+    <div class="grid">
     <ag-grid-angular
-        style="height: 50rem; width: 100rem"
-        class="ag-theme-alpine"
-        [columnDefs]="columnDefs"
-        [defaultColDef]="defaultColDef"
-        [rowData]="rowData$"
-        [animateRows]="true"
-        (gridReady)="onGridReady($event)"
-        [paginationAutoPageSize]="true"
-        [pagination]="true"
-        [rowSelection]="rowSelection"
-        (rowSelected)="validateSelectButton()"
+            style="height: 50rem; width: 100rem"
+            class="ag-theme-alpine"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            [rowData]="rowData$"
+            [animateRows]="true"
+            (gridReady)="onGridReady($event)"
+            [paginationAutoPageSize]="true"
+            [pagination]="true"
+            [rowSelection]="rowSelection"
+            (rowSelected)="validateSelectButton()"
     ></ag-grid-angular>
     <button class="global-button" (click)="selectDataset()" [mat-dialog-close]="true" [disabled]="!isSelected">
         Select
     </button>
+    </div>
 </div>
