@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DiagramNodeService} from './diagram-node.service';
-import {DATASET_GET_ALL_COLUMNS} from '../utilities/urls';
+import {DATASET_GET_ALL_COLUMNS, DATASET_GET_ALL_COLUMNS_AFTER_RUN} from '../utilities/urls';
 
 @Injectable({
     providedIn: 'root',
@@ -11,26 +11,42 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
     }
 
     public async getDatasetColumns(): Promise<string> {
-        const formDataForGettingColumns = new FormData();
-
-        if (!this.diagramNodeService.source) {
+        if (!this.diagramNodeService.source || !this.diagramNodeService.selectedNodeData?.key) {
             return 'name,age,nationality,address,phone';
         }
 
-        formDataForGettingColumns.append('datasetName', this.diagramNodeService.source);
-        formDataForGettingColumns.append('username', 'admin');
+        if (this.diagramNodeService.selectedNodeData.key === 1) {
+            const response = await fetch(
+                DATASET_GET_ALL_COLUMNS + '?datasetName=' + this.diagramNodeService.source + '&username=admin',
+                {
+                    method: 'get',
+                }
+            );
 
-        const response = await fetch(
-            DATASET_GET_ALL_COLUMNS + '?datasetName=' + this.diagramNodeService.source + '&username=admin',
-            {
-                method: 'get',
+            const data = await response.json();
+            console.log(data);
+
+            return await data.join(',');
+        } else {
+            if (this.diagramNodeService.pipelinePage === '') {
+                return '';
             }
-        );
+            const response = await fetch(
+                DATASET_GET_ALL_COLUMNS_AFTER_RUN +
+                    '?username=admin&pipelineName=' +
+                    this.diagramNodeService.pipelinePage +
+                    '&processId=' +
+                    (this.diagramNodeService.selectedNodeData.key - 1),
+                {
+                    method: 'get',
+                }
+            );
 
-        const data = await response.json();
-        console.log(data);
+            const data = await response.json();
+            console.log(data);
 
-        return await data.join(',');
+            return await data.join(',');
+        }
     }
 
     public async getSelectedDatasetColumns(datasetName: string): Promise<string> {
