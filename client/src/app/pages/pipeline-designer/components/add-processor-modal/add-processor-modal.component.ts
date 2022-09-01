@@ -73,6 +73,13 @@ export class AddProcessorModalComponent {
                 '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">\n    <path fill="#000" d="M0 3.25A.25.25 0 0 1 .25 3h6.5a.25.25 0 0 1 0 .5H.25A.25.25 0 0 1 0 3.25ZM0 8a1 1 0 0 1 1-1h8a1 1 0 0 1 0 2H1a1 1 0 0 1-1-1Zm.25-3a.25.25 0 0 0 0 .5h8a.25.25 0 0 0 0-.5h-8ZM0 10.75a.25.25 0 0 1 .25-.25h6.5a.25.25 0 1 1 0 .5H.25a.25.25 0 0 1-.25-.25Zm.25 1.75a.25.25 0 1 0 0 .5h8a.25.25 0 1 0 0-.5h-8ZM12.4 6.75h3.2c.051 0 .092.042.092.094v3.562a.093.093 0 0 1-.092.094h-3.2a.093.093 0 0 1-.092-.094V6.844c0-.052.04-.094.092-.094Zm2.37-1.156v.218h1.128c.056 0 .102.047.102.105v.427a.093.093 0 0 1-.092.093h-3.816A.093.093 0 0 1 12 6.345v-.438c0-.052.041-.093.092-.093h1.139v-.22c0-.051.041-.093.092-.093h1.354c.051 0 .092.042.092.094Z"></path>\n</svg>'
             ),
         },
+        {
+            name: 'Sort',
+            description: 'Sorts a column.',
+            icon: this.sanitizer.bypassSecurityTrustHtml(
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd"><g class="ti-normalize-border" fill="#000" fill-rule="nonzero"><path d="M9.92 16h3.33v-3.33H9.92zm0-3.73h3.32V8.94H9.91zm-.01-5.2h3.33V3.76H9.91zm0-3.73h3.33V.01H9.91zM2.56 13H5.9V9.66H2.56z"/><path d="M2.56 10H5.9V6.67H2.56zm0-3.66H5.9V3.01H2.56z"/></g><path d="M10.24 11.94h2.67V9.27h-2.67zm0-8.93h2.67V.34h-2.66zM2.9 6h2.66V3.35H2.9z" class="ti-normalize-blocks-a" fill="#515151" fill-rule="nonzero"/><path d="M10.24 6.75h2.67V4.08h-2.67zM2.9 9.66h2.67V7.01H2.89z" class="ti-normalize-blocks-b" fill="#BCBCBC" fill-rule="nonzero"/><path d="M3.3 10.02h.36v-.36H3.3zm.73 0h.37v-.36h-.37zm.74 0h.37v-.36h-.37zm.75 0h.37v-.36h-.37zm-2.96 0h.37v-.36h-.37z" class="ti-normalize-separator" fill="#FFF" fill-rule="nonzero"/><path d="M10.25 15.66h2.67V13h-2.67zm-7.36-3h2.67V10H2.89z" class="ti-normalize-blocks-c" fill="#8C8C8C" fill-rule="nonzero"/><path d="M7.49 9.63a.4.4 0 0 1-.3-.13.45.45 0 0 1 0-.61l.88-.93-.88-.92a.45.45 0 0 1 0-.61.4.4 0 0 1 .59 0l1.17 1.23a.45.45 0 0 1 0 .61L7.78 9.5a.4.4 0 0 1-.3.13z" class="ti-normalize-arrow" fill="#000" fill-rule="nonzero"/></g></svg>'
+            ),
+        },
     ];
 
     public createProcessor(name: string | undefined): void {

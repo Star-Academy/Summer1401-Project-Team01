@@ -9,6 +9,7 @@
         <app-join-config #joinConfigComponent *ngIf="isJoin" [processorId]="processorId"></app-join-config>
         <app-filter-config #filterConfigComponent *ngIf="isFilter" [processorId]="processorId"></app-filter-config>
         <app-field-remover-config #fieldRemoverConfigComponent *ngIf="isFieldRemover" [processorId]="processorId"></app-field-remover-config>
+        <app-sort-config #sortConfigComponent *ngIf="isSort" [processorId]="processorId"></app-sort-config>
     </div>
     <div class="configs__buttons">
 <!--        <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>-->

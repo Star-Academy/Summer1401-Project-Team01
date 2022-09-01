@@ -1,0 +1,20 @@
+<app-config-select
+        inputTitle="Column to Sort:"
+        inputPlaceHolder="Column to Sort"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedColumn($event)"
+        [inputValue]="selectedColumn"
+>
+</app-config-select>
+<app-config-select
+        inputTitle="Sort Type:"
+        inputPlaceHolder="Sort Type"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="sortTypes"
+        (inputValueChange)="getSelectedSortType($event)"
+        [inputValue]="selectedSortType"
+>
+</app-config-select>

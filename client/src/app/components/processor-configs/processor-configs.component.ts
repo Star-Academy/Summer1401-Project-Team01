@@ -22,6 +22,7 @@ import {FieldRemoverConfigComponent} from './processor-config-components/field-r
 import {AggregateConfigComponent} from './processor-config-components/aggregate-config/aggregate-config.component';
 import {FilterConfigComponent} from './processor-config-components/filter-config/filter-config.component';
 import {JoinConfigComponent} from './processor-config-components/join-config/join-config.component';
+import {SortConfigComponent} from './processor-config-components/sort-config/sort-config.component';
 
 @Component({
     selector: 'app-processor-configs',
@@ -46,6 +47,7 @@ export class ProcessorConfigsComponent implements OnChanges {
     public isJoin: boolean = false;
     public isFilter: boolean = false;
     public isFieldRemover: boolean = false;
+    public isSort: boolean = false;
 
     public processorId: number = 0;
 
@@ -89,36 +91,49 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isJoin = false;
             this.isFilter = false;
             this.isFieldRemover = false;
+            this.isSort = false;
         } else if (this.processorType === 'Aggregate') {
             this.isFieldSelector = false;
             this.isAggregation = true;
             this.isJoin = false;
             this.isFilter = false;
             this.isFieldRemover = false;
+            this.isSort = false;
         } else if (this.processorType === 'Join') {
             this.isFieldSelector = false;
             this.isAggregation = false;
             this.isJoin = true;
             this.isFilter = false;
             this.isFieldRemover = false;
+            this.isSort = false;
         } else if (this.processorType === 'Filter') {
             this.isFieldSelector = false;
             this.isAggregation = false;
             this.isJoin = false;
             this.isFilter = true;
             this.isFieldRemover = false;
+            this.isSort = false;
         } else if (this.processorType === 'Field remover') {
             this.isFieldSelector = false;
             this.isAggregation = false;
             this.isJoin = false;
             this.isFilter = false;
             this.isFieldRemover = true;
-        } else if (this.processorType === '') {
+            this.isSort = false;
+        } else if (this.processorType === 'Sort') {
             this.isFieldSelector = false;
             this.isAggregation = false;
             this.isJoin = false;
             this.isFilter = false;
             this.isFieldRemover = false;
+            this.isSort = true;
+        } else {
+            this.isFieldSelector = false;
+            this.isAggregation = false;
+            this.isJoin = false;
+            this.isFilter = false;
+            this.isFieldRemover = false;
+            this.isSort = false;
         }
         if (this.diagramNodeService.selectedNode) {
             this.processorId = this.diagramNodeService.selectedNode.id;
@@ -141,6 +156,7 @@ export class ProcessorConfigsComponent implements OnChanges {
     @ViewChild(AggregateConfigComponent) public aggregateConfigComponent!: AggregateConfigComponent;
     @ViewChild(FilterConfigComponent) public filterConfigComponent!: FilterConfigComponent;
     @ViewChild(JoinConfigComponent) public joinConfigComponent!: JoinConfigComponent;
+    @ViewChild(SortConfigComponent) public sortConfigComponent!: SortConfigComponent;
 
     public saveConfigs() {
         if (this.processorType === 'Field selector') {
@@ -153,6 +169,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.filterConfigComponent.exportConfigurations();
         } else if (this.processorType === 'Join') {
             this.joinConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Sort') {
+            this.sortConfigComponent.exportConfigurations();
         }
     }
 }
