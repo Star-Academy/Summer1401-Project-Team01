@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
 import {DiagramNodeService} from '../../../../services/diagram-node.service';
+import {DATASET_GET_ALL_DATASETS} from '../../../../utilities/urls';
 
 @Component({
     selector: 'app-join-config',
@@ -15,6 +16,10 @@ export class JoinConfigComponent {
     public selectedRight: string = '';
     public selectedJoinType: string = '';
     public joinTypes: string;
+
+    public columns: string = '';
+    public datasetColumns: string = '';
+    public datasets: string = '';
 
     public constructor(
         private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
@@ -38,6 +43,10 @@ export class JoinConfigComponent {
         if (this.selectedDataset !== '') {
             this.hasSelectedDataset = true;
         }
+
+        this.getDatasets().then((res) => (this.datasets = res));
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -81,22 +90,18 @@ export class JoinConfigComponent {
         this.diagramNodeService.changeNodeOption(configsObject);
     }
 
-    public getDatasets(): string {
-        //TODO
-        //get all datasets from service from api
-        return 'dataset1,test2,my3';
-    }
-
     public getSelectedDataset(e: string) {
         this.selectedDataset = e;
         this.hasSelectedDataset = true;
         console.log(this.selectedDataset);
+
+        this.getColumnsOfSelectedDataset().then((res) => {
+            this.datasetColumns = res;
+        });
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedLeftVal(e: string) {
@@ -104,10 +109,16 @@ export class JoinConfigComponent {
         console.log(this.selectedLeft);
     }
 
-    public getColumnsOfSelectedDataset(): string {
-        //TODO
-        //get columns of selected dataset from service from api
-        return 'color,shape,size';
+    public async getColumnsOfSelectedDataset(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getSelectedDatasetColumns(this.selectedDataset);
+    }
+
+    public async getDatasets(): Promise<string> {
+        const response = await fetch(DATASET_GET_ALL_DATASETS + '/admin');
+
+        const data = await response.json();
+
+        return await data.join(',');
     }
 
     public getSelectedRightVal(e: string) {

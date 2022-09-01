@@ -33,21 +33,19 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
         return await data.join(',');
     }
 
-    public selectorToOption(selectedColumn: string[]): void {
-        const option = {columns: selectedColumn};
+    public async getSelectedDatasetColumns(datasetName: string): Promise<string> {
+        const formDataForGettingColumns = new FormData();
 
-        console.log(option);
+        formDataForGettingColumns.append('datasetName', '');
+        formDataForGettingColumns.append('username', 'admin');
 
-        this.diagramNodeService.changeNodeOption(option);
-    }
+        const response = await fetch(DATASET_GET_ALL_COLUMNS + '?datasetName=' + datasetName + '&username=admin', {
+            method: 'get',
+        });
 
-    public selectExportConfigurations(selectedColumns: string): string {
-        const configsObject = {
-            columns: [selectedColumns],
-        };
+        const data = await response.json();
+        console.log(data);
 
-        console.log(configsObject);
-
-        return JSON.stringify(configsObject);
+        return await data.join(',');
     }
 }
