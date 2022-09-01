@@ -1,30 +1,32 @@
-<app-config-select
-    inputTitle="Column to Be Grouped by:"
-    inputPlaceHolder="Column to Be Grouped by"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="getColumns()"
-    (inputValueChange)="getSelectedGroupColumn($event)"
-    [inputValue]="selectedGroupColumn"
->
-</app-config-select>
-<app-config-select
-    inputTitle="Operation Column:"
-    inputPlaceHolder="Operation Column"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="getColumns()"
-    (inputValueChange)="getSelectedOperationColumn($event)"
-    [inputValue]="selectedOperationColumn"
->
-</app-config-select>
-<app-config-select
-    inputTitle="Aggregation Type:"
-    inputPlaceHolder="Aggregation Type"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="aggregationTypes"
-    (inputValueChange)="getSelectedAggregationType($event)"
-    [inputValue]="selectedAggregationType"
->
-</app-config-select>
+<main class="config-component">
+    <app-config-select
+        inputTitle="Column to Be Grouped by:"
+        inputPlaceHolder="Column to Be Grouped by"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedGroupColumn($event)"
+        [inputValue]="selectedGroupColumn"
+    >
+    </app-config-select>
+    <app-config-select
+        inputTitle="Operation Column:"
+        inputPlaceHolder="Operation Column"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedOperationColumn($event)"
+        [inputValue]="selectedOperationColumn"
+    >
+    </app-config-select>
+    <app-config-select
+        inputTitle="Aggregation Type:"
+        inputPlaceHolder="Aggregation Type"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="aggregationTypes"
+        (inputValueChange)="getSelectedAggregationType($event)"
+        [inputValue]="selectedAggregationType"
+    >
+    </app-config-select>
+</main>

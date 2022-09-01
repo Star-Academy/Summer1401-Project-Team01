@@ -1,14 +1,15 @@
-<app-config-select
+<main class="config-component">
+    <app-config-select
         inputTitle="Column to Filter on:"
         inputPlaceHolder="Column to Filter on"
         inputRequired="true"
         inputMultiple="false"
-        [inputOptions]="getColumns()"
+        [inputOptions]="columns"
         (inputValueChange)="getSelectedColumn($event)"
         [inputValue]="selectedColumn"
->
-</app-config-select>
-<app-config-select
+    >
+    </app-config-select>
+    <app-config-select
         inputTitle="Operator:"
         inputPlaceHolder="Operator"
         inputRequired="true"
@@ -16,13 +17,14 @@
         [inputOptions]="filterOperations"
         (inputValueChange)="getSelectedOperator($event)"
         [inputValue]="selectedOperator"
->
-</app-config-select>
-<app-config-input
+    >
+    </app-config-select>
+    <app-config-input
         inputTitle="Value:"
         inputPlaceHolder="Value"
         inputRequired="true"
         (inputValueChange)="getSelectedValue($event)"
         [inputValue]="selectedValue"
->
-</app-config-input>
+    >
+    </app-config-input>
+</main>

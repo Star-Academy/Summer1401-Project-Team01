@@ -1,24 +1,21 @@
 .wrapper {
-    width: 100%;
-
     display: grid;
     grid-template-columns: 3fr 4fr;
     align-items: center;
     gap: 2.4rem;
 
+    width: 100%;
 
-    padding-inline: 15rem;
     padding-block-start: 15rem;
-
-
+    padding-inline: 15rem;
 
     .hero-image {
         padding: 5rem;
 
         img {
             width: 100%;
-            object-fit: cover;
             aspect-ratio: auto;
+            object-fit: cover;
         }
     }
 
@@ -29,19 +26,22 @@
 
         .logo-box {
             display: flex;
-            gap: 2.4rem;
             align-items: center;
+            gap: 2.4rem;
 
             img {
                 width: 4rem;
                 height: 4rem;
+
                 border-radius: var(--border-radius-small);
             }
 
             h2 {
                 margin: 0;
-                font-family: 'Raleway', sans-serif;
+
+                font-family: Raleway, sans-serif;
                 font-weight: 700;
+
                 letter-spacing: 20px;
             }
         }
@@ -58,6 +58,7 @@
 
                 a {
                     display: inline-block;
+
                     line-height: 1;
                 }
             }
@@ -70,9 +71,10 @@
                 .slogan {
                     margin: 0;
 
-                    font-family: 'Raleway', sans-serif;
-                    font-weight: 900;
+                    font-family: Raleway, sans-serif;
                     font-size: 6.4rem;
+                    font-weight: 900;
+
                     line-height: 1;
                 }
 

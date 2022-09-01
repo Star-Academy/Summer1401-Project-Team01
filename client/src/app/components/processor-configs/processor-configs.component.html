@@ -4,14 +4,33 @@
         <h3 class="configs__header--type">{{ processorType }}</h3>
     </header>
     <div class="configs__body">
-        <app-field-selector-config #fieldSelectorConfigComponent *ngIf="isFieldSelector" [processorId]="processorId"></app-field-selector-config>
-        <app-aggregate-config #aggregateConfigComponent *ngIf="isAggregation" [processorId]="processorId"></app-aggregate-config>
+        <app-field-selector-config
+            #fieldSelectorConfigComponent
+            *ngIf="isFieldSelector"
+            [processorId]="processorId"
+        ></app-field-selector-config>
+        <app-aggregate-config
+            #aggregateConfigComponent
+            *ngIf="isAggregation"
+            [processorId]="processorId"
+        ></app-aggregate-config>
         <app-join-config #joinConfigComponent *ngIf="isJoin" [processorId]="processorId"></app-join-config>
         <app-filter-config #filterConfigComponent *ngIf="isFilter" [processorId]="processorId"></app-filter-config>
-        <app-field-remover-config #fieldRemoverConfigComponent *ngIf="isFieldRemover" [processorId]="processorId"></app-field-remover-config>
+        <app-field-remover-config
+            #fieldRemoverConfigComponent
+            *ngIf="isFieldRemover"
+            [processorId]="processorId"
+        ></app-field-remover-config>
+        <app-sort-config #sortConfigComponent *ngIf="isSort" [processorId]="processorId"></app-sort-config>
+        <app-math-operation-config
+            #mathOperationConfigComponent
+            *ngIf="isMathOperation"
+            [processorId]="processorId"
+        ></app-math-operation-config>
+        <app-score-config #scoreConfigComponent *ngIf="isScore" [processorId]="processorId"></app-score-config>
     </div>
     <div class="configs__buttons">
-        <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>
+        <!--        <button class="global-button-reverse reset-button" [disabled]="!hasChanged">Reset</button>-->
         <button class="global-button save-button" [disabled]="!hasChanged" (click)="saveConfigs()">Save</button>
     </div>
 </main>

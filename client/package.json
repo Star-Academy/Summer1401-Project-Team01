@@ -9,6 +9,10 @@
         "test": "ng test",
         "lint": "ng lint",
         "lint:fix": "ng lint --fix",
+        "eslint:check": "ng lint",
+        "eslint:fix": "ng lint --fix",
+        "stylelint:check": "stylelint \"**/*.scss\"",
+        "stylelint:fix": "stylelint \"**/*.scss\" --fix",
         "prettier": "prettier .",
         "prettier:fix": "prettier . --write"
     },

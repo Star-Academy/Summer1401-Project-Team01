@@ -1,7 +1,7 @@
 .wrapper {
-  min-height: 80rem;
-  min-width: 100rem;
+    display: grid;
+    align-items: stretch;
 
-  display: grid;
-  align-items: stretch;
+    min-width: 100rem;
+    min-height: 80rem;
 }

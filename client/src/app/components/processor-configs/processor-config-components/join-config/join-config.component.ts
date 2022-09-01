@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
+import {DATASET_GET_ALL_DATASETS} from '../../../../utilities/urls';
 
 @Component({
     selector: 'app-join-config',
@@ -15,11 +17,35 @@ export class JoinConfigComponent {
     public selectedJoinType: string = '';
     public joinTypes: string;
 
-    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+    public columns: string = '';
+    public datasetColumns: string = '';
+    public datasets: string = '';
+
+    public constructor(
+        private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
+        private diagramNodeService: DiagramNodeService
+    ) {
         this.joinTypes = 'Inner,Left,Right,Full';
-        //TODO
-        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
-        this.initializeConfigurations(configsFromBack);
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
+            const configsFromBack = JSON.stringify(
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+            );
+
+            console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
+
+            this.initializeConfigurations(configsFromBack);
+        }
+        this.initializeConfigurations('');
+        if (this.selectedDataset !== '') {
+            this.hasSelectedDataset = true;
+        }
+
+        this.getDatasets().then((res) => (this.datasets = res));
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -52,32 +78,29 @@ export class JoinConfigComponent {
         return 0;
     }
 
-    public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+    public exportConfigurations(): void {
+        const configsObject = {
             middleDatasetName: this.selectedDataset,
             leftVal: this.selectedLeft,
             rightVal: this.selectedRight,
             type: this.joinTypeValueToNumber(this.selectedJoinType),
-        });
-        return JSON.stringify(configsObject);
-    }
+        };
 
-    public getDatasets(): string {
-        //TODO
-        //get all datasets from service from api
-        return 'dataset1,test2,my3';
+        this.diagramNodeService.changeNodeOption(configsObject);
     }
 
     public getSelectedDataset(e: string) {
         this.selectedDataset = e;
         this.hasSelectedDataset = true;
         console.log(this.selectedDataset);
+
+        this.getColumnsOfSelectedDataset().then((res) => {
+            this.datasetColumns = res;
+        });
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedLeftVal(e: string) {
@@ -85,10 +108,16 @@ export class JoinConfigComponent {
         console.log(this.selectedLeft);
     }
 
-    public getColumnsOfSelectedDataset(): string {
-        //TODO
-        //get columns of selected dataset from service from api
-        return 'color,shape,size';
+    public async getColumnsOfSelectedDataset(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getSelectedDatasetColumns(this.selectedDataset);
+    }
+
+    public async getDatasets(): Promise<string> {
+        const response = await fetch(DATASET_GET_ALL_DATASETS + '/admin');
+
+        const data = await response.json();
+
+        return await data.join(',');
     }
 
     public getSelectedRightVal(e: string) {

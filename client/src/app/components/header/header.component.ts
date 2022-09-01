@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         this.determineLink();
     }
 
-    public determineLink() :void {
+    public determineLink(): void {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 console.log(event.url);
@@ -44,21 +44,20 @@ export class HeaderComponent implements OnInit, OnChanges {
     }
 
     public dataInventory(): void {
-        this.navigateTo = '/'
+        this.navigateTo = '/';
         this.pageName = 'Home';
         this.isAtHome = false;
     }
 
     public pipelineList(): void {
-        this.navigateTo = '/data-inventory'
-        this.pageName = 'Data Inventory'
+        this.navigateTo = '/data-inventory';
+        this.pageName = 'Data Inventory';
         this.isAtHome = false;
     }
 
     public pipelineDesigner(): void {
-        this.navigateTo = '/pipeline-list'
-        this.pageName = 'Pipeline List'
+        this.navigateTo = '/pipeline-list';
+        this.pageName = 'Pipeline List';
         this.isAtHome = false;
     }
 }
-

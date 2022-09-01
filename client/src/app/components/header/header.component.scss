@@ -2,7 +2,6 @@ header {
     height: 100%;
 
     .navbar {
-
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -24,28 +23,34 @@ header {
             display: grid;
             place-items: center;
 
-            height: 5rem;
             width: 5rem;
+            height: 5rem;
+
             border-radius: var(--border-radius-small);
 
             &:hover {
-                background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue));
+                background-image: linear-gradient(
+                    to top right,
+                    var(--color-tertiary-green),
+                    var(--color-tertiary-blue)
+                );
+
                 & > * {
                     filter: brightness(100);
                 }
             }
 
             .text-icon {
-                    font-size: 1.6rem;
-                    font-weight: 900;
+                font-size: 1.6rem;
+                font-weight: 900;
             }
 
             img {
                 display: inline-block;
+
                 width: 3rem;
                 height: 3rem;
             }
         }
     }
 }
-

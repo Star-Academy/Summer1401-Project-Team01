@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {SelectProcessorService} from './select-processor.service';
+import {PipelineValueService} from './pipeline-value.service';
 
-describe('SelectProcessorService', () => {
-    let service: SelectProcessorService;
+describe('PipelineValueService', () => {
+    let service: PipelineValueService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(SelectProcessorService);
+        service = TestBed.inject(PipelineValueService);
     });
 
     it('should be created', () => {
