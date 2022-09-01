@@ -26,7 +26,7 @@ public class FieldRemover : IProcess
         {
             var selectOptions = JsonSerializer.Deserialize<FieldRemoverOptions>(Options.ToString());
             var query = $"ALTER TABLE \"{sourceTable}\" \n";
-            query = selectOptions.columns.Aggregate(query, (current, column) => current + $"DROP COLUMN {column},\n");
+            query = selectOptions.columns.Aggregate(query, (current, column) => current + $"DROP COLUMN {column},");
 
             query = query[..^1] + ";";
             _sqlService.ExecuteNonQueryPostgres(query);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Data;
 using TalStart.IServices;
 using TalStart.Services;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -11,11 +12,13 @@ namespace TalStart.Controllers;
 public class DatasetController : ControllerBase
 {
     private readonly IDatasetService _datasetService;
+    private readonly IScenarioService _scenarioService;
     private readonly IFileService _fileService;
     private readonly ISqlService _sqlService;
 
-    public DatasetController(IDatasetService datasetService, IFileService fileService)
+    public DatasetController(IDatasetService datasetService, IFileService fileService,IScenarioService scenarioService)
     {
+        _scenarioService = scenarioService;
         _datasetService = datasetService;
         _fileService = fileService;
         _sqlService = SqlService.GetInstance();
@@ -145,6 +148,29 @@ public class DatasetController : ControllerBase
             return new OkResult();
         }
         catch (Exception)
+        {
+            return new BadRequestResult();
+        }
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetColumnsAfterRun([FromQuery] string username,
+        [FromQuery] string pipelineName, [FromQuery] int processId)
+    {
+        try
+        {
+                var dt = await _scenarioService.PreviewRun(pipelineName, username, processId);
+                var result = new List<string>();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    result.Add(column.ColumnName);
+                }
+                return Ok(result);
+        }
+        catch (Exception e)
         {
             return new BadRequestResult();
         }
