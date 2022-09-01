@@ -65,12 +65,12 @@ export class DiagramNodeService {
             const pipelineData = await JSON.parse(data?.Json);
 
             for (let i = 0; i < pipelineData.length; i++) {
-                console.log(JSON.parse(JSON.stringify(pipelineData[i].option)));
+                console.log(JSON.parse(JSON.stringify(pipelineData[i].Options)));
                 const newNode = {
-                    key: pipelineData[i].id,
-                    name: this.backNameToFrontNameViceVersaService.backProcessNameToFrontName(pipelineData[i].name),
-                    parent: pipelineData[i].id - 1,
-                    option: JSON.parse(JSON.stringify(pipelineData[i].option)),
+                    key: pipelineData[i].Id,
+                    name: this.backNameToFrontNameViceVersaService.backProcessNameToFrontName(pipelineData[i].Name),
+                    parent: pipelineData[i].Id - 1,
+                    option: JSON.parse(JSON.stringify(pipelineData[i].Options)),
                 };
 
                 this.nodeDataArray.push(newNode);
@@ -253,9 +253,9 @@ export class DiagramNodeService {
             );
 
             const newNode = {
-                id: this.nodeDataArray[i].key,
-                name: name,
-                option: this.nodeDataArray[i].option,
+                Id: this.nodeDataArray[i].key,
+                Name: name,
+                Options: this.nodeDataArray[i].option,
             };
 
             nodeArray.push(newNode);
