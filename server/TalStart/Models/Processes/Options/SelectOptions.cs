@@ -1,7 +1,6 @@
-﻿namespace TalStart.Models.Processes.Options
+﻿namespace TalStart.Models.Processes.Options;
+
+public class SelectOptions
 {
-    public class SelectOptions
-    {
-        public List<string> columns { get; set; }
-    }
+    public List<string> columns { get; set; }
 }

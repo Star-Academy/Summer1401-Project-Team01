@@ -4,6 +4,5 @@ public enum DataType
 {
     Boolean,
     Int,
-    Varchar,
-    
+    Varchar
 }

@@ -1,35 +1,34 @@
-﻿using TalStart.IServices;
-using TalStart.Models.Interfaces;
+﻿using TalStart.Models.Interfaces;
 using TalStart.Services;
 
-namespace TalStart.Models.Processes
+namespace TalStart.Models.Processes;
+
+public class FooProcess : IProcess
 {
-    public class FooProcess : IProcess
+    private readonly SqlService _sqlService;
+
+    public FooProcess()
     {
-        private readonly SqlService _sqlService;
-        public FooProcess()
+        _sqlService = SqlService.GetInstance();
+    }
+
+    public string Name { get; set; }
+    public int Id { get; set; }
+
+    public object? Options { get; set; }
+
+
+    public bool Run(string sourceTable, string finalTable)
+    {
+        try
         {
-            _sqlService = SqlService.GetInstance();
+            var query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+            _sqlService.ExecuteNonQueryPostgres(query);
+            return true;
         }
-        public string Name { get; set; }
-        public int Id { get;set; }
-
-        public object? Options { get; set; }
-
-
-        public bool Run(string sourceTable, string finalTable)
+        catch (Exception)
         {
-            try
-            {
-                var query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
-                _sqlService.ExecuteNonQueryPostgres(query);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
+            return false;
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace TalStart.Models.Processes.Options
+﻿namespace TalStart.Models.Processes.Options;
+
+public class SortOptions
 {
-    public class SortOptions
-    {
-        public string OperationColumn { get; set; }
-        public bool SortAscending { get; set; }
-    }
+    public string OperationColumn { get; set; }
+    public bool SortAscending { get; set; }
 }
