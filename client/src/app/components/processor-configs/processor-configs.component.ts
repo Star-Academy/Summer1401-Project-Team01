@@ -1,5 +1,4 @@
 import {
-    AfterContentChecked,
     Component,
     ComponentFactoryResolver,
     ComponentRef,
@@ -9,13 +8,11 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
 import {DiagramNodeService} from '../../services/diagram-node.service';
 import {SelectedNodeModel} from '../../models/selected-node.model';
 import {Subject} from 'rxjs';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {ConfigSelectComponent} from './config-components/config-select/config-select.component';
-import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
 import {FieldSelectorConfigComponent} from './processor-config-components/field-selector-config/field-selector-config.component';
 import {FieldRemoverConfigComponent} from './processor-config-components/field-remover-config/field-remover-config.component';
@@ -23,6 +20,8 @@ import {AggregateConfigComponent} from './processor-config-components/aggregate-
 import {FilterConfigComponent} from './processor-config-components/filter-config/filter-config.component';
 import {JoinConfigComponent} from './processor-config-components/join-config/join-config.component';
 import {SortConfigComponent} from './processor-config-components/sort-config/sort-config.component';
+import {SnackbarService} from '../../services/snackbar.service';
+import {snackbarType} from '../../models/snackbar-type.enum';
 
 @Component({
     selector: 'app-processor-configs',
@@ -55,7 +54,8 @@ export class ProcessorConfigsComponent implements OnChanges {
         private diagramNodeService: DiagramNodeService,
         private sanitizer: DomSanitizer,
         private CFR: ComponentFactoryResolver,
-        private sidebarCollapseService: SidebarCollapseService
+        private sidebarCollapseService: SidebarCollapseService,
+        private snackbarService: SnackbarService
     ) {
         this.selectedNodeChange.subscribe((value) => {
             this.selectedNode = value;
@@ -172,5 +172,6 @@ export class ProcessorConfigsComponent implements OnChanges {
         } else if (this.processorType === 'Sort') {
             this.sortConfigComponent.exportConfigurations();
         }
+        this.snackbarService.show('Processor has been edited successfully.', snackbarType.INFO);
     }
 }
