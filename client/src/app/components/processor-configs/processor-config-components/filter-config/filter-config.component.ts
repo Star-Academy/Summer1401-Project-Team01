@@ -51,7 +51,7 @@ export class FilterConfigComponent {
         if (configsObject.hasOwnProperty('value')) this.selectedValue = configsObject.value;
     }
 
-    public exportConfigurations(): string {
+    public exportConfigurations(): void {
         const configsObject = {
             columnName: this.selectedColumn,
             operator: this.selectedOperator,
@@ -59,8 +59,6 @@ export class FilterConfigComponent {
         };
 
         this.diagramNodeService.changeNodeOption(configsObject);
-
-        return JSON.stringify(configsObject);
     }
 
     public async getColumns(): Promise<string> {

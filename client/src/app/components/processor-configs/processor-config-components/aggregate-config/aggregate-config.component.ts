@@ -71,7 +71,7 @@ export class AggregateConfigComponent {
         return 0;
     }
 
-    public exportConfigurations(): string {
+    public exportConfigurations(): void {
         const configsObject = {
             ColumnToBeGroupedBy: this.selectedGroupColumn,
             OperationColumn: this.selectedOperationColumn,
@@ -79,8 +79,6 @@ export class AggregateConfigComponent {
         };
 
         this.diagramNodeService.changeNodeOption(configsObject);
-
-        return JSON.stringify(configsObject);
     }
 
     public async getColumns(): Promise<string> {

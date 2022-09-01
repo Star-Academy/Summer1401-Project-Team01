@@ -57,15 +57,13 @@ export class SortConfigComponent {
             this.selectedSortType = this.sortTypeBoolToVal(configsObject.SortAscending);
     }
 
-    public exportConfigurations(): string {
+    public exportConfigurations(): void {
         const configsObject = {
             OperationColumn: this.selectedColumn,
             SortAscending: this.sortTypeValToBool(this.selectedSortType),
         };
 
         this.diagramNodeService.changeNodeOption(configsObject);
-
-        return JSON.stringify(configsObject);
     }
 
     public async getColumns(): Promise<string> {

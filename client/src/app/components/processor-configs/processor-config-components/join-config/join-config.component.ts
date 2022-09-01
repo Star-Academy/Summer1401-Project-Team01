@@ -67,7 +67,7 @@ export class JoinConfigComponent {
         return 0;
     }
 
-    public exportConfigurations(): string {
+    public exportConfigurations(): void {
         const configsObject = {
             middleDatasetName: this.selectedDataset,
             leftVal: this.selectedLeft,
@@ -76,8 +76,6 @@ export class JoinConfigComponent {
         };
 
         this.diagramNodeService.changeNodeOption(configsObject);
-
-        return JSON.stringify(configsObject);
     }
 
     public getDatasets(): string {
