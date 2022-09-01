@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using TalStart.IServices;
 
 namespace TalStart.Controllers;
 
@@ -7,6 +8,13 @@ namespace TalStart.Controllers;
 [Route("[controller]/[action]")]
 public class FileController : ControllerBase
 {
+    private IFileService _fileService;
+
+    public FileController(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -15,7 +23,7 @@ public class FileController : ControllerBase
     {
         try
         {
-            var path = $"{AppContext.BaseDirectory}../../../resources/{username}/{datasetName}.csv";
+            var path = _fileService.GetPath(username, datasetName, "csv");
             return JsonSerializer.Serialize($"File:/{path}");
         }
         catch (Exception e)

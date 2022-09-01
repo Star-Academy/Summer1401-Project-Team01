@@ -72,7 +72,7 @@ namespace TalStart.Services
                 _sqlService.ExecuteNonQueryPostgres(query);
                 _db.SaveChanges();
                 _fileService.RenameFile(username, $"{currentDatasetName}",
-                    $"{newDatasetName}", ".csv");
+                    $"{newDatasetName}", "csv");
                 return true;
             }
             catch (Exception)
@@ -83,8 +83,8 @@ namespace TalStart.Services
 
         public void UpdateDatasetFromTable(string datasetName, string username)
         {
-            var tableName = $"{datasetName}.{username}";
-            var path = Path.Combine(Configurations.PathToResources, $"{username}", $"{tableName}.csv");
+            var tableName = $"{datasetName}_{username}";
+            var path = _fileService.GetPath(username, tableName, "csv");
             _parser.ParsePostgresTableToCsv(tableName, path);
         }
 
