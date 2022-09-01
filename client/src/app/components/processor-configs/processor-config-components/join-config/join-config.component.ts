@@ -35,6 +35,9 @@ export class JoinConfigComponent {
             this.initializeConfigurations(configsFromBack);
         }
         this.initializeConfigurations('');
+        if (this.selectedDataset !== '') {
+            this.hasSelectedDataset = true;
+        }
     }
 
     public initializeConfigurations(configs: string) {
