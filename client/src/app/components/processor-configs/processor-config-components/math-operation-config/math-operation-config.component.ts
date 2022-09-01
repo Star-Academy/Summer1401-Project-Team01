@@ -22,7 +22,6 @@ export class MathOperationConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         this.mathOperations = '+,-,*,/';
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

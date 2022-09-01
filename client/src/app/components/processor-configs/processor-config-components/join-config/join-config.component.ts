@@ -26,7 +26,6 @@ export class JoinConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         this.joinTypes = 'Inner,Left,Right,Full';
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

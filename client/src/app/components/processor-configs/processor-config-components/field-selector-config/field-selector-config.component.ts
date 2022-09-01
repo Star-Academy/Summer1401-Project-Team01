@@ -17,7 +17,6 @@ export class FieldSelectorConfigComponent {
         public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
         private diagramNodeService: DiagramNodeService
     ) {
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

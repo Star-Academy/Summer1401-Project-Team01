@@ -21,7 +21,6 @@ export class AggregateConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         this.aggregationTypes = 'Sum,Min,Max,Average,Count';
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

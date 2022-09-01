@@ -21,7 +21,6 @@ export class FilterConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         this.filterOperations = '=,>,<,!=,>=,<=,IS NULL,IS NOT NULL';
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

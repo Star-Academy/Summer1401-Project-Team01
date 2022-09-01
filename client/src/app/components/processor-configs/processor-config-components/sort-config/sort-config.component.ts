@@ -20,7 +20,6 @@ export class SortConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         this.sortTypes = 'Ascending,Descending';
-        //TODO
         if (
             !!diagramNodeService.selectedNodeData?.key &&
             !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option

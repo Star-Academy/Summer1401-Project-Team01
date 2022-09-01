@@ -1,9 +1,9 @@
 .grid {
-    min-height: 100%;
-
     display: grid;
     grid-template-columns: 7rem 1fr;
     justify-items: center;
+
+    min-height: 100%;
 
     main {
         grid-column: 1 / 3;

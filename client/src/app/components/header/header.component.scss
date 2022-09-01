@@ -23,8 +23,9 @@ header {
             display: grid;
             place-items: center;
 
-            height: 5rem;
             width: 5rem;
+            height: 5rem;
+
             border-radius: var(--border-radius-small);
 
             &:hover {
@@ -33,6 +34,7 @@ header {
                     var(--color-tertiary-green),
                     var(--color-tertiary-blue)
                 );
+
                 & > * {
                     filter: brightness(100);
                 }
@@ -45,6 +47,7 @@ header {
 
             img {
                 display: inline-block;
+
                 width: 3rem;
                 height: 3rem;
             }

@@ -10,24 +10,25 @@
 
     .actions {
         position: absolute;
-
-        inset-inline-end: -5rem;
         inset-block-end: 0;
+        inset-inline-end: -5rem;
 
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
 
         button {
-            font-size: 1.8rem;
-
-            border-radius: var(--border-radius-small);
             display: grid;
             place-items: center;
 
             width: 4rem;
             height: 4rem;
-            padding: 0rem;
+
+            padding: 0;
+
+            border-radius: var(--border-radius-small);
+
+            font-size: 1.8rem;
 
             i {
                 color: var(--color-primary-normal);
