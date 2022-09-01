@@ -21,6 +21,10 @@ export class BackNameToFrontNameViceVersaService {
             frontName = 'Field remover';
         } else if (backName === 'sort') {
             frontName = 'Sort';
+        } else if (backName === 'operation') {
+            frontName = 'Math operation';
+        } else if (backName === 'score') {
+            frontName = 'Score';
         }
 
         return frontName;
@@ -41,6 +45,10 @@ export class BackNameToFrontNameViceVersaService {
             backName = 'fieldRemover';
         } else if (frontName === 'Sort') {
             backName = 'sort';
+        } else if (frontName === 'Math operation') {
+            backName = 'operation';
+        } else if (frontName === 'Score') {
+            backName = 'score';
         }
 
         return backName;

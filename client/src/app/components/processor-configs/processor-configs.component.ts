@@ -22,6 +22,8 @@ import {JoinConfigComponent} from './processor-config-components/join-config/joi
 import {SortConfigComponent} from './processor-config-components/sort-config/sort-config.component';
 import {SnackbarService} from '../../services/snackbar.service';
 import {snackbarType} from '../../models/snackbar-type.enum';
+import {MathOperationConfigComponent} from './processor-config-components/math-operation-config/math-operation-config.component';
+import {ScoreConfigComponent} from './processor-config-components/score-config/score-config.component';
 
 @Component({
     selector: 'app-processor-configs',
@@ -47,6 +49,8 @@ export class ProcessorConfigsComponent implements OnChanges {
     public isFilter: boolean = false;
     public isFieldRemover: boolean = false;
     public isSort: boolean = false;
+    public isMathOperation: boolean = false;
+    public isScore: boolean = false;
 
     public processorId: number = 0;
 
@@ -92,6 +96,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = false;
             this.isFieldRemover = false;
             this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = false;
         } else if (this.processorType === 'Aggregate') {
             this.isFieldSelector = false;
             this.isAggregation = true;
@@ -99,6 +105,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = false;
             this.isFieldRemover = false;
             this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = false;
         } else if (this.processorType === 'Join') {
             this.isFieldSelector = false;
             this.isAggregation = false;
@@ -106,6 +114,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = false;
             this.isFieldRemover = false;
             this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = false;
         } else if (this.processorType === 'Filter') {
             this.isFieldSelector = false;
             this.isAggregation = false;
@@ -113,6 +123,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = true;
             this.isFieldRemover = false;
             this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = false;
         } else if (this.processorType === 'Field remover') {
             this.isFieldSelector = false;
             this.isAggregation = false;
@@ -120,6 +132,8 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = false;
             this.isFieldRemover = true;
             this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = false;
         } else if (this.processorType === 'Sort') {
             this.isFieldSelector = false;
             this.isAggregation = false;
@@ -127,6 +141,26 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.isFilter = false;
             this.isFieldRemover = false;
             this.isSort = true;
+            this.isMathOperation = false;
+            this.isScore = false;
+        } else if (this.processorType === 'Math operation') {
+            this.isFieldSelector = false;
+            this.isAggregation = false;
+            this.isJoin = false;
+            this.isFilter = false;
+            this.isFieldRemover = false;
+            this.isSort = false;
+            this.isMathOperation = true;
+            this.isScore = false;
+        } else if (this.processorType === 'Score') {
+            this.isFieldSelector = false;
+            this.isAggregation = false;
+            this.isJoin = false;
+            this.isFilter = false;
+            this.isFieldRemover = false;
+            this.isSort = false;
+            this.isMathOperation = false;
+            this.isScore = true;
         } else {
             this.isFieldSelector = false;
             this.isAggregation = false;
@@ -157,6 +191,8 @@ export class ProcessorConfigsComponent implements OnChanges {
     @ViewChild(FilterConfigComponent) public filterConfigComponent!: FilterConfigComponent;
     @ViewChild(JoinConfigComponent) public joinConfigComponent!: JoinConfigComponent;
     @ViewChild(SortConfigComponent) public sortConfigComponent!: SortConfigComponent;
+    @ViewChild(MathOperationConfigComponent) public mathOperationConfigComponent!: MathOperationConfigComponent;
+    @ViewChild(ScoreConfigComponent) public scoreConfigComponent!: ScoreConfigComponent;
 
     public saveConfigs() {
         if (this.processorType === 'Field selector') {
@@ -171,6 +207,10 @@ export class ProcessorConfigsComponent implements OnChanges {
             this.joinConfigComponent.exportConfigurations();
         } else if (this.processorType === 'Sort') {
             this.sortConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Math operation') {
+            this.mathOperationConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Score') {
+            this.scoreConfigComponent.exportConfigurations();
         }
         this.snackbarService.show('Processor has been edited successfully.', snackbarType.INFO);
     }
