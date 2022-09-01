@@ -1,12 +1,12 @@
 <main class="config-component">
-<app-config-select
-    inputTitle="Columns to Select:"
-    inputPlaceHolder="Columns to Select"
-    inputRequired="false"
-    inputMultiple="true"
-    [inputOptions]="columns"
-    (inputValueChange)="getSelectedColumns($event)"
-    [inputValue]="selectedColumns"
->
-</app-config-select>
+    <app-config-select
+        inputTitle="Columns to Select:"
+        inputPlaceHolder="Columns to Select"
+        inputRequired="false"
+        inputMultiple="true"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedColumns($event)"
+        [inputValue]="selectedColumns"
+    >
+    </app-config-select>
 </main>

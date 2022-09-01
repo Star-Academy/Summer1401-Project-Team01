@@ -42,7 +42,11 @@
             }
 
             &:hover:not(.delete) {
-                background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue));
+                background-image: linear-gradient(
+                    to top right,
+                    var(--color-tertiary-green),
+                    var(--color-tertiary-blue)
+                );
 
                 & > * {
                     filter: brightness(100);

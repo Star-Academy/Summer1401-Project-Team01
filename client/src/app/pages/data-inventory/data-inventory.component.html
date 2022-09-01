@@ -13,13 +13,13 @@
                 <div class="input">
                     <mat-form-field appearance="fill">
                         <mat-label>File Name</mat-label>
-                        <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()"/>
+                        <input matInput [(ngModel)]="fileName" (keyup)="validateContinue()" />
                     </mat-form-field>
                 </div>
                 <button
-                        class="global-button add-processor-button"
-                        (click)="openSelectTypeModal()"
-                        [disabled]="disableContinue"
+                    class="global-button add-processor-button"
+                    (click)="openSelectTypeModal()"
+                    [disabled]="disableContinue"
                 >
                     Continue
                 </button>

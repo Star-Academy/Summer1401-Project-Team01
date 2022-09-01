@@ -1,40 +1,40 @@
 <main class="config-component">
     <app-config-select
-            inputTitle="First Column:"
-            inputPlaceHolder="First Column"
-            inputRequired="true"
-            inputMultiple="false"
-            [inputOptions]="columns"
-            (inputValueChange)="getSelectedFirstColumn($event)"
-            [inputValue]="selectedFirstColumn"
+        inputTitle="First Column:"
+        inputPlaceHolder="First Column"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedFirstColumn($event)"
+        [inputValue]="selectedFirstColumn"
     >
     </app-config-select>
     <app-config-select
-            inputTitle="Second Column:"
-            inputPlaceHolder="Second Column"
-            inputRequired="true"
-            inputMultiple="false"
-            [inputOptions]="columns"
-            (inputValueChange)="getSelectedSecondColumn($event)"
-            [inputValue]="selectedSecondColumn"
+        inputTitle="Second Column:"
+        inputPlaceHolder="Second Column"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedSecondColumn($event)"
+        [inputValue]="selectedSecondColumn"
     >
     </app-config-select>
     <app-config-select
-            inputTitle="Operator:"
-            inputPlaceHolder="Operator"
-            inputRequired="true"
-            inputMultiple="false"
-            [inputOptions]="mathOperations"
-            (inputValueChange)="getSelectedOperator($event)"
-            [inputValue]="selectedOperator"
+        inputTitle="Operator:"
+        inputPlaceHolder="Operator"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="mathOperations"
+        (inputValueChange)="getSelectedOperator($event)"
+        [inputValue]="selectedOperator"
     >
     </app-config-select>
     <app-config-input
-            inputTitle="New Column Name:"
-            inputPlaceHolder="New Column Name"
-            inputRequired="true"
-            (inputValueChange)="getSelectedNewColumn($event)"
-            [inputValue]="selectedNewColumn"
+        inputTitle="New Column Name:"
+        inputPlaceHolder="New Column Name"
+        inputRequired="true"
+        (inputValueChange)="getSelectedNewColumn($event)"
+        [inputValue]="selectedNewColumn"
     >
     </app-config-input>
 </main>

@@ -1,12 +1,12 @@
 .wrapper {
-  width: 30rem;
-  display: grid;
-  justify-content: stretch;
-
-  .input {
+    width: 30rem;
     display: grid;
     justify-content: stretch;
 
-    font-size: 1.8rem;
-  }
+    .input {
+        display: grid;
+        justify-content: stretch;
+
+        font-size: 1.8rem;
+    }
 }

@@ -5,6 +5,4 @@ import {Component} from '@angular/core';
     templateUrl: './pipeline-list.component.html',
     styleUrls: ['./pipeline-list.component.scss'],
 })
-export class PipelineListComponent {
-
-}
+export class PipelineListComponent {}

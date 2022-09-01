@@ -36,13 +36,17 @@
             &.delete:hover {
                 background-image: linear-gradient(to top right, var(--error-color-dark), var(--error-color));
 
-                i{
+                i {
                     color: var(--color-accent-normal);
                 }
             }
 
             &:hover:not(.delete) {
-                background-image: linear-gradient(to top right, var(--color-tertiary-green), var(--color-tertiary-blue));
+                background-image: linear-gradient(
+                    to top right,
+                    var(--color-tertiary-green),
+                    var(--color-tertiary-blue)
+                );
                 & > * {
                     filter: brightness(100);
                 }

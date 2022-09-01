@@ -9,7 +9,6 @@
     overflow: hidden;
 
     &__header {
-
         position: relative;
         z-index: 10;
 
@@ -21,8 +20,7 @@
         //block-size: 5vh;
         inline-size: 100%;
         grid-column: 1 / 3;
-        grid-row:  1 / 2;
-
+        grid-row: 1 / 2;
 
         padding-block: var(--padding-small);
         padding-inline: var(--padding-large);
@@ -33,8 +31,6 @@
     }
 
     &__side {
-
-
         //position: absolute;
         //inset-block-end: 0;
         //inset-inline-end: 0;
@@ -60,7 +56,7 @@
         display: grid;
         justify-content: end;
 
-        .content{
+        .content {
             position: absolute;
             right: 0;
 
@@ -73,14 +69,12 @@
             margin: 0;
         }
 
-        .show{
+        .show {
             //display: block;
-
         }
 
-        .hide{
+        .hide {
             //display: none;
-
         }
 
         &.closed {
@@ -156,7 +150,6 @@
         width: 5rem;
         height: 5rem;
 
-
         transform: translateY(-50%) rotate(45deg);
 
         display: flex;
@@ -170,9 +163,9 @@
 
         color: var(--color-accent-normal);
 
-        .hide, .show {
+        .hide,
+        .show {
             transform: rotate(-45deg) translateX(-2rem);
         }
-
     }
 }

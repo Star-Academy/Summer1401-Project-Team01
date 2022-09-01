@@ -1,45 +1,45 @@
 <main class="config-component">
-<app-config-select
-    inputTitle="Middle Dataset Name:"
-    inputPlaceHolder="Middle Dataset Name"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="datasets"
-    (inputValueChange)="getSelectedDataset($event)"
-    [inputValue]="selectedDataset"
->
-</app-config-select>
-<app-config-select
-    *ngIf="hasSelectedDataset"
-    inputTitle="Left Value Column:"
-    inputPlaceHolder="Left Value Column"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="columns"
-    (inputValueChange)="getSelectedLeftVal($event)"
-    [inputValue]="selectedLeft"
->
-</app-config-select>
-<app-config-select
-    *ngIf="hasSelectedDataset"
-    inputTitle="Right Value Column:"
-    inputPlaceHolder="Right Value Column"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="datasetColumns"
-    (inputValueChange)="getSelectedRightVal($event)"
-    [inputValue]="selectedRight"
->
-</app-config-select>
-<app-config-select
-    *ngIf="hasSelectedDataset"
-    inputTitle="Join Type:"
-    inputPlaceHolder="Join Type"
-    inputRequired="true"
-    inputMultiple="false"
-    [inputOptions]="joinTypes"
-    (inputValueChange)="getSelectedJoinType($event)"
-    [inputValue]="selectedJoinType"
->
-</app-config-select>
+    <app-config-select
+        inputTitle="Middle Dataset Name:"
+        inputPlaceHolder="Middle Dataset Name"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="datasets"
+        (inputValueChange)="getSelectedDataset($event)"
+        [inputValue]="selectedDataset"
+    >
+    </app-config-select>
+    <app-config-select
+        *ngIf="hasSelectedDataset"
+        inputTitle="Left Value Column:"
+        inputPlaceHolder="Left Value Column"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedLeftVal($event)"
+        [inputValue]="selectedLeft"
+    >
+    </app-config-select>
+    <app-config-select
+        *ngIf="hasSelectedDataset"
+        inputTitle="Right Value Column:"
+        inputPlaceHolder="Right Value Column"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="datasetColumns"
+        (inputValueChange)="getSelectedRightVal($event)"
+        [inputValue]="selectedRight"
+    >
+    </app-config-select>
+    <app-config-select
+        *ngIf="hasSelectedDataset"
+        inputTitle="Join Type:"
+        inputPlaceHolder="Join Type"
+        inputRequired="true"
+        inputMultiple="false"
+        [inputOptions]="joinTypes"
+        (inputValueChange)="getSelectedJoinType($event)"
+        [inputValue]="selectedJoinType"
+    >
+    </app-config-select>
 </main>

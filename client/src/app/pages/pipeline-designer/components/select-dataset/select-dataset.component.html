@@ -12,5 +12,7 @@
         [rowSelection]="rowSelection"
         (rowSelected)="validateSelectButton()"
     ></ag-grid-angular>
-    <button class="global-button" (click)="selectDataset()" [mat-dialog-close]="true" [disabled]="!isSelected">Select</button>
+    <button class="global-button" (click)="selectDataset()" [mat-dialog-close]="true" [disabled]="!isSelected">
+        Select
+    </button>
 </div>

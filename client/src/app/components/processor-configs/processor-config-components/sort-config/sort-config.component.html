@@ -1,5 +1,5 @@
 <main class="config-component">
-<app-config-select
+    <app-config-select
         inputTitle="Column to Sort:"
         inputPlaceHolder="Column to Sort"
         inputRequired="true"
@@ -7,9 +7,9 @@
         [inputOptions]="columns"
         (inputValueChange)="getSelectedColumn($event)"
         [inputValue]="selectedColumn"
->
-</app-config-select>
-<app-config-select
+    >
+    </app-config-select>
+    <app-config-select
         inputTitle="Sort Type:"
         inputPlaceHolder="Sort Type"
         inputRequired="true"
@@ -17,6 +17,6 @@
         [inputOptions]="sortTypes"
         (inputValueChange)="getSelectedSortType($event)"
         [inputValue]="selectedSortType"
->
-</app-config-select>
+    >
+    </app-config-select>
 </main>

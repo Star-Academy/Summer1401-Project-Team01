@@ -1,39 +1,39 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 6.4rem;
-
-  inline-size: 100rem;
-
-  margin-inline: auto;
-  padding-block-start: 6.4rem;
-
-  .header {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 6.4rem;
 
-    a {
+    inline-size: 100rem;
+
+    margin-inline: auto;
+    padding-block-start: 6.4rem;
+
+    .header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        a {
+        }
+
+        .text {
+            width: 70%;
+
+            h1 {
+                font-family: Raleway, sans-serif;
+                font-size: 4.8rem;
+                font-weight: 900;
+            }
+
+            p {
+                margin: 0;
+                font-family: Raleway, sans-serif;
+                font-weight: 700;
+                font-size: var(--font-size-tertiary-heading);
+                line-height: 1.2;
+
+                width: 80%;
+            }
+        }
     }
-
-    .text {
-      width: 70%;
-
-      h1 {
-        font-family: Raleway, sans-serif;
-        font-size: 4.8rem;
-        font-weight: 900;
-      }
-
-      p {
-        margin: 0;
-        font-family: Raleway, sans-serif;
-        font-weight: 700;
-        font-size: var(--font-size-tertiary-heading);
-        line-height: 1.2;
-
-        width: 80%;
-      }
-    }
-  }
 }

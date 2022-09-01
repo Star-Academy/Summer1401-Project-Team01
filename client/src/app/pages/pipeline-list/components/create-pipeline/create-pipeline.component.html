@@ -2,8 +2,10 @@
     <div class="input">
         <mat-form-field appearance="fill">
             <mat-label>Pipeline Name</mat-label>
-            <input matInput [(ngModel)]="pipelineName" (keyup)="validateContinue()"/>
+            <input matInput [(ngModel)]="pipelineName" (keyup)="validateContinue()" />
         </mat-form-field>
     </div>
-    <button class="global-button" [disabled]="disableContinue" (click)="createPipeline()" [mat-dialog-close]="true">Create Pipeline</button>
+    <button class="global-button" [disabled]="disableContinue" (click)="createPipeline()" [mat-dialog-close]="true">
+        Create Pipeline
+    </button>
 </div>

@@ -10,8 +10,8 @@ export class ColumnTypesComponent implements OnInit {
     public constructor(@Inject(MAT_DIALOG_DATA) public data: {columnTypes: string[]; columnTitles: string[]}) {}
 
     public ngOnInit(): void {
-        for(let i = 0; i < this.data.columnTypes.length; i++) {
-            this.data.columnTypes[i] = 'string'
+        for (let i = 0; i < this.data.columnTypes.length; i++) {
+            this.data.columnTypes[i] = 'string';
         }
     }
 }

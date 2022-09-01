@@ -19,9 +19,9 @@ import {AggregateConfigComponent} from './processor-config-components/aggregate-
 import {JoinConfigComponent} from './processor-config-components/join-config/join-config.component';
 import {FilterConfigComponent} from './processor-config-components/filter-config/filter-config.component';
 import {FieldRemoverConfigComponent} from './processor-config-components/field-remover-config/field-remover-config.component';
-import { SortConfigComponent } from './processor-config-components/sort-config/sort-config.component';
-import { MathOperationConfigComponent } from './processor-config-components/math-operation-config/math-operation-config.component';
-import { ScoreConfigComponent } from './processor-config-components/score-config/score-config.component';
+import {SortConfigComponent} from './processor-config-components/sort-config/sort-config.component';
+import {MathOperationConfigComponent} from './processor-config-components/math-operation-config/math-operation-config.component';
+import {ScoreConfigComponent} from './processor-config-components/score-config/score-config.component';
 
 @NgModule({
     declarations: [

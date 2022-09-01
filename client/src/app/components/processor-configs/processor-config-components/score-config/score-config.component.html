@@ -1,30 +1,30 @@
 <main class="config-component">
     <app-config-select
-            inputTitle="Positive Columns:"
-            inputPlaceHolder="Positive Columns"
-            inputRequired="true"
-            inputMultiple="true"
-            [inputOptions]="columns"
-            (inputValueChange)="getSelectedPositiveColumns($event)"
-            [inputValue]="selectedPositiveColumns"
+        inputTitle="Positive Columns:"
+        inputPlaceHolder="Positive Columns"
+        inputRequired="true"
+        inputMultiple="true"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedPositiveColumns($event)"
+        [inputValue]="selectedPositiveColumns"
     >
     </app-config-select>
     <app-config-select
-            inputTitle="Negative Columns:"
-            inputPlaceHolder="Negative Columns"
-            inputRequired="true"
-            inputMultiple="true"
-            [inputOptions]="columns"
-            (inputValueChange)="getSelectedNegativeColumns($event)"
-            [inputValue]="selectedNegativeColumns"
+        inputTitle="Negative Columns:"
+        inputPlaceHolder="Negative Columns"
+        inputRequired="true"
+        inputMultiple="true"
+        [inputOptions]="columns"
+        (inputValueChange)="getSelectedNegativeColumns($event)"
+        [inputValue]="selectedNegativeColumns"
     >
     </app-config-select>
     <app-config-input
-            inputTitle="New Column Name:"
-            inputPlaceHolder="New Column Name"
-            inputRequired="true"
-            (inputValueChange)="getSelectedNewColumn($event)"
-            [inputValue]="selectedNewColumn"
+        inputTitle="New Column Name:"
+        inputPlaceHolder="New Column Name"
+        inputRequired="true"
+        (inputValueChange)="getSelectedNewColumn($event)"
+        [inputValue]="selectedNewColumn"
     >
     </app-config-input>
 </main>

@@ -1,18 +1,10 @@
 <!--<main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">-->
 <main #designer class="designer">
     <div class="designer__header">
-        <button
-                class="canvas-circle"
-                (click)="removeNode()"
-                k
-                [disabled]="!isNodeSelectedForDeleteBtn"
-        >
+        <button class="canvas-circle" (click)="removeNode()" k [disabled]="!isNodeSelectedForDeleteBtn">
             <i class="far fa-square-minus"></i>
         </button>
-        <button
-            class="canvas-circle"
-            (click)="openAddProcessorModal()" k
-            [disabled]="!isNodeSelectedForStartBtn">
+        <button class="canvas-circle" (click)="openAddProcessorModal()" k [disabled]="!isNodeSelectedForStartBtn">
             <i class="far fa-square-plus"></i>
         </button>
         <button class="canvas-run" (click)="runProcess()" k><i class="fas fa-play"></i></button>
@@ -35,11 +27,11 @@
 
     <aside #side class="designer__side">
         <button class="collapse-button" (click)="sidebarCollapseService.collapse()">
-            <i #rightArrow class=" show"></i>
+            <i #rightArrow class="show"></i>
             <i #leftArrow class="fa-solid fa-chevron-left hide"></i>
         </button>
         <div class="content">
-           <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+            <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
         </div>
         <!--        <div #dragH class="drag-h" (mousedown)="dragHHandler($event)"></div>-->
     </aside>
