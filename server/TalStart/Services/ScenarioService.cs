@@ -118,6 +118,9 @@ namespace TalStart.Services
                         case "sort":
                             pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
+                        case "operation":
+                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
                     }
                 }
 
@@ -167,6 +170,9 @@ namespace TalStart.Services
                             break;
                         case "sort":
                             pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "operation":
+                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }
