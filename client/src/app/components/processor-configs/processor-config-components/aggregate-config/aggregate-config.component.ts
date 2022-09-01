@@ -14,15 +14,20 @@ export class AggregateConfigComponent {
     public selectedOperationColumn: string = '';
     public selectedAggregationType: string = '';
 
+    public columns: string = '';
+
     public constructor(
         private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
         private diagramNodeService: DiagramNodeService
     ) {
         this.aggregationTypes = 'Sum,Min,Max,Average,Count';
         //TODO
-        if (!!diagramNodeService.selectedNodeData?.key) {
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
             const configsFromBack = JSON.stringify(
-                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
             );
 
             console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
@@ -30,6 +35,8 @@ export class AggregateConfigComponent {
             this.initializeConfigurations(configsFromBack);
         }
         this.initializeConfigurations('');
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -65,18 +72,19 @@ export class AggregateConfigComponent {
     }
 
     public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+        const configsObject = {
             ColumnToBeGroupedBy: this.selectedGroupColumn,
             OperationColumn: this.selectedOperationColumn,
             AggregationType: this.aggregationTypeValueToNumber(this.selectedAggregationType),
-        });
+        };
+
+        this.diagramNodeService.changeNodeOption(configsObject);
+
         return JSON.stringify(configsObject);
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedGroupColumn(e: string) {

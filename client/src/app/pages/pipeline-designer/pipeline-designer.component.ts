@@ -9,7 +9,7 @@ import {PIPELINE_RUNPIPELINE} from '../../utilities/urls';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SampleModalComponent} from './components/sample-modal/sample-modal.component';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
-import {PreviewComponent} from "./components/preview/preview.component";
+import {PreviewComponent} from './components/preview/preview.component';
 
 @Component({
     selector: 'app-pipeline-designer',
@@ -56,8 +56,6 @@ export class PipelineDesignerComponent implements AfterContentChecked, OnInit {
         this.diagramNodeService.pipelinePage = this.pipelineName;
 
         if (!!this.pipelineName && this.pipelineName !== '') {
-            console.log('hey');
-
             this.diagramNodeService.getCurrentPipeLine().then();
         } else {
             this.diagramNodeService.justCreateInitialNodeData();

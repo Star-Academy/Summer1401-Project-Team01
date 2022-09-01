@@ -12,14 +12,19 @@ export class FieldRemoverConfigComponent {
 
     public selectedColumns: string = '';
 
+    public columns: string = '';
+
     public constructor(
         private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
         private diagramNodeService: DiagramNodeService
     ) {
         //TODO
-        if (!!diagramNodeService.selectedNodeData?.key) {
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
             const configsFromBack = JSON.stringify(
-                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
             );
 
             console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
@@ -27,6 +32,8 @@ export class FieldRemoverConfigComponent {
             this.initializeConfigurations(configsFromBack);
         }
         this.initializeConfigurations('');
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -39,17 +46,16 @@ export class FieldRemoverConfigComponent {
         if (configsObject.hasOwnProperty('columns')) this.selectedColumns = configsObject.columns;
     }
 
-    public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+    public exportConfigurations(): void {
+        const configsObject = {
             columns: this.selectedColumns,
-        });
-        return JSON.stringify(configsObject);
+        };
+
+        this.diagramNodeService.changeNodeOption(configsObject);
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedColumns(e: string) {

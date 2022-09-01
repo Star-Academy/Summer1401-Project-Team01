@@ -14,13 +14,18 @@ export class FilterConfigComponent {
     public selectedOperator: string = '';
     public selectedValue: string = '';
 
+    public columns: string = '';
+
     public constructor(
         private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
         private diagramNodeService: DiagramNodeService
     ) {
         this.filterOperations = '=,>,<,!=,>=,<=,IS NULL,IS NOT NULL';
         //TODO
-        if (!!diagramNodeService.selectedNodeData?.key) {
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
             const configsFromBack = JSON.stringify(
                 diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
             );
@@ -30,6 +35,8 @@ export class FilterConfigComponent {
             this.initializeConfigurations(configsFromBack);
         }
         this.initializeConfigurations('');
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -45,18 +52,19 @@ export class FilterConfigComponent {
     }
 
     public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+        const configsObject = {
             columnName: this.selectedColumn,
             operator: this.selectedOperator,
             value: this.selectedValue,
-        });
+        };
+
+        this.diagramNodeService.changeNodeOption(configsObject);
+
         return JSON.stringify(configsObject);
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedColumn(e: string) {

@@ -3,7 +3,7 @@
     inputPlaceHolder="Column to Be Grouped by"
     inputRequired="true"
     inputMultiple="false"
-    [inputOptions]="getColumns()"
+    [inputOptions]="columns"
     (inputValueChange)="getSelectedGroupColumn($event)"
     [inputValue]="selectedGroupColumn"
 >
@@ -13,7 +13,7 @@
     inputPlaceHolder="Operation Column"
     inputRequired="true"
     inputMultiple="false"
-    [inputOptions]="getColumns()"
+    [inputOptions]="columns"
     (inputValueChange)="getSelectedOperationColumn($event)"
     [inputValue]="selectedOperationColumn"
 >

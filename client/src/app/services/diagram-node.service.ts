@@ -19,6 +19,7 @@ import {BackNameToFrontNameViceVersaService} from './back-name-to-front-name-vic
 export class DiagramNodeService {
     public pipelinePage: string = '';
     public source: string | null = null;
+    public destination: string | null = null;
 
     public nodeDataArray: NodeDataModel[] = [];
 
@@ -53,6 +54,14 @@ export class DiagramNodeService {
 
             const data = await response.json();
 
+            if (!!data.SourceDataset) {
+                this.isSourceSelected = true;
+                this.source = data.SourceDataset.Name;
+            }
+            if (!!data.DestinationDataset) {
+                this.isDestinationSelected = true;
+                this.destination = data.DestinationDataset.Name;
+            }
             const pipelineData = await JSON.parse(data?.Json);
 
             for (let i = 0; i < pipelineData.length; i++) {
@@ -71,6 +80,7 @@ export class DiagramNodeService {
                 key: pipelineData.length + 1,
                 name: 'Destination',
                 parent: pipelineData.length,
+                option: null,
             };
 
             this.nodeDataArray.push(lastNode);

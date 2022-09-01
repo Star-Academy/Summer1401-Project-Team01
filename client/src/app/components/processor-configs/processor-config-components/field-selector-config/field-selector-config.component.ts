@@ -18,9 +18,12 @@ export class FieldSelectorConfigComponent {
         private diagramNodeService: DiagramNodeService
     ) {
         //TODO
-        if (!!diagramNodeService.selectedNodeData?.key) {
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
             const configsFromBack = JSON.stringify(
-                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
             );
 
             console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
@@ -43,7 +46,13 @@ export class FieldSelectorConfigComponent {
     }
 
     public exportConfigurations(): void {
-        this.configsIfOnlyAndOnlyOptionsService.selectExportConfigurations(this.selectedColumns);
+        const configsObject = {
+            columns: this.selectedColumns,
+        };
+
+        console.log(configsObject);
+
+        this.diagramNodeService.changeNodeOption(configsObject);
     }
 
     public async getColumns(): Promise<string> {

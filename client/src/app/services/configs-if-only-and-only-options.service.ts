@@ -32,14 +32,4 @@ export class ConfigsIfOnlyAndOnlyOptionsService {
 
         return await data.join(',');
     }
-
-    public selectExportConfigurations(selectedColumns: string): void {
-        const configsObject = {
-            columns: selectedColumns,
-        };
-
-        console.log(configsObject);
-
-        this.diagramNodeService.changeNodeOption(configsObject);
-    }
 }

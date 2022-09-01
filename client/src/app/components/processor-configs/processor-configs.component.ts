@@ -18,6 +18,10 @@ import {ConfigSelectComponent} from './config-components/config-select/config-se
 import {createLogErrorHandler} from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import {SidebarCollapseService} from '../../services/sidebar-collapse.service';
 import {FieldSelectorConfigComponent} from './processor-config-components/field-selector-config/field-selector-config.component';
+import {FieldRemoverConfigComponent} from './processor-config-components/field-remover-config/field-remover-config.component';
+import {AggregateConfigComponent} from './processor-config-components/aggregate-config/aggregate-config.component';
+import {FilterConfigComponent} from './processor-config-components/filter-config/filter-config.component';
+import {JoinConfigComponent} from './processor-config-components/join-config/join-config.component';
 
 @Component({
     selector: 'app-processor-configs',
@@ -133,10 +137,22 @@ export class ProcessorConfigsComponent implements OnChanges {
     // }
 
     @ViewChild(FieldSelectorConfigComponent) public fieldSelectorConfigComponent!: FieldSelectorConfigComponent;
+    @ViewChild(FieldRemoverConfigComponent) public fieldRemoverConfigComponent!: FieldRemoverConfigComponent;
+    @ViewChild(AggregateConfigComponent) public aggregateConfigComponent!: AggregateConfigComponent;
+    @ViewChild(FilterConfigComponent) public filterConfigComponent!: FilterConfigComponent;
+    @ViewChild(JoinConfigComponent) public joinConfigComponent!: JoinConfigComponent;
 
     public saveConfigs() {
         if (this.processorType === 'Field selector') {
             this.fieldSelectorConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Field remover') {
+            this.fieldRemoverConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Aggregate') {
+            this.aggregateConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Filter') {
+            this.filterConfigComponent.exportConfigurations();
+        } else if (this.processorType === 'Join') {
+            this.joinConfigComponent.exportConfigurations();
         }
     }
 }

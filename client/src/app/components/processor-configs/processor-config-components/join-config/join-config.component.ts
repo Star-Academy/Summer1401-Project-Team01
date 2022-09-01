@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
 
 @Component({
     selector: 'app-join-config',
@@ -15,11 +16,25 @@ export class JoinConfigComponent {
     public selectedJoinType: string = '';
     public joinTypes: string;
 
-    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+    public constructor(
+        private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
+        private diagramNodeService: DiagramNodeService
+    ) {
         this.joinTypes = 'Inner,Left,Right,Full';
         //TODO
-        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
-        this.initializeConfigurations(configsFromBack);
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
+            const configsFromBack = JSON.stringify(
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+            );
+
+            console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
+
+            this.initializeConfigurations(configsFromBack);
+        }
+        this.initializeConfigurations('');
     }
 
     public initializeConfigurations(configs: string) {
@@ -53,12 +68,15 @@ export class JoinConfigComponent {
     }
 
     public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+        const configsObject = {
             middleDatasetName: this.selectedDataset,
             leftVal: this.selectedLeft,
             rightVal: this.selectedRight,
             type: this.joinTypeValueToNumber(this.selectedJoinType),
-        });
+        };
+
+        this.diagramNodeService.changeNodeOption(configsObject);
+
         return JSON.stringify(configsObject);
     }
 
