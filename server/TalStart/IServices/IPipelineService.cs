@@ -4,17 +4,17 @@ namespace TalStart.IServices;
 
 public interface IPipelineService
 {
-    public void AddPipeline(string pipelineName, string username);
-    public void RemovePipeline(string pipelineName, string username);
-    public void UpdateJson(string json, string name, string username);
-    public void AddSource(string datasetName, string pipelineName, string username);
+    void AddPipeline(string pipelineName, string username);
+    void RemovePipeline(string pipelineName, string username);
+    void UpdateJson(string json, string name, string username);
+    void AddSource(string datasetName, string pipelineName, string username);
 
-    public void RemoveSource(string pipelineName, string username);
-    public void AddDestination(string destinationName, string pipelineName, string username);
-    public void RemoveDestination(string pipelineName, string username);
+    void RemoveSource(string pipelineName, string username);
+    void AddDestination(string destinationName, string pipelineName, string username);
+    void RemoveDestination(string pipelineName, string username);
 
-    public void RenamePipeline(string pipelineName, string username, string newPipelineName);
-    public List<string> GetAllPipelinesNames(string username);
+    void RenamePipeline(string pipelineName, string username, string newPipelineName);
+    List<string> GetAllPipelinesNames(string username);
 
-    public Pipeline GetPipeline(string pipelineName, string username);
+    Pipeline GetPipeline(string pipelineName, string username);
 }

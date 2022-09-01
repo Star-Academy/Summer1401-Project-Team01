@@ -8,7 +8,7 @@ namespace TalStart.Controllers;
 [Route("[controller]/[action]")]
 public class FileController : ControllerBase
 {
-    private IFileService _fileService;
+    private readonly IFileService _fileService;
 
     public FileController(IFileService fileService)
     {

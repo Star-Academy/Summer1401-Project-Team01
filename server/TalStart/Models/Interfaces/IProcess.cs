@@ -2,10 +2,9 @@
 
 public interface IProcess
 {
-    public string Name { get; set; }
-    public int Id { get; set; }
+    string Name { get; set; }
+    int Id { get; set; }
+    object? Options { get; set; }
 
-    public object? Options { get; set; }
-
-    public bool Run(string sourceTable, string finalTable );
+    bool Run(string sourceTable, string finalTable);
 }
