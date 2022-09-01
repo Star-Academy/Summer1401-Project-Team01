@@ -26,6 +26,7 @@ export class PreviewComponent implements OnInit {
     public rowData$: any[] = [];
 
     public async ngOnInit(): Promise<void> {
+        console.log(this.diagramNodeService.selectedNodeData?.key)
         if (!this.diagramNodeService.selectedNodeData?.key) return;
         const data = await this.dataset.getPreview(
             this.diagramNodeService.pipelinePage,

@@ -63,7 +63,7 @@ export class DatasetService {
         let formData = new FormData();
         formData.append('pipelineName', pipelineName);
         formData.append('username', 'admin');
-        formData.append('count', `${lastProcessId}`);
+        formData.append('lastProcessId', `${lastProcessId}`);
 
         const response = await fetch(PIPELINE_PREVIEW, {body: formData, method: 'post'});
         return response.json();
