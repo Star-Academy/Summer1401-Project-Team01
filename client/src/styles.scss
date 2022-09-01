@@ -383,6 +383,20 @@ body {
     line-height: 1;
     padding-top: 0.3rem;
   }
+
+  .input-component{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    h4{
+      margin: 0;
+    }
+  }
+  .config-component{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem
+  }
 }
 
 html,
