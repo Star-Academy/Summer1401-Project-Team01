@@ -1,4 +1,18 @@
 <form>
+    <mat-form-field appearance="fill">
+        <mat-label>ُSet Type for All Fields</mat-label>
+        <mat-select
+                matInput
+                matNativeControl
+                (selectionChange)="changeAllValues($event.value)"
+        >
+            <mat-option value="string">String</mat-option>
+            <mat-option value="integer">Integer</mat-option>
+            <mat-option value="double">Double</mat-option>
+            <mat-option value="date">Date</mat-option>
+            <mat-option value="boolean">Boolean</mat-option>
+        </mat-select>
+    </mat-form-field>
     <div class="select-container">
         <div class="select-item" *ngFor="let title of data.columnTitles; let i = index">
             <h3>{{ title }}</h3>
@@ -8,6 +22,7 @@
                 <mat-select
                     matInput
                     matNativeControl
+                    [(value)]="data.columnTypes[i]"
                     [(ngModel)]="data.columnTypes[i]"
                     [name]="'select-' + title"
                     required

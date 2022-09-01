@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Inject, Output} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -6,12 +6,16 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
     templateUrl: './column-types.component.html',
     styleUrls: ['./column-types.component.scss'],
 })
-export class ColumnTypesComponent implements OnInit {
-    public constructor(@Inject(MAT_DIALOG_DATA) public data: {columnTypes: string[]; columnTitles: string[]}) {}
+export class ColumnTypesComponent {
+    public str: string = 'string';
 
-    public ngOnInit(): void {
-        for (let i = 0; i < this.data.columnTypes.length; i++) {
-            this.data.columnTypes[i] = 'string';
+    public constructor(@Inject(MAT_DIALOG_DATA) public data: {columnTypes: string[]; columnTitles: string[]}, private cd: ChangeDetectorRef) {}
+
+    public changeAllValues(value: string): void{
+
+        for (let i = 0; i < this.data.columnTitles.length; i++) {
+            this.data.columnTypes[i] = value;
+            console.log(this.data.columnTypes[i] ,value);
         }
     }
 }
