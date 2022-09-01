@@ -35,6 +35,7 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
+
             finalTable = finalTable[..^1];
             sourceTable = finalTable;
             finalTable = $"{pipe.DestinationDataset?.Name}_{pipe.User.Username}";
@@ -65,6 +66,7 @@ namespace TalStart.Services
                 sourceTable = finalTable;
                 finalTable += '1';
             }
+
             finalTable = finalTable[..^1];
 
 
@@ -97,28 +99,35 @@ namespace TalStart.Services
                     {
                         continue;
                     }
+
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
+                            pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = null });
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Select
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "aggregate":
-                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Aggregate
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "join":
-                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Join
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "filter":
-                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Filter
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "fieldRemover":
-                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new FieldRemover
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "sort":
-                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new SortProcess
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                     }
                 }
@@ -150,25 +159,31 @@ namespace TalStart.Services
                     switch (r.Name)
                     {
                         case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
+                            pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = null });
                             break;
                         case "select":
-                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Select
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "aggregate":
-                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Aggregate
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "join":
-                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Join
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "filter":
-                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new Filter
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "fieldRemover":
-                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new FieldRemover
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                         case "sort":
-                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
+                            pipe.TreeOfProcesses.Add(new SortProcess
+                                { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
                             break;
                     }
                 }

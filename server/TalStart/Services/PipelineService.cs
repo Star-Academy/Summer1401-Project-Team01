@@ -6,12 +6,12 @@ namespace TalStart.Services
 {
     public class PipelineService : IPipelineService
     {
-        readonly TalStartContext _db = new();
+        private readonly TalStartContext _db = new();
 
         public void AddPipeline(string pipelineName, string username)
         {
             _db.Pipelines.Add(new Pipeline()
-                {Name = pipelineName, User = _db.Users.Single(user => user.Username == username)});
+                { Name = pipelineName, User = _db.Users.Single(user => user.Username == username) });
             _db.SaveChanges();
         }
 
@@ -25,7 +25,8 @@ namespace TalStart.Services
 
         public void UpdateJson(string json, string pipeName, string username)
         {
-            var pipeline = _db.Pipelines.FirstOrDefault(p => p.Name == pipeName && p.User.Username == username);
+            var pipeline = _db.Pipelines.FirstOrDefault(pipeline =>
+                pipeline.Name == pipeName && pipeline.User.Username == username);
 
             pipeline.Json = json;
             _db.SaveChanges();

@@ -54,9 +54,9 @@ public class PostgresQueryBuilder : IQueryBuilder
             $"CREATE TABLE {finalTable} as SELECT {columnToBeGroupedBy}, {operationType}({operationColumn}) From {sourceTable} GROUP BY {columnToBeGroupedBy}";
     }
 
-    public string SortQuery(string sourceTable, string finalTable, string operationColumn,bool isAscending)
+    public string SortQuery(string sourceTable, string finalTable, string operationColumn, bool isAscending)
     {
-        var query =  $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+        var query = $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
         query += $" ORDER BY \"{operationColumn}\" ";
         query += isAscending ? "ASC" : "DESC";
         return query;
@@ -76,9 +76,10 @@ public class PostgresQueryBuilder : IQueryBuilder
         var query = $"SELECT ";
         foreach (var column in columns)
         {
-            query += $"\"{column}\"" +',';
+            query += $"\"{column}\"" + ',';
         }
-        query = query.Substring(0,query.Length - 1);
+
+        query = query.Substring(0, query.Length - 1);
         query += $"  INTO \"{finalTable}\" FROM \"{sourceTable}\"";
 
         return query;
