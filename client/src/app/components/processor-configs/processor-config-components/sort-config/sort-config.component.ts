@@ -14,6 +14,7 @@ export class SortConfigComponent {
     public selectedSortType: string = '';
 
     public columns: string = '';
+
     constructor(
         private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
         private diagramNodeService: DiagramNodeService

@@ -3,7 +3,7 @@
     inputPlaceHolder="Middle Dataset Name"
     inputRequired="true"
     inputMultiple="false"
-    [inputOptions]="getDatasets()"
+    [inputOptions]="datasets"
     (inputValueChange)="getSelectedDataset($event)"
     [inputValue]="selectedDataset"
 >
@@ -14,7 +14,7 @@
     inputPlaceHolder="Left Value Column"
     inputRequired="true"
     inputMultiple="false"
-    [inputOptions]="getColumns()"
+    [inputOptions]="columns"
     (inputValueChange)="getSelectedLeftVal($event)"
     [inputValue]="selectedLeft"
 >
@@ -25,7 +25,7 @@
     inputPlaceHolder="Right Value Column"
     inputRequired="true"
     inputMultiple="false"
-    [inputOptions]="getColumnsOfSelectedDataset()"
+    [inputOptions]="datasetColumns"
     (inputValueChange)="getSelectedRightVal($event)"
     [inputValue]="selectedRight"
 >
