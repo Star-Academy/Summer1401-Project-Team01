@@ -29,10 +29,10 @@ export class DiagramComponent {
                 arrangement: go.TreeLayout.ArrangementHorizontal,
                 // properties for most of the tree:
                 angle: 0,
-                layerSpacing: 150,
+                layerSpacing: 75,
                 // properties for the "last parents":
                 // alternateAngle: 90,
-                alternateLayerSpacing: 150,
+                alternateLayerSpacing: 75,
                 alternateAlignment: go.TreeLayout.AlignmentBus,
                 alternateNodeSpacing: 20,
             }),
