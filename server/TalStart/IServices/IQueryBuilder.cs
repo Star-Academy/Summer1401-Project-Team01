@@ -20,5 +20,9 @@ public interface IQueryBuilder
     string SelectQuery(string sourceTable, string finalTable, List<string> selectOptionsColumns);
     string JoinQuery(string sourceTable, string finalTable, string type, string middleDatasetName, string leftVal,
         string rightVal);
-    string FieldRemoverQuery(string sourceTable, List<string> columns);
+    string FieldRemoverQuery(string sourceTable, IEnumerable<string> columns);
+    string MathOperationQuery(string sourceTable, string finalTable, string firstColumn, string secondColumn,
+        string operation, string newColumn);
+    string ScoreQuery(string sourceTable, string finalTable, IEnumerable<string> goods, IEnumerable<string> bads,
+        string newColumn);
 }

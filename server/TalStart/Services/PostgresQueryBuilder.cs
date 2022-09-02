@@ -102,11 +102,37 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"SELECT * INTO \"{finalTable}\" FROM \"{sourceTable}\"";
     }
 
-    public string FieldRemoverQuery(string sourceTable, List<string> columns)
+    public string FieldRemoverQuery(string sourceTable, IEnumerable<string> columns)
     {
         var query = $"ALTER TABLE \"{sourceTable}\" \n";
         query = columns.Aggregate(query, (current, column) => current + $"DROP COLUMN {column},\n");
         query = query[..^1] + ";";
+        return query;
+    }
+
+    public string MathOperationQuery(string sourceTable, string finalTable, string firstColumn, string secondColumn,
+        string operation, string newColumn)
+    {
+        return
+            $"SELECT *, {firstColumn} {operation} {secondColumn} as {newColumn}  INTO \"{finalTable}\" FROM \"{sourceTable}\"";
+    }
+
+    public string ScoreQuery(string sourceTable, string finalTable, IEnumerable<string> goods, IEnumerable<string> bads,
+        string newColumn)
+    {
+        var query = $"SELECT *, (";
+        foreach (var column in goods)
+        {
+            query += $" {column} *";
+        }
+        query = query[..^1] +")/(";
+        foreach (var column in bads)
+        {
+            query += $" {column} *";
+        }
+        query = query[..^1] + ")";
+
+        query += $" as \"{newColumn}\" INTO \"{finalTable}\" FROM \"{sourceTable}\"";
         return query;
     }
 }

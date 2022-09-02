@@ -5,6 +5,7 @@ using TalStart.Models;
 using TalStart.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using TalStart.Models.Processes;
+using TalStart.Models.ProcessType;
 
 namespace TalStart.Services;
 
@@ -101,9 +102,6 @@ public class ScenarioService : IScenarioService
                     }
                     switch (r.Name)
                     {
-                        case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
-                            break;
                         case "select":
                             pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
@@ -123,10 +121,10 @@ public class ScenarioService : IScenarioService
                             pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                         case "operation":
-                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new MathOperation() { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                         case "score":
-                            pipe.TreeOfProcesses.Add(new ScoreProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Score { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }
@@ -157,9 +155,6 @@ public class ScenarioService : IScenarioService
                 {
                     switch (r.Name)
                     {
-                        case "foo":
-                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
-                            break;
                         case "select":
                             pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
@@ -179,10 +174,10 @@ public class ScenarioService : IScenarioService
                             pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                         case "operation":
-                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new MathOperation() { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                         case "score":
-                            pipe.TreeOfProcesses.Add(new ScoreProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            pipe.TreeOfProcesses.Add(new Score { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
                             break;
                     }
                 }

@@ -141,7 +141,7 @@ public class DatasetController : ControllerBase
                 { "a", "text" }
             };
             //_fileService.UploadFile(null, columns, username, datasetName);
-            var queryBuilder = new QueryBuilder();
+            var queryBuilder = new PostgresQueryBuilder();
             var query = queryBuilder.BuildTableQuery(columns, $"{datasetName}_{username}");
             _sqlService.ExecuteNonQueryPostgres(query);
             _datasetService.AddDataset(username, datasetName);
