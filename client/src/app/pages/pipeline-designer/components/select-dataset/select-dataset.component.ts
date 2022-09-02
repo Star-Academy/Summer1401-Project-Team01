@@ -11,8 +11,8 @@ import {
     PIPELINE_REMOVE_SOURCE,
 } from '../../../../utilities/urls';
 import {ActivatedRoute} from '@angular/router';
-import {snackbarType} from "../../../../models/snackbar-type.enum";
-import {SnackbarService} from "../../../../services/snackbar.service";
+import {snackbarType} from '../../../../models/snackbar-type.enum';
+import {SnackbarService} from '../../../../services/snackbar.service';
 
 @Component({
     selector: 'app-select-dataset',
@@ -94,7 +94,7 @@ export class SelectDatasetComponent implements OnInit {
         }
         this.gridApi.setRowData(newRowData);
 
-        if(this.diagramNodeService.selectedNode?.type === 'Destination') this.isInDestination = true;
+        if (this.diagramNodeService.selectedNode?.type === 'Destination') this.isInDestination = true;
     }
 
     public validateSelectButton(): void {
@@ -109,9 +109,7 @@ export class SelectDatasetComponent implements OnInit {
 
         const formDataForSrcDes = new FormData();
 
-        console.log(this.diagramNodeService.selectedNode?.type);
-
-        if (this.diagramNodeService.selectedNodeData?.name === 'Start') {
+        if (this.diagramNodeService.nodeSelection === 'start') {
             this.diagramNodeService.source = fileName;
 
             formDataForSrcDes.append('sourceName', fileName);
@@ -124,7 +122,7 @@ export class SelectDatasetComponent implements OnInit {
             });
 
             if (response.ok) this.diagramNodeService.isSourceSelected = true;
-        } else if (this.diagramNodeService.selectedNode?.type === 'Destination') {
+        } else if (this.diagramNodeService.nodeSelection === 'destination') {
             formDataForSrcDes.append('destinationName', fileName);
             formDataForSrcDes.append('pipelineName', this.diagramNodeService.pipelinePage);
             formDataForSrcDes.append('username', 'admin');

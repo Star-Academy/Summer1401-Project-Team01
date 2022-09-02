@@ -34,6 +34,8 @@ export class DiagramNodeService {
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
+    public nodeSelection: string = '';
+
     public constructor(
         public dialog: MatDialog,
         private backNameToFrontNameViceVersaService: BackNameToFrontNameViceVersaService
@@ -177,12 +179,14 @@ export class DiagramNodeService {
 
     public openSelectDatasetModal(state: string, order: string) {
         if (state === 'start' && !this.isSourceSelected && order === 'add') {
+            this.nodeSelection = 'start';
             const dialog = this.dialog.open(SelectDatasetComponent);
 
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
             });
         } else if (state === 'destination' && !this.isDestinationSelected && order === 'add') {
+            this.nodeSelection = 'destination';
             const dialog = this.dialog.open(SelectDatasetComponent);
 
             dialog.afterClosed().subscribe((result) => {

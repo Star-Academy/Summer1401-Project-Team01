@@ -22,116 +22,6 @@ export class DiagramComponent {
     constructor(private diagramNodeService: DiagramNodeService) {}
 
     public ngAfterViewInit(): void {
-        const nodeHoverAdornmentForSource = $(
-            go.Adornment,
-            'Spot',
-            {
-                //background: "transparent",
-                // hide the Adornment when the mouse leaves it
-                mouseLeave: (e, obj) => {
-                    let ad = obj.part;
-                    // @ts-ignore
-                    ad.adornedPart.removeAdornment('mouseHover');
-                },
-            },
-            $(go.Placeholder, {
-                //background: "transparent",  // to allow this Placeholder to be "seen" by mouse events
-                isActionable: true, // needed because this is in a temporary Layer
-                click: (e: any, obj: any) => {
-                    const node = obj.part.adornedPart;
-                    node.diagram.select(node);
-                },
-            }),
-            $(
-                'Button',
-                {
-                    alignment: go.Spot.Left,
-                    alignmentFocus: go.Spot.Right,
-                    background: 'hsl(0deg 0% 5%)',
-                },
-                {
-                    click: (e, obj) => {
-                        // @ts-ignore
-                        const node = obj.part.adornedPart.qb;
-                        console.log('node: ', node);
-                        this.addRemoveSrcDes('start', 'add');
-                    },
-                },
-                $(go.TextBlock, 'Add Source', {
-                    margin: 5,
-                })
-            ),
-            $(
-                'Button',
-                {alignment: go.Spot.Right, alignmentFocus: go.Spot.Left},
-                {
-                    click: (e, obj) => {
-                        console.log(e);
-                        console.log(obj);
-                        this.addRemoveSrcDes('start', 'remove');
-                    },
-                },
-                $(go.TextBlock, 'Remove Source', {
-                    margin: 5,
-                })
-            )
-        );
-
-        const nodeHoverAdornmentForDestination = $(
-            go.Adornment,
-            'Spot',
-            {
-                //background: "transparent",
-                // hide the Adornment when the mouse leaves it
-                mouseLeave: (e, obj) => {
-                    let ad = obj.part;
-                    // @ts-ignore
-                    ad.adornedPart.removeAdornment('mouseHover');
-                },
-            },
-            $(go.Placeholder, {
-                //background: "transparent",  // to allow this Placeholder to be "seen" by mouse events
-                isActionable: true, // needed because this is in a temporary Layer
-                click: (e: any, obj: any) => {
-                    const node = obj.part.adornedPart;
-                    node.diagram.select(node);
-                },
-            }),
-            $(
-                'Button',
-                {
-                    alignment: go.Spot.Left,
-                    alignmentFocus: go.Spot.Right,
-                    background: 'hsl(0deg 0% 5%)',
-                },
-                {
-                    click: (e, obj) => {
-                        // @ts-ignore
-                        const node = obj.part.adornedPart.qb;
-                        console.log('node: ', node);
-                        this.addRemoveSrcDes('destination', 'add');
-                    },
-                },
-                $(go.TextBlock, 'Add Destination', {
-                    margin: 5,
-                })
-            ),
-            $(
-                'Button',
-                {alignment: go.Spot.Right, alignmentFocus: go.Spot.Left},
-                {
-                    click: (e, obj) => {
-                        console.log(e);
-                        console.log(obj);
-                        this.addRemoveSrcDes('destination', 'remove');
-                    },
-                },
-                $(go.TextBlock, 'Remove Destination', {
-                    margin: 5,
-                })
-            )
-        );
-
         DiagramNodeService.diagram = $(go.Diagram, 'diagram-div', {
             layout: $(go.TreeLayout, {
                 isOngoing: true,
@@ -163,25 +53,6 @@ export class DiagramComponent {
                 return sel ? 'Foreground' : '';
             }).ofObject(),
             // define the node's outer shape
-            {
-                mouseHover: (e: any, obj: any) => {
-                    const node = obj.part;
-                    if (node.qb.name === 'Start') {
-                        console.log(node.qb);
-                        nodeHoverAdornmentForSource.adornedObject = node;
-                        node.addAdornment('mouseHover', nodeHoverAdornmentForSource);
-                    } else if (node.qb.name === 'Destination') {
-                        console.log(node.qb);
-                        nodeHoverAdornmentForDestination.adornedObject = node;
-                        node.addAdornment('mouseHover', nodeHoverAdornmentForDestination);
-                    }
-                },
-                //mouseLeave: (e: any, obj: any) => {
-                //const node = obj.part;
-                // nodeHoverAdornmentForSource.adornedObject = node;
-                // node?.removeAdornment('mouseLeave');
-                //},
-            },
             $(
                 go.Shape,
                 'RoundedRectangle',
@@ -311,9 +182,5 @@ export class DiagramComponent {
         //         this.diagramNodeService.openSelectDatasetModal('destination', 'add');
         //     }
         // });
-    }
-
-    public addRemoveSrcDes(state: string, order: string): void {
-        this.diagramNodeService.openSelectDatasetModal(state, order);
     }
 }
