@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
 
 @Component({
     selector: 'app-filter-config',
@@ -13,11 +14,28 @@ export class FilterConfigComponent {
     public selectedOperator: string = '';
     public selectedValue: string = '';
 
-    public constructor(private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
+    public columns: string = '';
+
+    public constructor(
+        private configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
+        private diagramNodeService: DiagramNodeService
+    ) {
         this.filterOperations = '=,>,<,!=,>=,<=,IS NULL,IS NOT NULL';
-        //TODO
-        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
-        this.initializeConfigurations(configsFromBack);
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
+            const configsFromBack = JSON.stringify(
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option
+            );
+
+            console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
+
+            this.initializeConfigurations(configsFromBack);
+        }
+        this.initializeConfigurations('');
+
+        this.getColumns().then((res) => (this.columns = res));
     }
 
     public initializeConfigurations(configs: string) {
@@ -32,19 +50,18 @@ export class FilterConfigComponent {
         if (configsObject.hasOwnProperty('value')) this.selectedValue = configsObject.value;
     }
 
-    public exportConfigurations(): string {
-        const configsObject: JSON = <JSON>(<any>{
+    public exportConfigurations(): void {
+        const configsObject = {
             columnName: this.selectedColumn,
             operator: this.selectedOperator,
             value: this.selectedValue,
-        });
-        return JSON.stringify(configsObject);
+        };
+
+        this.diagramNodeService.changeNodeOption(configsObject);
     }
 
-    public getColumns(): string {
-        //TODO
-        //get columns of current source from service from api
-        return 'name,age,nationality,address,phone';
+    public async getColumns(): Promise<string> {
+        return await this.configsIfOnlyAndOnlyOptionsService.getDatasetColumns();
     }
 
     public getSelectedColumn(e: string) {

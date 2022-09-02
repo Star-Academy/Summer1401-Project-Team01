@@ -6,7 +6,6 @@ import {PipelineDesignerComponent} from './pages/pipeline-designer/pipeline-desi
 import {DataInventoryComponent} from './pages/data-inventory/data-inventory.component';
 import {PipelineListComponent} from './pages/pipeline-list/pipeline-list.component';
 
-
 const routes: Routes = [
     {path: '', pathMatch: 'full', component: HomeComponent},
     {path: 'data-inventory', component: DataInventoryComponent},

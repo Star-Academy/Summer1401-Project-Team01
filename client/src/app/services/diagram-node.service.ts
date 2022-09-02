@@ -11,6 +11,7 @@ import {
     PIPELINE_UPDATE_PROCESSES,
 } from '../utilities/urls';
 import {Subject} from 'rxjs';
+import {BackNameToFrontNameViceVersaService} from './back-name-to-front-name-vice-versa.service';
 
 @Injectable({
     providedIn: 'root',
@@ -18,11 +19,12 @@ import {Subject} from 'rxjs';
 export class DiagramNodeService {
     public pipelinePage: string = '';
     public source: string | null = null;
+    public destination: string | null = null;
 
-    public nodeDataArray: NodeDataModel[] = [{key: 0, name: 'Start', option: null}];
+    public nodeDataArray: NodeDataModel[] = [];
 
-    private isSourceSelected: boolean = false;
-    private isDestinationSelected: boolean = false;
+    public isSourceSelected: boolean = false;
+    public isDestinationSelected: boolean = false;
 
     public model: go.TreeModel = new go.TreeModel(this.nodeDataArray);
 
@@ -32,32 +34,72 @@ export class DiagramNodeService {
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
-    public constructor(public dialog: MatDialog) {}
+    public constructor(
+        public dialog: MatDialog,
+        private backNameToFrontNameViceVersaService: BackNameToFrontNameViceVersaService
+    ) {}
 
     public async getCurrentPipeLine(): Promise<void> {
-        const response = await fetch(PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin', {
-            method: 'get',
-        });
-        const data = await response.json();
+        this.nodeDataArray = [];
 
-        const pipelineData = await JSON.parse(data?.Json);
+        this.nodeDataArray.push({key: 0, name: 'Start', option: null});
 
-        if (!pipelineData) return;
+        try {
+            const response = await fetch(
+                PIPELINE_GET_PIPELINE + '?pipelineName=' + this.pipelinePage + '&username=admin',
+                {
+                    method: 'get',
+                }
+            );
 
-        for (let i = 0; i < pipelineData.length; i++) {
-            const newNode = {
-                key: pipelineData[i].id,
-                name: pipelineData[i].name,
-                parent: pipelineData[i].id - 1,
-                option: JSON.parse(JSON.stringify(pipelineData[i].option)),
+            const data = await response.json();
+
+            if (!!data.SourceDataset) {
+                this.isSourceSelected = true;
+                this.source = data.SourceDataset.Name;
+            }
+            if (!!data.DestinationDataset) {
+                this.isDestinationSelected = true;
+                this.destination = data.DestinationDataset.Name;
+            }
+            const pipelineData = await JSON.parse(data?.Json);
+
+            for (let i = 0; i < pipelineData.length; i++) {
+                console.log(JSON.parse(JSON.stringify(pipelineData[i].Options)));
+                const newNode = {
+                    key: pipelineData[i].Id,
+                    name: this.backNameToFrontNameViceVersaService.backProcessNameToFrontName(pipelineData[i].Name),
+                    parent: pipelineData[i].Id - 1,
+                    option: JSON.parse(JSON.stringify(pipelineData[i].Options)),
+                };
+
+                this.nodeDataArray.push(newNode);
+            }
+
+            const lastNode = {
+                key: pipelineData.length + 1,
+                name: 'Destination',
+                parent: pipelineData.length,
+                option: null,
             };
 
-            this.nodeDataArray.push(newNode);
+            this.nodeDataArray.push(lastNode);
+        } catch (err) {
+            this.nodeDataArray = [];
+
+            this.nodeDataArray.push({key: 0, name: 'Start', option: null});
+
+            this.justCreateInitialNodeData();
         }
+
+        this.createDiagramAgain();
+    }
+
+    public justCreateInitialNodeData(): void {
         const lastNode = {
-            key: pipelineData.length + 1,
+            key: 1,
             name: 'Destination',
-            parent: pipelineData.length,
+            parent: 0,
         };
 
         this.nodeDataArray.push(lastNode);
@@ -78,6 +120,7 @@ export class DiagramNodeService {
             this.selectedNodeData = null;
             return;
         }
+
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};
         this.selectedNodeChange.next(this.selectedNode);
         this.selectedNodeData = JSON.parse(JSON.stringify(_selectedNodeData));
@@ -104,10 +147,7 @@ export class DiagramNodeService {
 
         this.nodeDataArray.splice(this.selectedNodeData.key + 1, 0, newNodeData);
 
-        this.model = new go.TreeModel(this.nodeDataArray);
-
-        // @ts-ignore
-        DiagramNodeService.diagram?.model = this.model;
+        this.createDiagramAgain();
 
         this.selectedNode = null;
         this.selectedNodeData = null;
@@ -127,10 +167,7 @@ export class DiagramNodeService {
 
         this.nodeDataArray.splice(this.selectedNodeData.key, 1);
 
-        this.model = new go.TreeModel(this.nodeDataArray);
-
-        // @ts-ignore
-        DiagramNodeService.diagram?.model = this.model;
+        this.createDiagramAgain();
 
         this.selectedNode = null;
         this.selectedNodeData = null;
@@ -144,14 +181,12 @@ export class DiagramNodeService {
 
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
-                this.isSourceSelected = true;
             });
         } else if (state === 'destination' && !this.isDestinationSelected && order === 'add') {
             const dialog = this.dialog.open(SelectDatasetComponent);
 
             dialog.afterClosed().subscribe((result) => {
                 console.log(`${result}`);
-                this.isDestinationSelected = true;
             });
         } else if (state === 'start' && this.isSourceSelected && order === 'remove') {
             const formDataForSrcDes = new FormData();
@@ -164,7 +199,9 @@ export class DiagramNodeService {
             fetch(PIPELINE_REMOVE_SOURCE, {
                 method: 'delete',
                 body: formDataForSrcDes,
-            }).then();
+            }).then((Response) => {
+                if (Response.ok) this.isSourceSelected = false;
+            });
 
             this.isSourceSelected = false;
         } else if (state === 'destination' && this.isDestinationSelected && order === 'remove') {
@@ -176,7 +213,9 @@ export class DiagramNodeService {
             fetch(PIPELINE_REMOVE_DESTINATION, {
                 method: 'delete',
                 body: formDataForSrcDes,
-            }).then();
+            }).then((Response) => {
+                if (Response.ok) this.isDestinationSelected = false;
+            });
 
             this.isDestinationSelected = false;
         }
@@ -209,15 +248,14 @@ export class DiagramNodeService {
     public createNodeArray(): NodeModel[] {
         const nodeArray = [];
         for (let i = 0; i < this.nodeDataArray.length; i++) {
-            let name = 'foo';
-            if (this.nodeDataArray[i].name === 'Field selector') {
-                name = 'select';
-            }
+            const name = this.backNameToFrontNameViceVersaService.frontProcessNameToBackName(
+                this.nodeDataArray[i].name
+            );
 
             const newNode = {
-                id: this.nodeDataArray[i].key,
-                name: name,
-                option: this.nodeDataArray[i].option,
+                Id: this.nodeDataArray[i].key,
+                Name: name,
+                Options: this.nodeDataArray[i].option,
             };
 
             nodeArray.push(newNode);

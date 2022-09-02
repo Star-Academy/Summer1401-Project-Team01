@@ -91,46 +91,45 @@ public class ScenarioService : IScenarioService
                 return null;
             }
 
-            pipe.TreeOfProcesses = new List<IProcess>();
-            var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
-            foreach (var r in res.OrderBy(r => r.Id))
-            {
-                if (r.Id > lastProcessId)
+                pipe.TreeOfProcesses = new List<IProcess>();
+                var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
+                foreach (var r in res.OrderBy(r => r.Id))
                 {
-                    continue;
+                    if (r.Id > lastProcessId)
+                    {
+                        continue;
+                    }
+                    switch (r.Name)
+                    {
+                        case "foo":
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
+                            break;
+                        case "select":
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "aggregate":
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "join":
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "filter":
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "fieldRemover":
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "sort":
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "operation":
+                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "score":
+                            pipe.TreeOfProcesses.Add(new ScoreProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                    }
                 }
-
-                switch (r.Name)
-                {
-                    case "foo":
-                        pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = null });
-                        break;
-                    case "select":
-                        pipe.TreeOfProcesses.Add(new Select
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "aggregate":
-                        pipe.TreeOfProcesses.Add(new Aggregate
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "join":
-                        pipe.TreeOfProcesses.Add(new Join
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "filter":
-                        pipe.TreeOfProcesses.Add(new Filter
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "fieldRemover":
-                        pipe.TreeOfProcesses.Add(new FieldRemover
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "sort":
-                        pipe.TreeOfProcesses.Add(new SortProcess
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                }
-            }
 
             return pipe;
         }
@@ -152,41 +151,41 @@ public class ScenarioService : IScenarioService
                 return null;
             }
 
-            pipe.TreeOfProcesses = new List<IProcess>();
-            var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
-            foreach (var r in res.OrderBy(r => r.Id))
-            {
-                switch (r.Name)
+                pipe.TreeOfProcesses = new List<IProcess>();
+                var res = JsonSerializer.Deserialize<List<Process>>(pipe.Json);
+                foreach (var r in res.OrderBy(r => r.Id))
                 {
-                    case "foo":
-                        pipe.TreeOfProcesses.Add(new FooProcess { Id = r.Id, Name = r.Name, Options = null });
-                        break;
-                    case "select":
-                        pipe.TreeOfProcesses.Add(new Select
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "aggregate":
-                        pipe.TreeOfProcesses.Add(new Aggregate
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "join":
-                        pipe.TreeOfProcesses.Add(new Join
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "filter":
-                        pipe.TreeOfProcesses.Add(new Filter
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "fieldRemover":
-                        pipe.TreeOfProcesses.Add(new FieldRemover
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
-                    case "sort":
-                        pipe.TreeOfProcesses.Add(new SortProcess
-                            { Id = r.Id, Name = r.Name, Options = r.Options?.ToString() });
-                        break;
+                    switch (r.Name)
+                    {
+                        case "foo":
+                            pipe.TreeOfProcesses.Add(new FooProcess {Id = r.Id, Name = r.Name, Options = null});
+                            break;
+                        case "select":
+                            pipe.TreeOfProcesses.Add(new Select {Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "aggregate":
+                            pipe.TreeOfProcesses.Add(new Aggregate { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "join":
+                            pipe.TreeOfProcesses.Add(new Join { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "filter":
+                            pipe.TreeOfProcesses.Add(new Filter { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "fieldRemover":
+                            pipe.TreeOfProcesses.Add(new FieldRemover { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "sort":
+                            pipe.TreeOfProcesses.Add(new SortProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "operation":
+                            pipe.TreeOfProcesses.Add(new OperationProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                        case "score":
+                            pipe.TreeOfProcesses.Add(new ScoreProcess { Id = r.Id, Name = r.Name, Options = r.Options.ToString() });
+                            break;
+                    }
                 }
-            }
 
             return pipe;
         }

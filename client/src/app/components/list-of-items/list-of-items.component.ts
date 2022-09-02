@@ -10,10 +10,10 @@ import {
 } from 'ag-grid-community';
 import {HttpClient} from '@angular/common/http';
 import {DatasetService} from '../../services/api/dataset.service';
-import {ShowSampleComponent} from "../../pages/data-inventory/components/show-sample/show-sample.component";
+import {ShowSampleComponent} from '../../pages/data-inventory/components/show-sample/show-sample.component';
 import {MatDialog} from '@angular/material/dialog';
-import {SnackbarService} from "../../services/snackbar.service";
-import {snackbarType} from "../../models/snackbar-type.enum";
+import {SnackbarService} from '../../services/snackbar.service';
+import {snackbarType} from '../../models/snackbar-type.enum';
 
 @Component({
     selector: 'app-list-of-items',
@@ -74,7 +74,12 @@ export class ListOfItemsComponent implements OnInit {
 
     public rowData$: any[] = [];
 
-    public constructor(private http: HttpClient, private datasetService: DatasetService, public dialog: MatDialog, private snackbar: SnackbarService) {}
+    public constructor(
+        private http: HttpClient,
+        private datasetService: DatasetService,
+        public dialog: MatDialog,
+        private snackbar: SnackbarService
+    ) {}
 
     public async ngOnInit(): Promise<void> {
         let data = await this.datasetService.getDatasets();
@@ -92,27 +97,24 @@ export class ListOfItemsComponent implements OnInit {
         if (selectedData[0]) {
             this.datasetService.deleteDataset(selectedData[0].fileName);
             this.gridApi.applyTransaction({remove: selectedData});
-        }
-        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
+        } else this.snackbar.show('You must select a file first', snackbarType.WARNING);
     }
 
     public async downloadSelected(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
         if (selectedData[0]) await this.datasetService.getDownloadDataset(selectedData[0].fileName);
-        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
-
+        else this.snackbar.show('You must select a file first', snackbarType.WARNING);
     }
 
     public async viewDataset(): Promise<void> {
         const selectedData = this.gridApi.getSelectedRows();
-        if(selectedData[0]) {
+        if (selectedData[0]) {
             const sampleData = await this.datasetService.getRecords(selectedData[0].fileName, 50);
 
             const dialogRef = this.dialog.open(ShowSampleComponent, {
                 data: {sampleData: sampleData},
             });
-        }
-        else this.snackbar.show("You must select a file first", snackbarType.WARNING);
+        } else this.snackbar.show('You must select a file first', snackbarType.WARNING);
     }
 
     public clearData(): void {
@@ -125,5 +127,11 @@ export class ListOfItemsComponent implements OnInit {
 
     public onCellClicked(e: CellClickedEvent): void {
         console.log('cellClicked', e);
+    }
+
+    public async updateGrid(fileName: string): Promise<void> {
+        let data = await this.datasetService.getDatasets();
+
+        this.gridApi.applyTransaction({add: [{fileName: fileName, dataType: 'csv'}]});
     }
 }

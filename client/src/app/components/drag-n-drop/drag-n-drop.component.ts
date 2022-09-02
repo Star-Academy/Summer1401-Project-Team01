@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
-import {SnackbarService} from "../../services/snackbar.service";
-import {snackbarType} from "../../models/snackbar-type.enum";
+import {SnackbarService} from '../../services/snackbar.service';
+import {snackbarType} from '../../models/snackbar-type.enum';
 
 @Component({
     selector: 'app-drag-n-drop',
@@ -13,8 +13,7 @@ export class DragNDropComponent {
 
     @Output() public uploadedFile = new EventEmitter<File>();
 
-    public constructor(private snackbar: SnackbarService) {
-    }
+    public constructor(private snackbar: SnackbarService) {}
 
     public files: File[] = [];
 
@@ -36,7 +35,7 @@ export class DragNDropComponent {
         formData.append('file', file);
 
         this.uploadedFile.emit(file);
-        this.snackbar.show("File added, continue to upload", snackbarType.INFO);
+        this.snackbar.show('File added, continue to upload', snackbarType.INFO);
         this.fileDropEl.nativeElement.value = '';
     }
 }

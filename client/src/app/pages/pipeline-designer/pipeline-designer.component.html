@@ -1,26 +1,23 @@
 <!--<main #designer class="designer" (mousemove)="dragGeneralHandler($event)" (mouseup)="freeDragHandler()">-->
 <main #designer class="designer">
     <div class="designer__header">
-        <button
-            class="global-button processor-button"
-            (click)="openAddProcessorModal()"
-            k
-            [disabled]="!isNodeSelectedForStartBtn"
-        >
-            Add processor After This
+        <button class="canvas-circle" (click)="removeNode()" k [disabled]="!isNodeSelectedForDeleteBtn">
+            <i class="far fa-square-minus"></i>
         </button>
-        <button
-            class="global-button processor-button"
-            (click)="removeNode()"
-            k
-            [disabled]="!isNodeSelectedForDeleteBtn"
-        >
-            Delete processor
+        <button class="canvas-circle" (click)="openAddProcessorModal()" k [disabled]="!isNodeSelectedForStartBtn">
+            <i class="far fa-square-plus"></i>
         </button>
-        <button class="global-button processor-button" (click)="runProcess()" k>Run</button>
-        <button class="global-button processor-button" (click)="openSampleModal()" k [disabled]="!isSourceSelected">
-            Show Sample
+        <button class="canvas-run" (click)="runProcess()" k><i class="fas fa-play"></i></button>
+        <button class="canvas-circle" (click)="openSampleModal()" k [disabled]="!isSourceSelected">
+            <i class="far fa-eye"></i>
         </button>
+
+        <!--   TODO: Sina     -->
+<!--        <button class="canvas-circle"><i class="far fa-file-plus"></i></button>-->
+<!--        <button class="canvas-circle"><i class="far fa-file-minus"></i></button>-->
+
+<!--        <button class="canvas-circle"><i class="far fa-file-plus"></i></button>-->
+<!--        <button class="canvas-circle"><i class="far fa-file-minus"></i></button>-->
     </div>
 
     <div #canvas class="designer__canvas">
@@ -37,10 +34,12 @@
 
     <aside #side class="designer__side">
         <button class="collapse-button" (click)="sidebarCollapseService.collapse()">
-            <i #rightArrow class="fa-solid fa-chevron-right show"></i>
+            <i #rightArrow class="show"></i>
             <i #leftArrow class="fa-solid fa-chevron-left hide"></i>
         </button>
-        <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        <div class="content">
+            <app-processor-configs [selectedProcessor]="selectedProcessor"></app-processor-configs>
+        </div>
         <!--        <div #dragH class="drag-h" (mousedown)="dragHHandler($event)"></div>-->
     </aside>
 </main>

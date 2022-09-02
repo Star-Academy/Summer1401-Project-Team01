@@ -18,6 +18,7 @@
 
         .text {
             width: 70%;
+
             h1 {
                 font-family: Raleway, sans-serif;
                 font-size: 4.8rem;
@@ -25,17 +26,18 @@
             }
 
             p {
-                margin: 0;
-                font-family: Raleway, sans-serif;
-                font-weight: 700;
-                font-size: var(--font-size-tertiary-heading);
-                line-height: 1.2;
-
                 width: 80%;
+
+                margin: 0;
+
+                font-family: Raleway, sans-serif;
+                font-size: var(--font-size-tertiary-heading);
+                font-weight: 700;
+
+                line-height: 1.2;
             }
         }
     }
-
 
     .content {
         display: flex;
@@ -51,18 +53,18 @@
             }
 
             .name {
+                background-color: var(--color-accent-normal);
+
                 display: flex;
                 flex-direction: column;
                 align-items: stretch;
                 gap: 1.2rem;
 
-                background-color: var(--color-accent-normal);
-
                 .input {
-                    font-size: 1.6rem;
-
                     display: grid;
                     justify-content: stretch;
+
+                    font-size: 1.6rem;
                 }
             }
         }
@@ -70,7 +72,5 @@
         .grid {
             flex: 1;
         }
-
-
     }
 }

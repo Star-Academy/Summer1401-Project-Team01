@@ -9,7 +9,7 @@ export class SnackbarService {
     constructor(private _snackBar: MatSnackBar) {}
 
     public show(massage: string, type: snackbarType): void {
-        console.log('snackbar')
+        console.log('snackbar');
         this._snackBar.open(massage, 'close', {
             horizontalPosition: 'center',
             verticalPosition: 'bottom',

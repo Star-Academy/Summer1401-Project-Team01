@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Data;
 using TalStart.IServices;
+using TalStart.Services;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TalStart.Controllers;
@@ -10,19 +12,23 @@ namespace TalStart.Controllers;
 public class DatasetController : ControllerBase
 {
     private readonly IDatasetService _datasetService;
+    private readonly IScenarioService _scenarioService;
     private readonly IFileService _fileService;
+    private readonly ISqlService _sqlService;
 
-    public DatasetController(IDatasetService datasetService, IFileService fileService)
+    public DatasetController(IDatasetService datasetService, IFileService fileService,IScenarioService scenarioService)
     {
+        _scenarioService = scenarioService;
         _datasetService = datasetService;
         _fileService = fileService;
+        _sqlService = SqlService.GetInstance();
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddDataset([FromForm] string datasetName,
+    public async Task<IActionResult> AddDataset(/*[FromForm] IFormFile file, */[FromForm] string datasetName,
         [FromForm] string columnTypes, [FromForm] string username)
     {
         try
@@ -40,13 +46,12 @@ public class DatasetController : ControllerBase
                     columns[columnName] = "DOUBLE PRECISION";
                 }
             }
-            await _fileService.UploadFile(file, columns, username, datasetName);
+            _fileService.UploadFile(file, columns, username, datasetName);
             _datasetService.AddDataset(username, datasetName);
             return new OkResult();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -55,7 +60,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult RemoveDataset([FromForm] string datasetName, [FromForm] string username)
+    public async Task<IActionResult> RemoveDataset([FromForm] string datasetName, [FromForm] string username)
     {
         if (_datasetService.RemoveDataset(datasetName, username))
             return new OkResult();
@@ -66,7 +71,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult RenameDataset([FromForm] string currentDatasetName, [FromForm] string username,
+    public async Task<IActionResult> RenameDataset([FromForm] string currentDatasetName, [FromForm] string username,
         [FromForm] string newDatasetName)
     {
         if (_datasetService.RenameDataset(currentDatasetName, username, newDatasetName))
@@ -78,15 +83,14 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetAllDatasets([FromRoute] string username)
+    public async Task<IActionResult> GetAllDatasets([FromRoute] string username)
     {
         try
         {
             return Ok(_datasetService.GetAllDatasetNames(username));
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -99,11 +103,11 @@ public class DatasetController : ControllerBase
         try
         {
             var dt = await  _datasetService.PreviewDataset(username, datasetName, count);
-            return Ok(JsonConvert.SerializeObject(dt));
+            var JSONresult = JsonConvert.SerializeObject(dt);
+            return Ok(JSONresult);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
             return new BadRequestResult();
         }
     }
@@ -112,7 +116,7 @@ public class DatasetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDatasetColumns([FromQuery] string datasetName,[FromQuery] string username)
+    public async Task<IActionResult> GetDatasetColumns([FromQuery] string datasetName, [FromQuery] string username)
     {
         try
         {
@@ -120,7 +124,54 @@ public class DatasetController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            return new BadRequestResult();
+        }
+    }
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateEmptyDataset([FromForm] string datasetName, [FromForm] string username)
+    {
+        try
+        {
+            //var file = Request.Form.Files[0];
+            var columns = new Dictionary<string, string>
+            {
+                { "a", "text" }
+            };
+            //_fileService.UploadFile(null, columns, username, datasetName);
+            var queryBuilder = new QueryBuilder();
+            var query = queryBuilder.BuildTableQuery(columns, $"{datasetName}_{username}");
+            _sqlService.ExecuteNonQueryPostgres(query);
+            _datasetService.AddDataset(username, datasetName);
+            return new OkResult();
+        }
+        catch (Exception)
+        {
+            return new BadRequestResult();
+        }
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetColumnsAfterRun([FromQuery] string username,
+        [FromQuery] string pipelineName, [FromQuery] int processId)
+    {
+        try
+        {
+                var dt = await _scenarioService.PreviewRun(pipelineName, username, processId);
+                var result = new List<string>();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    result.Add(column.ColumnName);
+                }
+                return Ok(result);
+        }
+        catch (Exception e)
+        {
             return new BadRequestResult();
         }
     }

@@ -9,10 +9,10 @@ import {MatInputModule} from '@angular/material/input';
 import {ColumnTypesComponent} from './components/column-types/column-types.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DataInventoryComponent} from './data-inventory.component';
-import { ShowSampleComponent } from './components/show-sample/show-sample.component';
-import {AgGridModule} from "ag-grid-angular";
+import {ShowSampleComponent} from './components/show-sample/show-sample.component';
+import {AgGridModule} from 'ag-grid-angular';
 import 'ag-grid-enterprise';
-import {RouterModule} from "@angular/router";
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     declarations: [DataInventoryComponent, ShowSampleComponent],

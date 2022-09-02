@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ConfigsIfOnlyAndOnlyOptionsService} from '../../../../services/configs-if-only-and-only-options.service';
+import {DiagramNodeService} from '../../../../services/diagram-node.service';
 
 @Component({
     selector: 'app-field-selector-config',
@@ -12,10 +13,23 @@ export class FieldSelectorConfigComponent {
 
     public columns: string = '';
 
-    public constructor(public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService) {
-        //TODO
-        const configsFromBack = '{"ColumnToBeGroupedBy" : "name", "OperationColumn" : "address","AggregationType" : 1}';
-        this.initializeConfigurations(configsFromBack);
+    public constructor(
+        public configsIfOnlyAndOnlyOptionsService: ConfigsIfOnlyAndOnlyOptionsService,
+        private diagramNodeService: DiagramNodeService
+    ) {
+        if (
+            !!diagramNodeService.selectedNodeData?.key &&
+            !!diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+        ) {
+            const configsFromBack = JSON.stringify(
+                diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData.key].option
+            );
+
+            console.log(diagramNodeService.nodeDataArray[diagramNodeService.selectedNodeData?.key].option);
+
+            this.initializeConfigurations(configsFromBack);
+        }
+        this.initializeConfigurations('');
 
         this.getColumns().then((res) => (this.columns = res));
     }
@@ -31,9 +45,13 @@ export class FieldSelectorConfigComponent {
     }
 
     public exportConfigurations(): void {
-        this.configsIfOnlyAndOnlyOptionsService.selectorToOption([this.selectedColumns]);
+        const configsObject = {
+            columns: this.selectedColumns,
+        };
 
-        this.configsIfOnlyAndOnlyOptionsService.selectExportConfigurations(this.selectedColumns);
+        console.log(configsObject);
+
+        this.diagramNodeService.changeNodeOption(configsObject);
     }
 
     public async getColumns(): Promise<string> {

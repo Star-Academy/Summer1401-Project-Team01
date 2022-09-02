@@ -8,6 +8,6 @@ public class FilterOptions
 
     public override string ToString()
     {
-        return $"{columnName} {@operator} {value}";
+        return $"{columnName} {@operator} \'{value}\'";
     }
 }

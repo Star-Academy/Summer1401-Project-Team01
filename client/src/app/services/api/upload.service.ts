@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {UPLOAD_FILE} from '../../utilities/urls';
 import {HttpClient, HttpEventType} from '@angular/common/http';
-import {SnackbarService} from "../snackbar.service";
-import {snackbarType} from "../../models/snackbar-type.enum";
+import {SnackbarService} from '../snackbar.service';
+import {snackbarType} from '../../models/snackbar-type.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +17,7 @@ export class UploadService {
             body: formData,
         });
 
-        this.snackbar.show("File uploaded successfully", snackbarType.SUCCESS);
+        this.snackbar.show('File uploaded successfully', snackbarType.SUCCESS);
 
         // this.http.post(UPLOAD_FILE, formData, {reportProgress: true, observe: 'events'}).subscribe(
         //     (event) => {

@@ -6,7 +6,7 @@ export interface NodeDataModel {
 }
 
 export interface NodeModel {
-    id: number;
-    name: string;
-    option: any;
+    Id: number;
+    Name: string;
+    Options: any;
 }
