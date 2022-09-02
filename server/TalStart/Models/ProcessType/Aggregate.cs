@@ -26,10 +26,11 @@ public class Aggregate : IProcess
         {
             var aggregateOptions = JsonConvert.DeserializeObject<AggregateOptions>(Options.ToString());
         
-            var query = _queryBuilder.AggregateQuery(sourceTable, 
+            var query = _queryBuilder.AggregateQuery($"\"{sourceTable}\"", 
                 aggregateOptions!.ColumnToBeGroupedBy, aggregateOptions.OperationColumn, 
-                aggregateOptions.AggregationType.ToString(), finalTable);
-        
+                aggregateOptions.AggregationType.ToString(), $"\"{finalTable}\"");
+
+
             _sqlService.ExecuteNonQueryPostgres(query);
         
             return true;
