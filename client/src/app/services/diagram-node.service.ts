@@ -34,7 +34,7 @@ export class DiagramNodeService {
     public selectedNodeChange: Subject<SelectedNodeModel> = new Subject<SelectedNodeModel>();
     public selectedNodeData: SelectedNodeDataModel | null = null;
 
-    public nodeSelection: string = '';
+    public nodeSelection: string | null = null;
 
     public constructor(
         public dialog: MatDialog,
@@ -121,6 +121,14 @@ export class DiagramNodeService {
             this.selectedNode = null;
             this.selectedNodeData = null;
             return;
+        }
+
+        if (_selectedNodeData.name === 'Start') {
+            this.nodeSelection = 'start';
+        } else if (_selectedNodeData.name === 'Destination') {
+            this.nodeSelection = 'destination';
+        } else {
+            this.nodeSelection = null;
         }
 
         this.selectedNode = {id: _selectedNodeData.key, type: _selectedNodeData.name};
