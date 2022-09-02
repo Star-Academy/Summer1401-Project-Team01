@@ -17,7 +17,7 @@
             class="canvas-circle"
             (click)="diagramNodeService.openSelectDatasetModal('start', 'add')"
             title="Add Source"
-            [disabled]="diagramNodeService.isSourceSelected"
+            *ngIf="!diagramNodeService.isSourceSelected"
         >
             <i class="far fa-file-plus"></i>
         </button>
@@ -25,7 +25,7 @@
             class="canvas-circle"
             (click)="diagramNodeService.openSelectDatasetModal('start', 'remove')"
             title="Remove Source"
-            [disabled]="!diagramNodeService.isSourceSelected"
+            *ngIf="diagramNodeService.isSourceSelected"
         >
             <i class="far fa-file-minus"></i>
         </button>
@@ -34,7 +34,7 @@
             class="canvas-circle"
             (click)="diagramNodeService.openSelectDatasetModal('destination', 'add')"
             title="Add Destination"
-            [disabled]="diagramNodeService.isDestinationSelected"
+            *ngIf="!diagramNodeService.isDestinationSelected"
         >
             <i class="far fa-file-plus"></i>
         </button>
@@ -42,7 +42,7 @@
             class="canvas-circle"
             (click)="diagramNodeService.openSelectDatasetModal('destination', 'remove')"
             title="Remove Destination"
-            [disabled]="!diagramNodeService.isDestinationSelected"
+            *ngIf="diagramNodeService.isDestinationSelected"
         >
             <i class="far fa-file-minus"></i>
         </button>
