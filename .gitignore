@@ -536,7 +536,7 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,webstorm,visualstudio
-/server/TalStart/Properties/CString.cs
+/server/DataGate/Properties/CString.cs
 /client/src/app/services/api/upload.service.ts.bak
-/server/TalStart/resources/admin
+/server/DataGate/Resources/admin
 /client/src/app/services/diagram-node.service.ts.bak
